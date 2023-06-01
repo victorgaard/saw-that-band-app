@@ -1,3 +1,5 @@
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { SupabaseClient } from "@supabase/supabase-js";
 import { createContext } from "react";
 
 export type User = {
@@ -24,11 +26,13 @@ export type User = {
 type Context = {
   user: User | null;
   setUser: (user: User | null) => void;
+  supabase: SupabaseClient
 };
 
 const context: Context = {
   user: null,
   setUser: () => {},
+  supabase: createPagesBrowserClient()
 };
 
 export const AuthContext = createContext(context);

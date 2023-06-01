@@ -1,6 +1,5 @@
 "use client";
 
-import supabase from "@/utils/supabase";
 import { AuthContext } from "@/auth/AuthContext";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -11,7 +10,7 @@ function SignInForm() {
   const [error, setError] = useState("");
 
   const router = useRouter();
-  const { setUser } = useContext(AuthContext);
+  const { supabase, setUser } = useContext(AuthContext);
 
   async function handleSubmit() {
     const res = await supabase.auth.signInWithPassword({ email, password });
@@ -48,6 +47,7 @@ function SignInForm() {
         className="text-black"
       />
       <button type="submit">Login</button>
+      {error && <p className="text-red-600">{error}</p>}
     </form>
   );
 }
