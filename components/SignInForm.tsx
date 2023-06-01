@@ -1,13 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import supabase from "@/utils/supabase";
+import { AuthContext } from "@/auth/AuthContext";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 
 function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  function handleSubmit() {
-    console.log(email, password);
+  const router = useRouter();
+  const { setUser } = useContext(AuthContext);
+
+  async function handleSubmit() {
+    const res = await supabase.auth.signInWithPassword({ email, password });
+
+    if (res.error) {
+      return setError("Invalid credentials");
+    }
+
+    setUser(res.data.user);
+    return router.push("/dashboard");
   }
 
   return (
