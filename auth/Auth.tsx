@@ -1,9 +1,10 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { AuthContext, User } from "./AuthContext";
+import { AuthContext } from "./AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import supabase from "@/utils/supabase";
+import { User } from "@supabase/supabase-js";
 
 function Auth({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -32,12 +33,17 @@ function Auth({ children }: { children: ReactNode }) {
     if (
       typeof window !== undefined &&
       !localStorage.getItem("sb-guerfzlhzjrpooirzvlf-auth-token") &&
-      !user
+      !user &&
+      path !== "/signup"
     ) {
       router.push("/login");
     }
 
-    if ((user && path === "/login") || (user && path === "/")) {
+    if (
+      (user && path === "/login") ||
+      (user && path === "/") ||
+      (user && path === "/signup")
+    ) {
       router.push("/dashboard");
     }
   }, [user, router, path]);

@@ -8,7 +8,7 @@ function Navbar() {
   const { user } = useContext(AuthContext);
 
   return (
-    <nav className="flex items-center px-8 justify-between">
+    <nav className="fixed bg-black right-0 left-0 flex items-center py-4 px-8 justify-between">
       <span>Welcome {user ? user.email : "Guest"}</span>
       {user ? (
         <Link href="/logout">Sign out</Link>

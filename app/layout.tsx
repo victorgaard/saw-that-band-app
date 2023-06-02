@@ -2,6 +2,7 @@ import Auth from "@/auth/Auth";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import ToastWrapper from "@/components/Toast/ToastWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,15 +17,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <Auth>
+    <Auth>
+      <html lang="en">
         <body className={inter.className}>
-          <main className="min-h-screen flex flex-col">
-            <Navbar />
-            {children}
-          </main>
+          <ToastWrapper>
+            <main className="min-h-screen flex flex-col">
+              <Navbar />
+              <div className="py-20 px-8">{children}</div>
+            </main>
+          </ToastWrapper>
         </body>
-      </Auth>
-    </html>
+      </html>
+    </Auth>
   );
 }

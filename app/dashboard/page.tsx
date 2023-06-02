@@ -31,7 +31,13 @@ function Dashboard() {
 
   if (!bands) return <>Loading...</>;
 
-  return <>{JSON.stringify(bands)}</>;
+  return (
+    <>
+      {bands.map((band) => (
+        <p key={band.id}>{band.band}</p>
+      ))}
+    </>
+  );
 }
 
 export default Dashboard;
