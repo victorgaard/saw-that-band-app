@@ -1,4 +1,5 @@
-import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/supabase";
+import supabase from "@/utils/supabase";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { createContext } from "react";
 
@@ -26,13 +27,13 @@ export type User = {
 type Context = {
   user: User | null;
   setUser: (user: User | null) => void;
-  supabase: SupabaseClient
+  supabase: SupabaseClient<Database>
 };
 
 const context: Context = {
   user: null,
   setUser: () => {},
-  supabase: createPagesBrowserClient()
+  supabase: supabase
 };
 
 export const AuthContext = createContext(context);
