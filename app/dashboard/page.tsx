@@ -1,11 +1,14 @@
 "use client";
 
 import { AuthContext } from "@/auth/AuthContext";
+import { ToastContext } from "@/components/Toast/ToastContext";
 import { Database } from "@/types/supabase";
 import { useCallback, useContext, useEffect, useState } from "react";
 
 function Dashboard() {
   const { user, supabase } = useContext(AuthContext);
+  const { toast } = useContext(ToastContext);
+
   const [bands, setBands] =
     useState<Database["public"]["Tables"]["Bands"]["Row"][]>();
 
@@ -18,10 +21,16 @@ function Dashboard() {
       .eq("user_id", user.id)
       .order("band", { ascending: true });
 
-    if (error) throw new Error("Could not get bands for this user");
+    if (error)
+      return toast({
+        type: "error",
+        title: "Bands could not be loaded",
+        message:
+          "There was an error loading your bands. Please try again later.",
+      });
 
     setBands(data);
-  }, [supabase, user]);
+  }, [supabase, user, toast]);
 
   useEffect(() => {
     if (user && !bands) {

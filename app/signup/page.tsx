@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthContext } from "@/auth/AuthContext";
+import { ToastContext } from "@/components/Toast/ToastContext";
 import { useContext, useState } from "react";
 
 function SignUp() {
@@ -10,6 +11,7 @@ function SignUp() {
   const [name, setName] = useState("");
 
   const { supabase } = useContext(AuthContext);
+  const { toast } = useContext(ToastContext);
 
   async function handleSubmit() {
     const res = await supabase.auth.signUp({
@@ -19,8 +21,20 @@ function SignUp() {
     });
 
     if (res.error) {
-      throw new Error("Could not sign up");
+      return toast({
+        type: "error",
+        title: "Account not created",
+        message:
+          "There was an error creating your account. Please try again later.",
+      });
     }
+
+    return toast({
+      type: "success",
+      title: "Account created",
+      message:
+        "Your account was created. Check the link sent to your email to active it.",
+    });
   }
 
   return (
