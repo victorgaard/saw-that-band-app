@@ -10,6 +10,12 @@ function Navbar() {
   return (
     <nav className="fixed bg-black right-0 left-0 flex items-center py-4 px-8 justify-between">
       <span>Welcome {user ? user.email : "Guest"}</span>
+      {user && (
+        <>
+          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/profile">Profile</Link>
+        </>
+      )}
       {user ? (
         <Link href="/logout">Sign out</Link>
       ) : (

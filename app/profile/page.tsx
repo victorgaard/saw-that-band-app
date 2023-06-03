@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthContext } from "@/auth/AuthContext";
+import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { ToastContext } from "@/components/Toast/ToastContext";
 import Image from "next/image";
@@ -8,17 +9,27 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 function Profile() {
+  /** Helpers */
   const router = useRouter();
   const { user, supabase } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
 
+  /** User states */
   const [name, setName] = useState("");
   const [picture, setPicture] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
 
+  /** Page states */
+  const [loading, setLoading] = useState(true);
+
+  /** Form states */
+  const [formLoading, setFormLoading] = useState(false);
+  const [profilePictureLoading, setProfilePictureLoading] = useState(false);
+
   useEffect(() => {
     if (user) {
+      setLoading(false);
       setName(user.user_metadata.name);
       setEmail(user.email!);
       setPicture(user.user_metadata.picture);
@@ -29,6 +40,7 @@ function Profile() {
   async function updateProfile() {
     if (!user) return;
 
+    setFormLoading(true);
     const res = await supabase.auth.updateUser({
       data: { name, username, picture },
     });
@@ -48,6 +60,7 @@ function Profile() {
       message: "Your profile was successfully updated.",
     });
 
+    setFormLoading(false);
     router.refresh();
   }
 
@@ -67,9 +80,11 @@ function Profile() {
         message: "Please provide a picture that is under 2.5 MB",
       });
 
+    const fileName = `/${user.id}/${new Date().toISOString()}`;
+
     const { data, error } = await supabase.storage
       .from("Avatar")
-      .upload(user.id, file);
+      .upload(fileName, file);
 
     if (error) {
       return toast({
@@ -131,6 +146,8 @@ function Profile() {
     router.refresh();
   }
 
+  if (loading) return <>Loading...</>;
+
   return (
     <>
       <input
@@ -148,7 +165,7 @@ function Profile() {
           e.preventDefault();
           updateProfile();
         }}
-        className="max-w-lg flex flex-col gap-4"
+        className="max-w-lg flex flex-col gap-5"
       >
         Profile
         {picture ? (
@@ -166,17 +183,17 @@ function Profile() {
         )}
         <Input
           type="text"
-          placeholder="First name"
-          label="First name"
+          placeholder="Name"
+          label="Name"
           value={name}
-          handleChange={(e) => setName(e.target.value.trim())}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           type="email"
           placeholder="Email"
           label="Email"
           value={email}
-          handleChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           disabled
         />
         <Input
@@ -184,12 +201,12 @@ function Profile() {
           placeholder="Username"
           label="Username"
           value={username}
-          handleChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
           disabled
         />
-        <button type="submit" disabled={!name}>
+        <Button type="submit" loading={formLoading} disabled={!name}>
           Save changes
-        </button>
+        </Button>
       </form>
     </>
   );

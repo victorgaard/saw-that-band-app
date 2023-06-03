@@ -1,8 +1,8 @@
 import Auth from "@/auth/Auth";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import ToastWrapper from "@/components/Toast/ToastWrapper";
+import SlimSideBarContainer from "@/components/SlimSideBarContainer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +18,18 @@ export default function RootLayout({
 }) {
   return (
     <Auth>
-      <html lang="en">
-        <body className={inter.className}>
+      <html lang="en" className={inter.className}>
+        <body className="relative touch-none overflow-hidden bg-zinc-900 antialiased">
           <ToastWrapper>
-            <main className="min-h-screen flex flex-col">
-              <Navbar />
-              <div className="py-20 px-8">{children}</div>
+            <main className="flex">
+              <div className="flex max-h-screen">
+                <div className="hidden sm:flex">
+                  <SlimSideBarContainer />
+                </div>
+              </div>
+              <div className="flex-1 w-full h-screen flex-col gap-10 overflow-x-hidden bg-zinc-870 px-4 py-8 text-white sm:px-12 sm:py-8"> 
+                {children}
+              </div>
             </main>
           </ToastWrapper>
         </body>
