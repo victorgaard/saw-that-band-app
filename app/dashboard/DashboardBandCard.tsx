@@ -1,19 +1,21 @@
-import BandsListItemCollapsedTags from "./BandsListItemCollapsedTags";
-import Image from "next/image";
-import { Database } from "@/types/supabase";
+import DashboardBandCardCollapsedTags from './DashboardBandCardCollapsedTags';
+import Image from 'next/image';
+import { Database } from '@/types/supabase';
 
-type BandsListItemProps = {
-  band: Database["public"]["Tables"]["Bands"]["Row"];
+type DashboardBandCardProps = {
+  band: Database['public']['Tables']['Bands']['Row'];
   setQuery: (query: string) => void;
-  resetScroll: () => void;
+  resetScrollPosition: () => void;
 };
 
-function BandsListItem({ band, setQuery, resetScroll }: BandsListItemProps) {
+function DashboardBandCard({
+  band,
+  setQuery,
+  resetScrollPosition
+}: DashboardBandCardProps) {
   return (
     <div className="flex justify-center md:mx-6">
-      <div
-        className="group flex h-[160px] w-full items-center gap-6 sm:gap-8 border-b border-zinc-700/50 from-zinc-100/5 to-zinc-500/5 to-50% p-6 text-white hover:border-zinc-600/40 hover:bg-gradient-to-tr sm:border sm:border-transparent md:rounded-lg"
-      >
+      <div className="group flex h-[160px] w-full items-center gap-6 border-b border-zinc-700/50 from-zinc-100/5 to-zinc-500/5 to-50% p-6 text-white hover:border-zinc-600/40 hover:bg-gradient-to-tr sm:gap-8 sm:border sm:border-transparent md:rounded-lg">
         <div className="h-[112px] w-[112px] shrink-0 overflow-hidden rounded-lg bg-zinc-900">
           <Image
             width={112}
@@ -31,33 +33,33 @@ function BandsListItem({ band, setQuery, resetScroll }: BandsListItemProps) {
             </span>
             <p className="mt-0.5 flex flex-col text-sm text-zinc-400 transition-colors group-hover:text-zinc-300 sm:flex-row sm:gap-1">
               <span>
-                {band.concerts[0].date.slice(6)} in {band.concerts[0].location}{" "}
+                {band.concerts[0].date.slice(6)} in {band.concerts[0].location}{' '}
               </span>
               {band.concerts.length > 1 && (
                 <span>
-                  & {band.concerts.length - 1} other{" "}
-                  {band.concerts.length === 2 ? "time" : "times"}
+                  & {band.concerts.length - 1} other{' '}
+                  {band.concerts.length === 2 ? 'time' : 'times'}
                 </span>
               )}
             </p>
           </div>
           <div className="hidden items-center gap-2 sm:flex">
-            {band.genre.slice(0, 3).map((genre) => (
+            {band.genre.slice(0, 3).map(genre => (
               <button
                 type="button"
                 key={genre}
                 className="whitespace-nowrap rounded border border-zinc-700/60 p-2 px-3 text-xs font-medium text-zinc-300 shadow-sm transition-colors duration-75 hover:border-zinc-600 hover:bg-zinc-700/50 hover:text-white"
-                onClick={(e) => {
+                onClick={e => {
                   e.preventDefault();
                   setQuery(genre);
-                  resetScroll();
+                  resetScrollPosition();
                 }}
               >
                 {genre}
               </button>
             ))}
             {band.genre.length > 3 && (
-              <BandsListItemCollapsedTags
+              <DashboardBandCardCollapsedTags
                 bandGenre={band.genre}
                 setQuery={setQuery}
               />
@@ -69,4 +71,4 @@ function BandsListItem({ band, setQuery, resetScroll }: BandsListItemProps) {
   );
 }
 
-export default BandsListItem;
+export default DashboardBandCard;

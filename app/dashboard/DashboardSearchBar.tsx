@@ -2,21 +2,21 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { ChangeEvent } from 'react';
 
-type SearchBarProps = {
+type DashboardSearchBarProps = {
   query: string;
   bandsCount: number;
   setQuery: (query: string) => void;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-function SearchBar({
+function DashboardSearchBar({
   query,
   bandsCount,
   setQuery,
-  handleChange,
-}: SearchBarProps) {
+  handleChange
+}: DashboardSearchBarProps) {
   return (
-    <div className="w-full flex h-[80px] items-center justify-between bg-zinc-870/70 pr-4 text-sm backdrop-blur-lg">
+    <div className="flex h-[80px] w-full items-center justify-between bg-zinc-870/70 pr-4 text-sm backdrop-blur-lg">
       <MagnifyingGlassIcon className="absolute left-6 h-4 w-4 text-zinc-500 sm:left-12" />
       <input
         onChange={e => {
@@ -53,4 +53,4 @@ function SearchBar({
   );
 }
 
-export default SearchBar;
+export default DashboardSearchBar;

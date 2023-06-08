@@ -3,15 +3,15 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 
-type BandsListItemCollapsedTagsProps = {
+type DashboardBandCardCollapsedTagsProps = {
   bandGenre: string[];
   setQuery: (query: string) => void;
 };
 
-function BandsListItemCollapsedTags({
+function DashboardBandCardCollapsedTags({
   bandGenre,
   setQuery
-}: BandsListItemCollapsedTagsProps) {
+}: DashboardBandCardCollapsedTagsProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggle() {
@@ -67,4 +67,4 @@ function BandsListItemCollapsedTags({
   );
 }
 
-export default BandsListItemCollapsedTags;
+export default DashboardBandCardCollapsedTags;
