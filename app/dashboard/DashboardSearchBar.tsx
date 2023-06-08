@@ -16,7 +16,7 @@ function DashboardSearchBar({
   handleChange
 }: DashboardSearchBarProps) {
   return (
-    <div className="flex h-[80px] w-full items-center justify-between bg-zinc-870/70 pr-4 text-sm backdrop-blur-lg">
+    <div className="flex h-[80px] w-full items-center justify-between bg-zinc-870/70 pr-12 text-sm backdrop-blur-lg">
       <MagnifyingGlassIcon className="absolute left-6 h-4 w-4 text-zinc-500 sm:left-12" />
       <input
         onChange={e => {
@@ -41,7 +41,7 @@ function DashboardSearchBar({
             type="button"
             className="flex items-center gap-2 whitespace-nowrap rounded border border-zinc-700/60 bg-zinc-900/30 px-4 py-3 text-sm font-medium text-zinc-300 transition-colors duration-75 hover:border-zinc-600 hover:bg-zinc-700/50 hover:text-white"
           >
-            <p className="hidden max-w-[20rem] truncate md:block">
+            <p className="hidden max-w-[15rem] truncate md:block">
               {bandsCount} {bandsCount === 1 ? 'result' : 'results'} for:{' '}
               {query}
             </p>

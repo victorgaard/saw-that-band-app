@@ -1,13 +1,14 @@
+import { Band, Bands } from '@/types/global';
 import { CSSProperties } from 'react';
-import { Database } from '@/types/supabase';
 import DashboardBandCard from './DashboardBandCard';
 
 type DashboardReactWindowRenderProps = {
   index: number;
   style: CSSProperties;
-  data: Database['public']['Tables']['Bands']['Row'][];
+  data: Bands;
   setQuery: (query: string) => void;
   resetScrollPosition: () => void;
+  selectBand: (selectedBand: Band) => void;
 };
 
 function DashboardReactWindowRender({
@@ -15,7 +16,8 @@ function DashboardReactWindowRender({
   style,
   data,
   setQuery,
-  resetScrollPosition
+  resetScrollPosition,
+  selectBand
 }: DashboardReactWindowRenderProps) {
   return (
     <div style={style}>
@@ -23,6 +25,7 @@ function DashboardReactWindowRender({
         band={data[index]}
         setQuery={setQuery}
         resetScrollPosition={resetScrollPosition}
+        selectBand={selectBand}
       />
     </div>
   );

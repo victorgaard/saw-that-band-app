@@ -2,24 +2,20 @@
 
 import { AuthContext } from '@/auth/AuthContext';
 import { ToastContext } from '@/components/Toast/ToastContext';
-import { Database } from '@/types/supabase';
+import { Band, Bands } from '@/types/global';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { FixedSizeList as List } from 'react-window';
+import { FixedSizeList as DashboardReactWindowList } from 'react-window';
 import Dashboard from './Dashboard';
 
 function DashboardPage() {
   const { supabase, user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
+  const dashboardBandCardRef = useRef<DashboardReactWindowList>(null);
 
-  const [bands, setBands] =
-    useState<Database['public']['Tables']['Bands']['Row'][]>();
+  const [bands, setBands] = useState<Bands>();
   const [query, setQuery] = useState('');
 
-  const listRef = useRef<List>(null);
-
-  function resetScrollPosition() {
-    listRef.current?.scrollToItem(0);
-  }
+  const [selectedBand, setSelectedBand] = useState<Band>();
 
   useEffect(() => {
     async function getBands() {
@@ -46,6 +42,26 @@ function DashboardPage() {
     }
   }, [user, bands, toast, supabase]);
 
+  function resetScrollPosition() {
+    dashboardBandCardRef.current?.scrollToItem(0);
+  }
+
+  function selectBand(currentBand: Band) {
+    setSelectedBand(currentBand);
+  }
+
+  function closeSelectedBand() {
+    setSelectedBand(undefined);
+  }
+
+  function addGenre() {
+    if (!selectedBand) return;
+
+    const newSelectedBand = { ...selectedBand };
+    newSelectedBand.genre = [...newSelectedBand.genre, ''];
+    setSelectedBand(newSelectedBand);
+  }
+
   const formattedQueryTerm = query.trim().toLowerCase();
   const filteredBandsList = bands?.filter(
     band =>
@@ -64,10 +80,13 @@ function DashboardPage() {
   return (
     <Dashboard
       query={query}
-      setQuery={setQuery}
       filteredBandsList={filteredBandsList}
-      listRef={listRef}
+      dashboardBandCardRef={dashboardBandCardRef}
+      selectedBand={selectedBand}
+      setQuery={setQuery}
       resetScrollPosition={resetScrollPosition}
+      selectBand={selectBand}
+      addGenre={addGenre}
     />
   );
 }

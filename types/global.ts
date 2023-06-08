@@ -75,3 +75,6 @@ export type Database = {
     };
   };
 };
+
+export type Bands = Database['public']['Tables']['Bands']['Row'][];
+export type Band = Database['public']['Tables']['Bands']['Row'];

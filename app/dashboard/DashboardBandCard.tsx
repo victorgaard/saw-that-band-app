@@ -1,21 +1,26 @@
-import DashboardBandCardCollapsedTags from './DashboardBandCardCollapsedTags';
+import { Band } from '@/types/global';
 import Image from 'next/image';
-import { Database } from '@/types/supabase';
+import DashboardBandCardCollapsedTags from './DashboardBandCardCollapsedTags';
 
 type DashboardBandCardProps = {
-  band: Database['public']['Tables']['Bands']['Row'];
+  band: Band;
   setQuery: (query: string) => void;
   resetScrollPosition: () => void;
+  selectBand: (selectedBand: Band) => void;
 };
 
 function DashboardBandCard({
   band,
   setQuery,
-  resetScrollPosition
+  resetScrollPosition,
+  selectBand
 }: DashboardBandCardProps) {
   return (
     <div className="flex justify-center md:mx-6">
-      <div className="group flex h-[160px] w-full items-center gap-6 border-b border-zinc-700/50 from-zinc-100/5 to-zinc-500/5 to-50% p-6 text-white hover:border-zinc-600/40 hover:bg-gradient-to-tr sm:gap-8 sm:border sm:border-transparent md:rounded-lg">
+      <div
+        onClick={() => selectBand(band)}
+        className="group flex h-[160px] w-full cursor-pointer items-center gap-6 border-b border-zinc-700/50 from-zinc-100/5 to-zinc-500/5 to-50% p-6 text-white hover:border-zinc-600/40 hover:bg-gradient-to-tr sm:gap-8 sm:border sm:border-transparent md:rounded-lg"
+      >
         <div className="h-[112px] w-[112px] shrink-0 overflow-hidden rounded-lg bg-zinc-900">
           <Image
             width={112}
@@ -44,13 +49,12 @@ function DashboardBandCard({
             </p>
           </div>
           <div className="hidden items-center gap-2 sm:flex">
-            {band.genre.slice(0, 3).map(genre => (
+            {band.genre.slice(0, 2).map(genre => (
               <button
                 type="button"
                 key={genre}
                 className="whitespace-nowrap rounded border border-zinc-700/60 p-2 px-3 text-xs font-medium text-zinc-300 shadow-sm transition-colors duration-75 hover:border-zinc-600 hover:bg-zinc-700/50 hover:text-white"
-                onClick={e => {
-                  e.preventDefault();
+                onClick={() => {
                   setQuery(genre);
                   resetScrollPosition();
                 }}
@@ -58,7 +62,7 @@ function DashboardBandCard({
                 {genre}
               </button>
             ))}
-            {band.genre.length > 3 && (
+            {band.genre.length > 2 && (
               <DashboardBandCardCollapsedTags
                 bandGenre={band.genre}
                 setQuery={setQuery}

@@ -1,23 +1,21 @@
 'use client';
 
 import { ReactElement } from 'react';
-import { usePathname } from 'next/navigation';
 import classNames from 'classnames';
 import Link from 'next/link';
-import Logo from './Logo';
+import Logo from '../Logo';
 
-type SlimSideBarProps = {
+type LayoutSideBarProps = {
   profileName: string;
   routes: {
     label: string;
     href: string;
     icon: ReactElement;
   }[];
+  path: string;
 };
 
-function SlimSideBar({ profileName, routes }: SlimSideBarProps) {
-  const path = usePathname();
-
+function LayoutSideBar({ profileName, routes, path }: LayoutSideBarProps) {
   return (
     <div className="relative flex w-20 flex-col items-center justify-between gap-7 p-6">
       <div className="flex flex-col items-center gap-6">
@@ -77,7 +75,7 @@ function SlimSideBar({ profileName, routes }: SlimSideBarProps) {
       <div className="flex shrink-0 items-end justify-center text-sm text-zinc-600">
         <p className="rotate-180 [writing-mode:vertical-lr]">
           <span className="font-semibold text-zinc-500">
-            {profileName.toLowerCase()}
+            {profileName?.toLowerCase()}
           </span>{' '}
           saw that band
         </p>
@@ -86,4 +84,4 @@ function SlimSideBar({ profileName, routes }: SlimSideBarProps) {
   );
 }
 
-export default SlimSideBar;
+export default LayoutSideBar;

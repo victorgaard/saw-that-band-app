@@ -31,7 +31,7 @@ function DashboardBandCardCollapsedTags({
           toggle();
         }}
       >
-        +{bandGenre.length - 3}
+        +{bandGenre.length - 2}
       </button>
 
       {isOpen && (
@@ -47,7 +47,7 @@ function DashboardBandCardCollapsedTags({
             {' '}
           </div>
           <div className="absolute right-0 top-10 z-10 flex flex-col overflow-hidden rounded bg-zinc-700 p-1 shadow-sm">
-            {bandGenre.slice(3).map(genre => (
+            {bandGenre.slice(2).map(genre => (
               <button
                 key={genre}
                 type="button"

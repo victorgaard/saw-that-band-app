@@ -1,7 +1,7 @@
-import { Database } from "@/types/supabase";
-import supabase from "@/utils/supabase";
-import { SupabaseClient, User } from "@supabase/supabase-js";
-import { createContext } from "react";
+import { Database } from '@/types/global';
+import supabase from '@/utils/supabase';
+import { SupabaseClient, User } from '@supabase/supabase-js';
+import { createContext } from 'react';
 
 type Context = {
   user: User | null;
@@ -12,7 +12,7 @@ type Context = {
 const context: Context = {
   user: null,
   setUser: () => {},
-  supabase: supabase,
+  supabase: supabase
 };
 
 export const AuthContext = createContext(context);
