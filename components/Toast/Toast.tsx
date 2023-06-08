@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import classNames from "classnames";
+import classNames from 'classnames';
 import {
   CheckIcon,
   ExclamationCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+  XMarkIcon
+} from '@heroicons/react/24/outline';
 
 export type ToastObjProps = {
-  type: "success" | "error";
+  type: 'success' | 'error';
   title: string;
   message: string;
 };
 
-type ToastProps = ToastObjProps & {
+export type ToastProps = ToastObjProps & {
   dismiss: () => void;
 };
 
@@ -21,15 +21,15 @@ function Toast({ type, title, message, dismiss }: ToastProps) {
   return (
     <div
       className={classNames(
-        "fixed right-8 bottom-8 flex justify-between items-center gap-12 max-w-[calc(100%-32px)] py-3 px-4 text-sm text-white rounded",
+        'fixed bottom-8 right-8 flex max-w-[calc(100%-32px)] items-center justify-between gap-12 rounded px-4 py-3 text-sm text-white',
         {
-          "bg-red-600": type === "error",
-          "bg-green-600": type === "success",
+          'bg-red-600': type === 'error',
+          'bg-green-600': type === 'success'
         }
       )}
     >
       <div className="flex gap-2">
-        {type === "success" ? (
+        {type === 'success' ? (
           <CheckIcon className="h-5 w-5" />
         ) : (
           <ExclamationCircleIcon className="h-5 w-5" />
