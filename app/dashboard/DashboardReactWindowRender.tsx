@@ -7,23 +7,17 @@ type DashboardReactWindowRenderProps = {
   style: CSSProperties;
   data: Bands;
   setQuery: (query: string) => void;
-  resetScrollPosition: () => void;
 };
 
 function DashboardReactWindowRender({
   index,
   style,
   data,
-  setQuery,
-  resetScrollPosition
+  setQuery
 }: DashboardReactWindowRenderProps) {
   return (
-    <div style={style}>
-      <DashboardBandCard
-        band={data[index]}
-        setQuery={setQuery}
-        resetScrollPosition={resetScrollPosition}
-      />
+    <div style={style} className="pt-8">
+      <DashboardBandCard band={data[index]} setQuery={setQuery} />
     </div>
   );
 }

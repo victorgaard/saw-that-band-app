@@ -6,14 +6,9 @@ import { useRouter } from 'next/navigation';
 type DashboardBandCardProps = {
   band: Band;
   setQuery: (query: string) => void;
-  resetScrollPosition: () => void;
 };
 
-function DashboardBandCard({
-  band,
-  setQuery,
-  resetScrollPosition
-}: DashboardBandCardProps) {
+function DashboardBandCard({ band, setQuery }: DashboardBandCardProps) {
   const router = useRouter();
   const bandNameFormatted = band.band.replaceAll(' ', '-');
   return (
@@ -57,9 +52,9 @@ function DashboardBandCard({
                 type="button"
                 key={genre}
                 className="whitespace-nowrap rounded border border-zinc-700/60 p-2 px-3 text-xs font-medium text-zinc-300 shadow-sm transition-colors duration-75 hover:border-zinc-600 hover:bg-zinc-700/50 hover:text-white"
-                onClick={() => {
+                onClick={e => {
+                  e.stopPropagation();
                   setQuery(genre);
-                  resetScrollPosition();
                 }}
               >
                 {genre}

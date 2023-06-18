@@ -27,7 +27,7 @@ function DashboardBandCardCollapsedTags({
           'bg-zinc-700/30': !isOpen
         })}
         onClick={e => {
-          e.preventDefault();
+          e.stopPropagation();
           toggle();
         }}
       >
@@ -40,7 +40,7 @@ function DashboardBandCardCollapsedTags({
             aria-hidden
             className="fixed inset-0 z-10 bg-transparent"
             onClick={e => {
-              e.preventDefault();
+              e.stopPropagation();
               toggle();
             }}
           >
@@ -53,7 +53,7 @@ function DashboardBandCardCollapsedTags({
                 type="button"
                 className="w-full whitespace-nowrap rounded bg-zinc-700 px-4 py-2 text-left text-xs font-medium text-zinc-100 hover:bg-zinc-800/70 hover:text-white"
                 onClick={e => {
-                  e.preventDefault();
+                  e.stopPropagation();
                   setQuery(genre);
                 }}
               >

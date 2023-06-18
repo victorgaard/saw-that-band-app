@@ -5,7 +5,7 @@ const Tabs = TabsComponent.Root;
 const TabsList = TabsComponent.List;
 
 type TabProps = {
-  value: 'sring';
+  value: string;
   children: ReactNode;
 };
 
@@ -25,7 +25,7 @@ function TabContent({ value, children, ...rest }: TabProps) {
   return (
     <TabsComponent.Content
       value={value}
-      className="oveflow-auto -mx-8 bg-white px-8 pt-8 outline-none"
+      className="oveflow-auto -mx-8 px-8 pt-8 outline-none"
       {...rest}
     >
       {children}

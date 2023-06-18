@@ -30,7 +30,7 @@ export default function RootLayout({
                   <Sidebar />
                 </div>
               </div>
-              <div className="h-screen w-full flex-1 flex-col gap-10 overflow-x-hidden bg-zinc-870 px-4 py-8 text-white sm:px-12 sm:py-8">
+              <div className="h-screen w-full flex-1 flex-col gap-10 overflow-hidden bg-zinc-870 px-4 py-8 text-white sm:px-12 sm:py-8">
                 {children}
               </div>
             </main>

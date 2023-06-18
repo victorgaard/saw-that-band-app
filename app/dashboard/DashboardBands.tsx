@@ -14,15 +14,13 @@ type DashboardBandsProps = {
   filteredBandsList: Bands;
   dashboardBandCardRef: RefObject<DashboardReactWindowList<any>>;
   setQuery: (query: string) => void;
-  resetScrollPosition: () => void;
 };
 
 function DashboardBands({
   query,
   filteredBandsList,
   dashboardBandCardRef,
-  setQuery,
-  resetScrollPosition
+  setQuery
 }: DashboardBandsProps) {
   return (
     <div className="border-r border-zinc-700">
@@ -70,7 +68,6 @@ function DashboardBands({
                   style={props.style}
                   data={filteredBandsList}
                   setQuery={setQuery}
-                  resetScrollPosition={resetScrollPosition}
                 />
               )}
             </DashboardReactWindowList>

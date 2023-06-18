@@ -44,6 +44,10 @@ function DashboardLayout({ children }: { children: ReactNode }) {
     dashboardBandCardRef.current?.scrollToItem(0);
   }
 
+  useEffect(() => {
+    resetScrollPosition();
+  }, [query]);
+
   const formattedQueryTerm = query.trim().toLowerCase();
   const filteredBandsList = bands?.filter(
     band =>
@@ -68,7 +72,6 @@ function DashboardLayout({ children }: { children: ReactNode }) {
         setQuery={setQuery}
         filteredBandsList={filteredBandsList}
         dashboardBandCardRef={dashboardBandCardRef}
-        resetScrollPosition={resetScrollPosition}
       />
       {children}
     </div>

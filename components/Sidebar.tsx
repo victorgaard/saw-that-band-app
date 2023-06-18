@@ -29,6 +29,8 @@ function Sidebar() {
     }
   ];
 
+  if (!user) return null;
+
   return (
     <div className="relative flex w-20 flex-col items-center justify-between gap-7 p-6">
       <div className="flex flex-col items-center gap-6">
