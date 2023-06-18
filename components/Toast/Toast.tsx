@@ -23,8 +23,8 @@ function Toast({ type, title, message, dismiss }: ToastProps) {
       className={classNames(
         'fixed bottom-8 right-8 flex max-w-[calc(100%-32px)] items-center justify-between gap-12 rounded px-4 py-3 text-sm text-white',
         {
-          'bg-red-600': type === 'error',
-          'bg-green-600': type === 'success'
+          'bg-green-600': type === 'success',
+          'bg-red-600': type === 'error'
         }
       )}
     >

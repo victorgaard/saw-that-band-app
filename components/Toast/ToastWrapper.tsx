@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
-import { ReactNode, useEffect, useState } from "react";
-import Toast, { ToastObjProps } from "./Toast";
-import { ToastContext } from "./ToastContext";
-
+import { ReactNode, useEffect, useState } from 'react';
+import Toast, { ToastObjProps } from './Toast';
+import { ToastContext } from './ToastContext';
 
 function ToastWrapper({ children }: { children: ReactNode }) {
   const [toastObj, setToastObj] = useState<ToastObjProps | undefined>();
@@ -17,7 +16,7 @@ function ToastWrapper({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    let toastTimeout: ReturnType<typeof setTimeout>;;
+    let toastTimeout: ReturnType<typeof setTimeout>;
 
     if (toastObj) {
       toastTimeout = setTimeout(() => {
