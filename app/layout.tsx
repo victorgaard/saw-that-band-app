@@ -2,7 +2,7 @@ import Auth from '@/auth/Auth';
 import './globals.css';
 import { Poppins } from 'next/font/google';
 import ToastWrapper from '@/components/Toast/ToastWrapper';
-import LayoutSideBarContainer from '@/components/Layout/LayoutSideBarContainer';
+import Sidebar from '@/components/Sidebar';
 
 const font = Poppins({
   subsets: ['latin'],
@@ -27,7 +27,7 @@ export default function RootLayout({
             <main className="flex">
               <div className="flex max-h-screen">
                 <div className="hidden sm:flex">
-                  <LayoutSideBarContainer />
+                  <Sidebar />
                 </div>
               </div>
               <div className="h-screen w-full flex-1 flex-col gap-10 overflow-x-hidden bg-zinc-870 px-4 py-8 text-white sm:px-12 sm:py-8">

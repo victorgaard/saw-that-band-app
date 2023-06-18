@@ -1,4 +1,4 @@
-import { Band, Bands } from '@/types/global';
+import { Bands } from '@/types/global';
 import { CSSProperties } from 'react';
 import DashboardBandCard from './DashboardBandCard';
 
@@ -8,7 +8,6 @@ type DashboardReactWindowRenderProps = {
   data: Bands;
   setQuery: (query: string) => void;
   resetScrollPosition: () => void;
-  selectBand: (selectedBand: Band) => void;
 };
 
 function DashboardReactWindowRender({
@@ -16,8 +15,7 @@ function DashboardReactWindowRender({
   style,
   data,
   setQuery,
-  resetScrollPosition,
-  selectBand
+  resetScrollPosition
 }: DashboardReactWindowRenderProps) {
   return (
     <div style={style}>
@@ -25,7 +23,6 @@ function DashboardReactWindowRender({
         band={data[index]}
         setQuery={setQuery}
         resetScrollPosition={resetScrollPosition}
-        selectBand={selectBand}
       />
     </div>
   );

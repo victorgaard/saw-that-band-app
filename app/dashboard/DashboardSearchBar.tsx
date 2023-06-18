@@ -27,7 +27,7 @@ function DashboardSearchBar({
         className={classNames(
           'h-full w-[90.5%] shrink-0 bg-transparent pl-14 pr-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400 sm:pl-20',
           {
-            'md:w-[57.5%]': query,
+            'md:w-[50%]': query,
             'md:w-full': !query
           }
         )}

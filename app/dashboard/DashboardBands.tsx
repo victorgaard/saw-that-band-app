@@ -1,4 +1,4 @@
-import { Band, Bands } from '@/types/global';
+import { Bands } from '@/types/global';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { RefObject } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
@@ -15,7 +15,6 @@ type DashboardBandsProps = {
   dashboardBandCardRef: RefObject<DashboardReactWindowList<any>>;
   setQuery: (query: string) => void;
   resetScrollPosition: () => void;
-  selectBand: (selectedBand: Band) => void;
 };
 
 function DashboardBands({
@@ -23,11 +22,10 @@ function DashboardBands({
   filteredBandsList,
   dashboardBandCardRef,
   setQuery,
-  resetScrollPosition,
-  selectBand
+  resetScrollPosition
 }: DashboardBandsProps) {
   return (
-    <div>
+    <div className="border-r border-zinc-700">
       <DashboardSearchBar
         query={query}
         setQuery={setQuery}
@@ -64,6 +62,7 @@ function DashboardBands({
               height={height}
               itemSize={160}
               itemCount={filteredBandsList.length}
+              className="[scrollbar-color:#3f3f46_transparent] [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-transparent"
             >
               {(props: DashboardReactWindowListProps) => (
                 <DashboardReactWindowRender
@@ -72,7 +71,6 @@ function DashboardBands({
                   data={filteredBandsList}
                   setQuery={setQuery}
                   resetScrollPosition={resetScrollPosition}
-                  selectBand={selectBand}
                 />
               )}
             </DashboardReactWindowList>

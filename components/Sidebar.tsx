@@ -1,41 +1,47 @@
 'use client';
 
-import { ReactElement } from 'react';
-import classNames from 'classnames';
+import { AuthContext } from '@/auth/AuthContext';
+import {
+  PlusCircleIcon,
+  TicketIcon,
+  UserCircleIcon
+} from '@heroicons/react/24/outline';
+import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
 import Link from 'next/link';
-import Logo from '../Logo';
+import classNames from 'classnames';
+import Button from './Button';
 
-type LayoutSideBarProps = {
-  profileName: string;
-  routes: {
-    label: string;
-    href: string;
-    icon: ReactElement;
-  }[];
-  path: string;
-};
+function Sidebar() {
+  const { user } = useContext(AuthContext);
+  const path = usePathname();
 
-function LayoutSideBar({ profileName, routes, path }: LayoutSideBarProps) {
+  const routes = [
+    {
+      label: 'Bands',
+      href: '/dashboard',
+      icon: <TicketIcon className="h-6 w-6" />
+    },
+    {
+      label: 'Profile',
+      href: '/profile',
+      icon: <UserCircleIcon className="h-6 w-6" />
+    }
+  ];
+
   return (
     <div className="relative flex w-20 flex-col items-center justify-between gap-7 p-6">
       <div className="flex flex-col items-center gap-6">
         <div>
-          <a
-            href="https://www.sawthat.band"
-            target="_blank"
-            rel="noreferrer"
-            className="peer cursor-pointer text-zinc-600 transition-colors hover:text-zinc-500"
-            aria-label="Create your profile"
-          >
-            <Logo width={48} height={48} />
-          </a>
-          <div className="absolute left-[4.5rem] top-5 z-20 hidden min-w-fit whitespace-nowrap rounded bg-zinc-700 px-6 py-4 text-sm font-medium text-white shadow-lg peer-hover:block">
-            Join the waitlist to create yours 🤘
-          </div>
+          <Link href="/new">
+            <Button size="sm">
+              <PlusCircleIcon className="h-6 w-6" />
+            </Button>
+          </Link>
         </div>
         <div className="flex flex-col gap-4">
           {routes.map(route => {
-            const isActive = path === route.href;
+            const isActive = path.includes(route.href);
             return (
               <Link
                 key={route.label}
@@ -75,7 +81,7 @@ function LayoutSideBar({ profileName, routes, path }: LayoutSideBarProps) {
       <div className="flex shrink-0 items-end justify-center text-sm text-zinc-600">
         <p className="rotate-180 [writing-mode:vertical-lr]">
           <span className="font-semibold text-zinc-500">
-            {profileName?.toLowerCase()}
+            {user?.user_metadata.name?.toLowerCase()}
           </span>{' '}
           saw that band
         </p>
@@ -84,4 +90,4 @@ function LayoutSideBar({ profileName, routes, path }: LayoutSideBarProps) {
   );
 }
 
-export default LayoutSideBar;
+export default Sidebar;
