@@ -1,11 +1,11 @@
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { Concerts } from '@/types/global';
+import { Concert } from '@/types/global';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
 type BandPageAddConcertProps = {
-  addConcert: (newConcert: Concerts) => void;
+  addConcert: (newConcert: Concert) => void;
 };
 
 function BandPageAddConcert({ addConcert }: BandPageAddConcertProps) {

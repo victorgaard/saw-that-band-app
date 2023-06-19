@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json }
   | Json[];
 
-export type Concerts = {
+export type Concert = {
   date: string;
   location: string;
 };
@@ -17,7 +17,7 @@ export type Database = {
       Bands: {
         Row: {
           band: string;
-          concerts: Concerts[];
+          concerts: Concert[];
           genre: string[];
           id: string;
           picture: string;
@@ -25,7 +25,7 @@ export type Database = {
         };
         Insert: {
           band: string;
-          concerts: Concerts[];
+          concerts: Concert[];
           genre: string[];
           id?: string;
           picture: string;
@@ -33,7 +33,7 @@ export type Database = {
         };
         Update: {
           band?: string;
-          concerts?: Json;
+          concerts?: Concert[];
           genre?: string[];
           id?: string;
           picture?: string;

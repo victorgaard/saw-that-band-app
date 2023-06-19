@@ -1,13 +1,13 @@
 'use client';
 
 import { AuthContext } from '@/auth/AuthContext';
+import Button from '@/components/Button';
 import { Tab, TabContent, Tabs, TabsList } from '@/components/Tabs';
 import { ToastContext } from '@/components/Toast/ToastContext';
-import { Band, Concerts } from '@/types/global';
+import { Band, Concert } from '@/types/global';
 import supabase from '@/utils/supabase';
 import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
-import Button from '@/components/Button';
 import BandPageAddConcert from './BandPageAddConcert';
 import BandPageEditConcert from './BandPageEditConcert';
 
@@ -50,9 +50,16 @@ function EditBandPage({ params }: EditBandPageProps) {
     }
   }, [user, band, toast, id]);
 
-  function addConcert(newConcert: Concerts) {
+  function addConcert(newConcert: Concert) {
     if (!band) return;
     const concerts = [...band.concerts, newConcert];
+    setBand({ ...band, concerts });
+  }
+
+  function editConcert(idx: number, updatedConcert: Concert) {
+    if (!band) return;
+    const concerts = [...band.concerts];
+    concerts[idx] = updatedConcert;
     setBand({ ...band, concerts });
   }
 
@@ -87,7 +94,7 @@ function EditBandPage({ params }: EditBandPageProps) {
         <div>
           <Tabs defaultValue="concerts">
             <TabsList className="-mx-8 flex items-center gap-4 px-8">
-              <Tab value="concerts">Concerts</Tab>
+              <Tab value="concerts">Concert</Tab>
               <Tab value="genres">Genres</Tab>
             </TabsList>
             <TabContent value="concerts">
@@ -98,6 +105,7 @@ function EditBandPage({ params }: EditBandPageProps) {
                       idx={idx}
                       concert={concert}
                       numOfConcerts={band.concerts.length}
+                      editConcert={editConcert}
                       deleteConcert={deleteConcert}
                     />
                   </div>
