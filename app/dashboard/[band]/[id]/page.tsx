@@ -94,7 +94,7 @@ function EditBandPage({ params }: EditBandPageProps) {
         <div>
           <Tabs defaultValue="concerts">
             <TabsList className="-mx-8 flex items-center gap-4 px-8">
-              <Tab value="concerts">Concert</Tab>
+              <Tab value="concerts">Concerts</Tab>
               <Tab value="genres">Genres</Tab>
             </TabsList>
             <TabContent value="concerts">
