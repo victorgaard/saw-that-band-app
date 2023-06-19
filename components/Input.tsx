@@ -1,5 +1,4 @@
-import classNames from "classnames";
-import { ChangeEvent, InputHTMLAttributes } from "react";
+import { ChangeEvent, InputHTMLAttributes } from 'react';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -24,9 +23,10 @@ function Input({
         value={value}
         onChange={onChange}
         maxLength={40}
-        className={classNames(
-          "bg-white/10 focus:outline-zinc-100/60 text-white w-full border text-sm border-zinc-600 p-4 rounded-lg disabled:cursor-not-allowed disabled:opacity-50"
-        )}
+        className="w-full rounded-lg border border-zinc-600 bg-white/10 p-4 text-sm text-white focus:outline-zinc-100/60 disabled:cursor-not-allowed disabled:opacity-50"
+        autoComplete="off"
+        data-lpignore="true"
+        data-form-type="other"
         {...HTMLInputProps}
       />
     </div>

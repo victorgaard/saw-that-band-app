@@ -19,7 +19,7 @@ function Sidebar() {
   const routes = [
     {
       label: 'Bands',
-      href: '/dashboard',
+      href: '/bands',
       icon: <TicketIcon className="h-6 w-6" />
     },
     {

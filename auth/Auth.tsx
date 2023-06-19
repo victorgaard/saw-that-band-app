@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { AuthContext } from "./AuthContext";
-import { useRouter, usePathname } from "next/navigation";
-import supabase from "@/utils/supabase";
-import { User } from "@supabase/supabase-js";
-import { ToastContext } from "@/components/Toast/ToastContext";
+import { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import { AuthContext } from './AuthContext';
+import { useRouter, usePathname } from 'next/navigation';
+import supabase from '@/utils/supabase';
+import { User } from '@supabase/supabase-js';
+import { ToastContext } from '@/components/Toast/ToastContext';
 
 function Auth({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -21,17 +21,17 @@ function Auth({ children }: { children: ReactNode }) {
     }
 
     return toast({
-      type: "error",
-      title: "Account error",
+      type: 'error',
+      title: 'Account error',
       message:
-        "There was an error getting your account. Please try again later.",
+        'There was an error getting your account. Please try again later.'
     });
   }, [toast]);
 
   useEffect(() => {
     if (
       typeof window !== undefined &&
-      localStorage.getItem("sb-guerfzlhzjrpooirzvlf-auth-token") &&
+      localStorage.getItem('sb-guerfzlhzjrpooirzvlf-auth-token') &&
       !user
     ) {
       getSession();
@@ -39,19 +39,19 @@ function Auth({ children }: { children: ReactNode }) {
 
     if (
       typeof window !== undefined &&
-      !localStorage.getItem("sb-guerfzlhzjrpooirzvlf-auth-token") &&
+      !localStorage.getItem('sb-guerfzlhzjrpooirzvlf-auth-token') &&
       !user &&
-      path !== "/signup"
+      path !== '/signup'
     ) {
-      router.push("/login");
+      router.push('/login');
     }
 
     if (
-      (user && path === "/") ||
-      (user && path === "/login") ||
-      (user && path === "/signup")
+      (user && path === '/') ||
+      (user && path === '/login') ||
+      (user && path === '/signup')
     ) {
-      router.push("/dashboard");
+      router.push('/bands');
     }
   }, [user, router, path, getSession]);
 
