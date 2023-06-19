@@ -10,6 +10,8 @@ import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
 import BandPageAddConcert from './BandPageAddConcert';
 import BandPageEditConcert from './BandPageEditConcert';
+import Input from '@/components/Input';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -70,6 +72,19 @@ function EditBandPage({ params }: EditBandPageProps) {
     setBand({ ...band, concerts });
   }
 
+  function addGenre() {
+    if (!band) return;
+    const genre = [...band.genre, ''];
+    setBand({ ...band, genre });
+  }
+
+  function removeGenre(idx: number) {
+    if (!band) return;
+    const genre = [...band.genre];
+    genre.splice(idx, 1);
+    setBand({ ...band, genre });
+  }
+
   if (!band) return <div className="bg-zinc-850 p-8">Loading band</div>;
 
   return (
@@ -113,7 +128,32 @@ function EditBandPage({ params }: EditBandPageProps) {
                 <BandPageAddConcert addConcert={addConcert} />
               </div>
             </TabContent>
-            <TabContent value="genres">Genres</TabContent>
+            <TabContent value="genres">
+              <div className="grid grid-cols-2 gap-4">
+                {band.genre.map((genre, idx) => (
+                  <div
+                    key={`${idx}${genre}`}
+                    className="flex items-center justify-between gap-2"
+                  >
+                    <Input
+                      value={genre}
+                      placeholder="Genre"
+                      onChange={() => {}}
+                    />
+                    <Button
+                      style="ghost"
+                      size="sm"
+                      onClick={() => removeGenre(idx)}
+                    >
+                      <XMarkIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button style="secondary" onClick={addGenre}>
+                  Add genre
+                </Button>
+              </div>
+            </TabContent>
           </Tabs>
         </div>
       </div>

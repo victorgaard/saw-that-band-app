@@ -15,7 +15,7 @@ function DashboardBandCard({ band, setQuery }: DashboardBandCardProps) {
     <div className="flex justify-center">
       <div
         onClick={() => router.push(`/bands/${bandNameFormatted}/${band.id}`)}
-        className="group flex h-[160px] w-full cursor-pointer items-center gap-6 from-zinc-100/5 to-zinc-500/5 to-50% p-6 text-white hover:border-zinc-600/40 hover:bg-gradient-to-tr sm:gap-8"
+        className="group flex h-[160px] w-full cursor-pointer items-center gap-6 p-6 text-white hover:border-zinc-600/40 hover:bg-zinc-900/40 sm:gap-8"
       >
         <div className="h-[112px] w-[112px] shrink-0 overflow-hidden rounded-lg bg-zinc-900">
           <Image
