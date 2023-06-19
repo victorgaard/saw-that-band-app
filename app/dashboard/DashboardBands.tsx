@@ -34,7 +34,7 @@ function DashboardBands({
         <div className="mt-20 flex flex-col items-center justify-center gap-8 px-8 pt-8 sm:mt-48">
           <div className="flex flex-col items-center gap-2">
             <p className="text-zinc-400">There are no results for: </p>
-            <p className="max-w-[calc(100vw-48px)] truncate text-xl font-medium text-white sm:max-w-[calc(100vw-480px)]">
+            <p className="w-96 truncate text-xl font-medium text-white">
               {query}
             </p>
           </div>

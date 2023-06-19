@@ -16,7 +16,7 @@ function DashboardReactWindowRender({
   setQuery
 }: DashboardReactWindowRenderProps) {
   return (
-    <div style={style} className="pt-8">
+    <div style={style}>
       <DashboardBandCard band={data[index]} setQuery={setQuery} />
     </div>
   );

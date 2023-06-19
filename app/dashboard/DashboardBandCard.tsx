@@ -12,12 +12,12 @@ function DashboardBandCard({ band, setQuery }: DashboardBandCardProps) {
   const router = useRouter();
   const bandNameFormatted = band.band.replaceAll(' ', '-');
   return (
-    <div className="flex justify-center md:mx-6">
+    <div className="flex justify-center">
       <div
         onClick={() =>
           router.push(`/dashboard/${bandNameFormatted}/${band.id}`)
         }
-        className="group flex h-[160px] w-full cursor-pointer items-center gap-6 border-b border-zinc-700/50 from-zinc-100/5 to-zinc-500/5 to-50% p-6 text-white hover:border-zinc-600/40 hover:bg-gradient-to-tr sm:gap-8 sm:border sm:border-transparent md:rounded-lg"
+        className="group flex h-[160px] w-full cursor-pointer items-center gap-6 from-zinc-100/5 to-zinc-500/5 to-50% p-6 text-white hover:border-zinc-600/40 hover:bg-gradient-to-tr sm:gap-8"
       >
         <div className="h-[112px] w-[112px] shrink-0 overflow-hidden rounded-lg bg-zinc-900">
           <Image

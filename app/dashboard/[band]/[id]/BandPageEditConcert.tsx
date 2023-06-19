@@ -1,9 +1,11 @@
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { Concert } from '@/types/global';
-import formatDate from '@/utils/formatDate';
+import dayMonthYearToFullDateStyle from '@/utils/dayMonthYearToFullDateStyle';
+import dayMonthYearToYearMonthDay from '@/utils/dayMonthYearToYearMonthDay';
+import yearMonthDayToDayMonthYear from '@/utils/yearMonthDayToDayMonthYear';
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type BandPageEditConcertProps = {
   idx: number;
@@ -21,8 +23,14 @@ function BandPageEditConcert({
   deleteConcert
 }: BandPageEditConcertProps) {
   const [edit, setEdit] = useState(false);
-  const [location, setLocation] = useState(concert.location);
-  const [date, setDate] = useState(concert.date);
+  const [location, setLocation] = useState('');
+  const [date, setDate] = useState(dayMonthYearToYearMonthDay(''));
+  const today = new Date().toISOString().split('T')[0];
+
+  useEffect(() => {
+    setLocation(concert.location);
+    setDate(dayMonthYearToYearMonthDay(concert.date));
+  }, [edit, concert]);
 
   if (edit)
     return (
@@ -32,12 +40,18 @@ function BandPageEditConcert({
           label="Location"
           value={location}
           onChange={e => setLocation(e.target.value)}
+          placeholder="Location"
           autoFocus
         />
         <Input
+          type="date"
           label="Date"
           value={date}
-          onChange={e => setDate(e.target.value)}
+          onChange={e => {
+            setDate(e.target.value);
+          }}
+          placeholder="dd-mm-yyyy"
+          max={today}
         />
         <div className="flex items-center justify-between">
           <Button
@@ -57,7 +71,10 @@ function BandPageEditConcert({
             <Button
               style="secondary"
               onClick={() => {
-                editConcert(idx, { location, date });
+                editConcert(idx, {
+                  location,
+                  date: yearMonthDayToDayMonthYear(date)
+                });
                 setEdit(false);
               }}
               disabled={!location || !date}
@@ -76,7 +93,7 @@ function BandPageEditConcert({
     >
       <div className="flex items-center gap-4">
         <p className="min-w-[100px] truncate">{concert.location}</p>
-        <p>{formatDate(concert.date)}</p>
+        <p>{dayMonthYearToFullDateStyle(concert.date)}</p>
       </div>
       <span className="opacity-0 group-hover:opacity-100">Edit concert</span>
     </div>

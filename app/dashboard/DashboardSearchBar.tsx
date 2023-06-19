@@ -16,8 +16,8 @@ function DashboardSearchBar({
   handleChange
 }: DashboardSearchBarProps) {
   return (
-    <div className="flex h-[80px] w-full items-center justify-between border-b border-zinc-700 bg-zinc-870/70 pr-12 text-sm backdrop-blur-lg">
-      <MagnifyingGlassIcon className="absolute left-6 h-4 w-4 text-zinc-500 sm:left-12" />
+    <div className="flex h-[80px] w-full items-center justify-between border-b border-zinc-700 bg-zinc-870/70 pr-6 text-sm backdrop-blur-lg">
+      <MagnifyingGlassIcon className="absolute left-6 h-4 w-4 text-zinc-500" />
       <input
         onChange={e => {
           handleChange(e);
@@ -25,7 +25,7 @@ function DashboardSearchBar({
         value={query}
         placeholder="Search for band, genre, year or location"
         className={classNames(
-          'h-full w-[90.5%] shrink-0 bg-transparent pl-14 pr-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400 sm:pl-20',
+          'h-full w-[90.5%] shrink-0 bg-transparent pl-14 pr-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400',
           {
             'md:w-[50%]': query,
             'md:w-full': !query
