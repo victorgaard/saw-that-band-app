@@ -1,15 +1,15 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import Toast, { ToastObjProps } from './Toast';
 import { ToastContext } from './ToastContext';
 
 function ToastWrapper({ children }: { children: ReactNode }) {
   const [toastObj, setToastObj] = useState<ToastObjProps | undefined>();
 
-  function toast({ type, title, message }: ToastObjProps) {
+  const toast = useCallback(({ type, title, message }: ToastObjProps) => {
     setToastObj({ type, title, message });
-  }
+  }, []);
 
   function dismiss() {
     setToastObj(undefined);

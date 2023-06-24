@@ -5,13 +5,13 @@ import Button from '@/components/Button';
 import { Tab, TabContent, Tabs, TabsList } from '@/components/Tabs';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import { Band, Concert } from '@/types/global';
-import supabase from '@/utils/supabase';
 import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
 import BandPageAddConcert from './BandPageAddConcert';
 import BandPageEditConcert from './BandPageEditConcert';
 import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import BandPageAddGenre from './BandPageAddGenre';
+import useBand from '@/hooks/useBand';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -21,36 +21,28 @@ function EditBandPage({ params }: EditBandPageProps) {
   const { id } = params;
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
+  const { getBand, updateBand } = useBand();
 
   const [band, setBand] = useState<Band>();
   const bandRef = useRef<Band>();
 
   useEffect(() => {
-    async function getBand() {
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from('Bands')
-        .select()
-        .eq('user_id', user.id)
-        .eq('id', id);
-
-      if (error || data.length > 1)
-        return toast({
-          type: 'error',
-          title: 'Band could not be loaded',
-          message:
-            'There was an error loading this band. Please try again later.'
-        });
-
-      setBand(data[0]);
-      bandRef.current = data[0];
+    if (user) {
+      getBand(user.id, id)
+        .then(res => {
+          setBand(res[0]);
+          bandRef.current = res[0];
+        })
+        .catch(() =>
+          toast({
+            type: 'error',
+            title: 'Band could not be loaded',
+            message:
+              'There was an error loading this band. Please try again later.'
+          })
+        );
     }
-
-    if (user && !band) {
-      getBand();
-    }
-  }, [user, band, toast, id]);
+  }, [user, id, toast, getBand]);
 
   function addConcert(newConcert: Concert) {
     if (!band) return;
@@ -83,6 +75,28 @@ function EditBandPage({ params }: EditBandPageProps) {
     const genre = [...band.genre];
     genre.splice(idx, 1);
     setBand({ ...band, genre });
+  }
+
+  function editBand() {
+    if (!user || !band) return;
+    updateBand(user.id, id, band)
+      .then(() => {
+        bandRef.current = band;
+        toast({
+          type: 'success',
+          title: 'Band updated',
+          message: `${band.band} was successfully updated.`
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        toast({
+          type: 'error',
+          title: 'Band could not be updated',
+          message:
+            'There was an error updating this band. Please try again later.'
+        });
+      });
   }
 
   if (!band) return <div className="bg-zinc-850 p-8">Loading band</div>;
@@ -156,7 +170,7 @@ function EditBandPage({ params }: EditBandPageProps) {
         </div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 flex flex-col border-t border-zinc-700 bg-zinc-850 p-8 py-6">
-        <Button disabled={band === bandRef.current}>
+        <Button disabled={band === bandRef.current} onClick={editBand}>
           Save changes to {band.band}
         </Button>
       </div>
