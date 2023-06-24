@@ -10,8 +10,8 @@ import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
 import BandPageAddConcert from './BandPageAddConcert';
 import BandPageEditConcert from './BandPageEditConcert';
-import Input from '@/components/Input';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import BandPageAddGenre from './BandPageAddGenre';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -72,9 +72,9 @@ function EditBandPage({ params }: EditBandPageProps) {
     setBand({ ...band, concerts });
   }
 
-  function addGenre() {
+  function addGenre(newGenre: string) {
     if (!band) return;
-    const genre = [...band.genre, ''];
+    const genre = [...band.genre, newGenre];
     setBand({ ...band, genre });
   }
 
@@ -129,29 +129,27 @@ function EditBandPage({ params }: EditBandPageProps) {
               </div>
             </TabContent>
             <TabContent value="genres">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-wrap gap-3 rounded-lg border border-zinc-700 bg-zinc-900/70 p-4 text-sm">
                 {band.genre.map((genre, idx) => (
                   <div
                     key={`${idx}${genre}`}
-                    className="flex items-center justify-between gap-2"
+                    className="flex cursor-default items-center justify-between gap-2 whitespace-nowrap rounded-lg border border-transparent bg-zinc-850 px-3 py-1 pr-1 hover:border-zinc-700"
                   >
-                    <Input
-                      value={genre}
-                      placeholder="Genre"
-                      onChange={() => {}}
-                    />
+                    <span>{genre}</span>
                     <Button
                       style="ghost"
-                      size="sm"
+                      size="xs"
                       onClick={() => removeGenre(idx)}
                     >
                       <XMarkIcon className="h-4 w-4" />
                     </Button>
                   </div>
                 ))}
-                <Button style="secondary" onClick={addGenre}>
-                  Add genre
-                </Button>
+                <BandPageAddGenre addGenre={addGenre} />
+              </div>
+              <div className="mt-4 flex items-center gap-1 text-xs text-zinc-300">
+                <LightBulbIcon className="h-3 w-3" /> Press enter to add a new
+                genre
               </div>
             </TabContent>
           </Tabs>
