@@ -9,12 +9,14 @@ function BandPageAddGenre({ addGenre }: BandPageAddGenreProps) {
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const formattedValue = e.target.value
-      .replace(/[^a-z\s]/g, '')
+      .replace(/[^a-z\s-]/g, '')
       .toLowerCase();
     setNewGenre(formattedValue);
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (!newGenre) return;
+
     if (e.key === 'Enter') {
       addGenre(newGenre);
       setNewGenre('');
@@ -26,7 +28,7 @@ function BandPageAddGenre({ addGenre }: BandPageAddGenreProps) {
       value={newGenre}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
-      placeholder="new genre"
+      placeholder="new genre..."
       className="h-[34px] min-w-[200px] flex-1 bg-transparent focus:border-0 focus:outline-none"
       autoComplete="off"
       data-lpignore="true"
