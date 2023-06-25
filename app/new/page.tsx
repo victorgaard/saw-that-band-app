@@ -3,12 +3,16 @@
 import { NewBand, SpotifySearch } from '@/types/global';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AddNewBand from './AddNewBand';
-import getSpotifyToken from '@/utils/getSpotifyToken';
 import BandResultsCard from './BandResultsCard';
+import useSpotify from '@/hooks/useSpotify';
+import { ToastContext } from '@/components/Toast/ToastContext';
 
 function NewBandPage() {
+  const { getSpotifyToken, search } = useSpotify();
+  const { toast } = useContext(ToastContext);
+
   const [query, setQuery] = useState('');
   const [spotifyToken, setSpotifyToken] = useState<string>();
   const [searchResults, setSearchResults] = useState<SpotifySearch[]>();
@@ -19,9 +23,16 @@ function NewBandPage() {
     if (!spotifyToken) {
       getSpotifyToken()
         .then(res => setSpotifyToken(res.accessToken))
-        .catch(err => console.log(err));
+        .catch(() =>
+          toast({
+            type: 'error',
+            title: 'Server instability',
+            message:
+              'There was an error loading this page. Please try again later.'
+          })
+        );
     }
-  }, [spotifyToken]);
+  }, [spotifyToken, getSpotifyToken, toast]);
 
   useEffect(() => {
     let searchTimeout: ReturnType<typeof setTimeout>;
@@ -29,22 +40,29 @@ function NewBandPage() {
     if (query && spotifyToken) {
       setSearchLoading(true);
       searchTimeout = setTimeout(async () => {
-        const res = await fetch(
-          `/api/spotify/search?token=${spotifyToken}&band=${query}`
-        );
-        const json = await res.json();
-        setSearchResults(json.artists.items);
-        setSearchLoading(false);
+        search(spotifyToken, query)
+          .then(res => {
+            setSearchResults(res.artists.items);
+            setSearchLoading(false);
+          })
+          .catch(() =>
+            toast({
+              type: 'error',
+              title: 'Search error',
+              message:
+                'There was an error searching for this band. Please try again later.'
+            })
+          );
       }, 700);
     }
     return () => clearTimeout(searchTimeout);
-  }, [query, spotifyToken]);
+  }, [query, spotifyToken, search, toast]);
 
   function pickBand(pickedBand: SpotifySearch) {
     const band: NewBand = {
       band: pickedBand.name,
       genre: pickedBand.genres,
-      picture: pickedBand.images[0].url || '',
+      picture: pickedBand.images.length > 0 ? pickedBand.images[0].url : '',
       concerts: []
     };
     setSelectedBand(band);

@@ -8,7 +8,6 @@ export async function GET(request: Request) {
   const res = await fetch(
     `${process.env.SPOTIFY_URL}/search?type=artist&limit=20&q=${band}`,
     {
-      cache: 'no-cache',
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`
@@ -17,7 +16,5 @@ export async function GET(request: Request) {
   );
 
   const data = await res.json();
-  console.log(data);
-
   return NextResponse.json(data);
 }

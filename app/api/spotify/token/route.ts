@@ -9,9 +9,12 @@ export type Token = {
 
 export async function GET() {
   const res = await fetch(`${process.env.SPOTIFY_REQUEST_TOKEN_URL}/`, {
-    cache: 'no-store',
     headers: {
       Accept: 'application/json'
+    },
+    cache: 'default',
+    next: {
+      revalidate: 600
     }
   });
 
