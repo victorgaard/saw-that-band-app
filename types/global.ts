@@ -78,3 +78,26 @@ export type Database = {
 
 export type Bands = Database['public']['Tables']['Bands']['Row'][];
 export type Band = Database['public']['Tables']['Bands']['Row'];
+export type NewBand = Database['public']['Tables']['Bands']['Insert'];
+
+export type SpotifySearch = {
+  external_urls: {
+    spotify: string;
+  };
+  followers: {
+    href: null;
+    total: number;
+  };
+  genres: string[];
+  href: string;
+  id: string;
+  images: {
+    height: number;
+    url: string;
+    width: number;
+  }[];
+  name: string;
+  popularity: number;
+  type: string;
+  uri: string;
+}[];

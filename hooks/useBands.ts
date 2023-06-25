@@ -1,6 +1,6 @@
 'use client';
 
-import { Band } from '@/types/global';
+import { Band, NewBand } from '@/types/global';
 import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
@@ -28,6 +28,15 @@ function useBands() {
     return data;
   }, []);
 
+  const addBand = useCallback(async (payload: NewBand) => {
+    const { data, error } = await supabase
+      .from('Bands')
+      .insert([{ ...payload }]);
+
+    if (error) throw new Error(`Band could not be updated: ${error}`);
+    return data;
+  }, []);
+
   const updateBand = useCallback(
     async (userId: string, bandId: string, payload: Band) => {
       const { data, error } = await supabase
@@ -42,7 +51,7 @@ function useBands() {
     []
   );
 
-  return { getAllBands, getBand, updateBand };
+  return { getAllBands, getBand, addBand, updateBand };
 }
 
 export default useBands;
