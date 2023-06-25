@@ -1,5 +1,10 @@
-function AddNewBandPage() {
-  return <>Adding new band aye</>;
+function NewBandPage() {
+  return (
+    <div className="-mx-12 -my-8 grid grid-cols-2">
+      <div>ae</div>
+      <div>ae</div>
+    </div>
+  );
 }
 
-export default AddNewBandPage;
+export default NewBandPage;

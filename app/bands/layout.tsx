@@ -12,8 +12,8 @@ import {
   useRef,
   useState
 } from 'react';
-import { FixedSizeList as DashboardReactWindowList } from 'react-window';
-import DashboardBands from './DashboardBands';
+import { FixedSizeList as BandsReactWindowList } from 'react-window';
+import BandsList from './BandsList';
 
 type Context = {
   hasUpdate: boolean;
@@ -30,7 +30,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
   const { getAllBands } = useBands();
-  const dashboardBandCardRef = useRef<DashboardReactWindowList>(null);
+  const dashboardBandCardRef = useRef<BandsReactWindowList>(null);
 
   const [bands, setBands] = useState<Bands>();
   const [hasUpdate, setHasUpdate] = useState(false);
@@ -98,7 +98,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <BandsContext.Provider value={{ hasUpdate, setHasUpdate }}>
       <div className="-mx-12 -my-8 grid grid-cols-2">
-        <DashboardBands
+        <BandsList
           query={query}
           setQuery={setQuery}
           filteredBandsList={filteredBandsList}

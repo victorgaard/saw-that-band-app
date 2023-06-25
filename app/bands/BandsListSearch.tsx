@@ -2,19 +2,19 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { ChangeEvent } from 'react';
 
-type DashboardSearchBarProps = {
+type BandsListSearchProps = {
   query: string;
   bandsCount: number;
   setQuery: (query: string) => void;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-function DashboardSearchBar({
+function BandsListSearch({
   query,
   bandsCount,
   setQuery,
   handleChange
-}: DashboardSearchBarProps) {
+}: BandsListSearchProps) {
   return (
     <div className="flex h-[80px] w-full items-center justify-between border-b border-zinc-700 bg-zinc-870/70 pr-6 text-sm backdrop-blur-lg">
       <MagnifyingGlassIcon className="absolute left-6 h-4 w-4 text-zinc-500" />
@@ -53,4 +53,4 @@ function DashboardSearchBar({
   );
 }
 
-export default DashboardSearchBar;
+export default BandsListSearch;

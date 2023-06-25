@@ -3,7 +3,7 @@
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
 
-function DashboardPage() {
+function BandPage() {
   const router = useRouter();
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-zinc-800">
@@ -13,4 +13,4 @@ function DashboardPage() {
   );
 }
 
-export default DashboardPage;
+export default BandPage;

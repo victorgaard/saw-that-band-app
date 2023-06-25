@@ -1,20 +1,20 @@
 import { Bands } from '@/types/global';
 import { CSSProperties } from 'react';
-import DashboardBandCard from './DashboardBandCard';
+import DashboardBandCard from './BandCard';
 
-type DashboardReactWindowRenderProps = {
+type BandsListReactWindowRenderProps = {
   index: number;
   style: CSSProperties;
   data: Bands;
   setQuery: (query: string) => void;
 };
 
-function DashboardReactWindowRender({
+function BandsListReactWindowRender({
   index,
   style,
   data,
   setQuery
-}: DashboardReactWindowRenderProps) {
+}: BandsListReactWindowRenderProps) {
   return (
     <div style={style}>
       <DashboardBandCard band={data[index]} setQuery={setQuery} />
@@ -22,4 +22,4 @@ function DashboardReactWindowRender({
   );
 }
 
-export default DashboardReactWindowRender;
+export default BandsListReactWindowRender;

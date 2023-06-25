@@ -1,14 +1,14 @@
 import { Band } from '@/types/global';
 import Image from 'next/image';
-import DashboardBandCardCollapsedTags from './DashboardBandCardCollapsedTags';
+import BandCardCollapsedTags from './BandCardCollapsedTags';
 import { useRouter } from 'next/navigation';
 
-type DashboardBandCardProps = {
+type BandCardProps = {
   band: Band;
   setQuery: (query: string) => void;
 };
 
-function DashboardBandCard({ band, setQuery }: DashboardBandCardProps) {
+function BandCard({ band, setQuery }: BandCardProps) {
   const router = useRouter();
   const bandNameFormatted = band.band.replaceAll(' ', '-');
   return (
@@ -59,7 +59,7 @@ function DashboardBandCard({ band, setQuery }: DashboardBandCardProps) {
               </button>
             ))}
             {band.genre.length > 2 && (
-              <DashboardBandCardCollapsedTags
+              <BandCardCollapsedTags
                 bandGenre={band.genre}
                 setQuery={setQuery}
               />
@@ -71,4 +71,4 @@ function DashboardBandCard({ band, setQuery }: DashboardBandCardProps) {
   );
 }
 
-export default DashboardBandCard;
+export default BandCard;

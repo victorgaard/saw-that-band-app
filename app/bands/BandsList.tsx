@@ -3,28 +3,28 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { RefObject } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import {
-  FixedSizeList as DashboardReactWindowList,
+  FixedSizeList as BandsReactWindowList,
   ListChildComponentProps as DashboardReactWindowListProps
 } from 'react-window';
-import DashboardReactWindowRender from './DashboardReactWindowRender';
-import DashboardSearchBar from './DashboardSearchBar';
+import BandsListSearch from './BandsListSearch';
+import BandsListReactWindowRender from './BandsListReactWindowRender';
 
-type DashboardBandsProps = {
+type BandsListProps = {
   query: string;
   filteredBandsList: Bands;
-  dashboardBandCardRef: RefObject<DashboardReactWindowList<any>>;
+  dashboardBandCardRef: RefObject<BandsReactWindowList<any>>;
   setQuery: (query: string) => void;
 };
 
-function DashboardBands({
+function BandsList({
   query,
   filteredBandsList,
   dashboardBandCardRef,
   setQuery
-}: DashboardBandsProps) {
+}: BandsListProps) {
   return (
     <div className="relative border-r border-zinc-700">
-      <DashboardSearchBar
+      <BandsListSearch
         query={query}
         setQuery={setQuery}
         bandsCount={filteredBandsList.length}
@@ -54,7 +54,7 @@ function DashboardBands({
       <div className="h-[calc(100vh-80px)] w-full">
         <AutoSizer>
           {({ height, width }: { height: number; width: number }) => (
-            <DashboardReactWindowList
+            <BandsReactWindowList
               ref={dashboardBandCardRef}
               width={width}
               height={height}
@@ -63,14 +63,14 @@ function DashboardBands({
               className="[scrollbar-color:#3f3f46_transparent] [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-transparent"
             >
               {(props: DashboardReactWindowListProps) => (
-                <DashboardReactWindowRender
+                <BandsListReactWindowRender
                   index={props.index}
                   style={props.style}
                   data={filteredBandsList}
                   setQuery={setQuery}
                 />
               )}
-            </DashboardReactWindowList>
+            </BandsReactWindowList>
           )}
         </AutoSizer>
       </div>
@@ -78,4 +78,4 @@ function DashboardBands({
   );
 }
 
-export default DashboardBands;
+export default BandsList;
