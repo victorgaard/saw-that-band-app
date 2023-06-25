@@ -9,10 +9,10 @@ import { Band, Concert } from '@/types/global';
 import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
-import BandPageAddConcert from './BandPageAddConcert';
-import BandPageAddGenre from './BandPageAddGenre';
-import BandPageEditConcert from './BandPageEditConcert';
 import { BandsContext } from '../../layout';
+import EditConcert from '@/components/EditConcert';
+import AddGenre from '@/components/AddGenre';
+import AddConcert from '@/components/AddConcert';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -133,7 +133,7 @@ function EditBandPage({ params }: EditBandPageProps) {
               <div className="flex flex-col gap-2">
                 {band.concerts.map((concert, idx) => (
                   <div key={concert.date}>
-                    <BandPageEditConcert
+                    <EditConcert
                       idx={idx}
                       concert={concert}
                       numOfConcerts={band.concerts.length}
@@ -142,7 +142,7 @@ function EditBandPage({ params }: EditBandPageProps) {
                     />
                   </div>
                 ))}
-                <BandPageAddConcert addConcert={addConcert} />
+                <AddConcert addConcert={addConcert} />
               </div>
             </TabContent>
             <TabContent value="genres">
@@ -162,7 +162,7 @@ function EditBandPage({ params }: EditBandPageProps) {
                     </Button>
                   </div>
                 ))}
-                <BandPageAddGenre addGenre={addGenre} />
+                <AddGenre addGenre={addGenre} />
               </div>
               <div className="mt-4 flex items-center gap-1 text-xs text-zinc-300">
                 <LightBulbIcon className="h-3 w-3" /> Press enter to add a new

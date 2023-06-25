@@ -1,10 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 
-type BandPageAddGenreProps = {
+type AddGenreProps = {
   addGenre: (newGenre: string) => void;
 };
 
-function BandPageAddGenre({ addGenre }: BandPageAddGenreProps) {
+function AddGenre({ addGenre }: AddGenreProps) {
   const [newGenre, setNewGenre] = useState('');
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -39,4 +39,4 @@ function BandPageAddGenre({ addGenre }: BandPageAddGenreProps) {
   );
 }
 
-export default BandPageAddGenre;
+export default AddGenre;

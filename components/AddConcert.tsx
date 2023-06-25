@@ -5,11 +5,11 @@ import yearMonthDayToDayMonthYear from '@/utils/yearMonthDayToDayMonthYear';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
-type BandPageAddConcertProps = {
+type AddConcertProps = {
   addConcert: (newConcert: Concert) => void;
 };
 
-function BandPageAddConcert({ addConcert }: BandPageAddConcertProps) {
+function AddConcert({ addConcert }: AddConcertProps) {
   const [add, setAdd] = useState(false);
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
@@ -67,4 +67,4 @@ function BandPageAddConcert({ addConcert }: BandPageAddConcertProps) {
   );
 }
 
-export default BandPageAddConcert;
+export default AddConcert;

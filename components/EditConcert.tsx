@@ -7,7 +7,7 @@ import yearMonthDayToDayMonthYear from '@/utils/yearMonthDayToDayMonthYear';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
-type BandPageEditConcertProps = {
+type EditConcertProps = {
   idx: number;
   concert: Concert;
   numOfConcerts: number;
@@ -15,13 +15,13 @@ type BandPageEditConcertProps = {
   deleteConcert: (idx: number) => void;
 };
 
-function BandPageEditConcert({
+function EditConcert({
   idx,
   concert,
   numOfConcerts,
   editConcert,
   deleteConcert
-}: BandPageEditConcertProps) {
+}: EditConcertProps) {
   const [edit, setEdit] = useState(false);
   const [location, setLocation] = useState('');
   const [date, setDate] = useState(dayMonthYearToYearMonthDay(''));
@@ -100,4 +100,4 @@ function BandPageEditConcert({
   );
 }
 
-export default BandPageEditConcert;
+export default EditConcert;
