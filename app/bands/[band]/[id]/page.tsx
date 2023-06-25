@@ -12,6 +12,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import BandPageAddConcert from './BandPageAddConcert';
 import BandPageAddGenre from './BandPageAddGenre';
 import BandPageEditConcert from './BandPageEditConcert';
+import { BandsContext } from '../../layout';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -21,6 +22,7 @@ function EditBandPage({ params }: EditBandPageProps) {
   const { id } = params;
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
+  const { setHasUpdate } = useContext(BandsContext);
   const { getBand, updateBand } = useBands();
 
   const [band, setBand] = useState<Band>();
@@ -81,6 +83,7 @@ function EditBandPage({ params }: EditBandPageProps) {
     if (!user || !band) return;
     updateBand(user.id, id, band)
       .then(() => {
+        setHasUpdate(true);
         bandRef.current = band;
         toast({
           type: 'success',
