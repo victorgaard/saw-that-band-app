@@ -6,6 +6,7 @@ import {
   ExclamationCircleIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
+import Button from '../Button';
 
 export type ToastObjProps = {
   type: 'success' | 'error';
@@ -21,10 +22,10 @@ function Toast({ type, title, message, dismiss }: ToastProps) {
   return (
     <div
       className={classNames(
-        'fixed bottom-8 right-8 z-50 flex max-w-[calc(100%-32px)] items-center justify-between gap-12 rounded px-4 py-3 text-sm text-white',
+        'fixed bottom-6 left-[102px] z-50 flex max-w-[calc(100%-32px)] items-center justify-between gap-12 overflow-hidden rounded-lg px-4 py-3 pb-4 text-sm text-white',
         {
-          'bg-green-600': type === 'success',
-          'bg-red-600': type === 'error'
+          'bg-green-600/20 backdrop-blur-lg': type === 'success',
+          'bg-red-600/20 backdrop-blur-lg': type === 'error'
         }
       )}
     >
@@ -35,13 +36,15 @@ function Toast({ type, title, message, dismiss }: ToastProps) {
           <ExclamationCircleIcon className="h-5 w-5" />
         )}
         <div className="flex flex-col gap-0.5">
-          <p className="font-semibold">{title}</p>
-          <p className="text-sm">{message}</p>
+          <p className="font-semibold text-white">{title}</p>
+          <p className="text-sm text-white/70">{message}</p>
         </div>
       </div>
-      <button onClick={dismiss}>
+      <Button style="ghost" size="sm" onClick={dismiss}>
         <XMarkIcon className="h-5 w-5" />
-      </button>
+      </Button>
+      <div className="absolute bottom-0 left-0 h-0.5 animate-width-to-fit bg-white/50" />
+      <div className="absolute bottom-0 left-0 h-0.5 w-full bg-white/10" />
     </div>
   );
 }
