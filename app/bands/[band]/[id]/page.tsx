@@ -119,7 +119,7 @@ function EditBandPage({ params }: EditBandPageProps) {
             <p className="text-4xl font-semibold">{band.band}</p>
             <p className="text-sm text-zinc-400">
               Seen live {band.concerts.length}{' '}
-              {band.concerts.length === 1 ? 'time' : 'times'}
+              {band.concerts.length === 1 ? 'once' : 'times'}
             </p>
           </div>
         </div>

@@ -3,18 +3,25 @@ import AddGenre from '@/components/AddGenre';
 import Button from '@/components/Button';
 import EditConcert from '@/components/EditConcert';
 import { Tab, TabContent, Tabs, TabsList } from '@/components/Tabs';
+import { ToastContext } from '@/components/Toast/ToastContext';
+import useBands from '@/hooks/useBands';
 import { Concert, NewBand } from '@/types/global';
 import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
 
 type AddNewBandProps = {
   selectedBand: NewBand | undefined;
 };
 
 function AddNewBand({ selectedBand }: AddNewBandProps) {
+  const { addBand } = useBands();
+  const { toast } = useContext(ToastContext);
+
+  const router = useRouter();
+
   const [band, setBand] = useState<NewBand>();
-  const bandRef = useRef<NewBand>();
 
   useEffect(() => {
     setBand(selectedBand);
@@ -53,7 +60,26 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
     setBand({ ...band, genre });
   }
 
-  function addBand() {}
+  function addBandToCatalogue() {
+    if (!band) return;
+    addBand(band)
+      .then(res => {
+        toast({
+          type: 'success',
+          title: 'Band added',
+          message: `${res[0].band} was successfully added to your catalogue`
+        });
+        const bandNameFormatted = res[0].band.replaceAll(' ', '-');
+        router.push(`bands/${bandNameFormatted}/${res[0].id}`);
+      })
+      .catch(() =>
+        toast({
+          type: 'error',
+          title: 'Band not added',
+          message: `${band.band} could not be added to your catalogue. Please try again later.`
+        })
+      );
+  }
 
   if (band)
     return (
@@ -69,10 +95,12 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
             />
             <div className="flex flex-col gap-2">
               <p className="text-4xl font-semibold">{band.band}</p>
-              <p className="text-sm text-zinc-400">
-                Seen live {band.concerts.length}{' '}
-                {band.concerts.length === 1 ? 'time' : 'times'}
-              </p>
+              {band.concerts.length !== 0 && (
+                <p className="text-sm text-zinc-400">
+                  Seen live {band.concerts.length}{' '}
+                  {band.concerts.length === 1 ? 'once' : 'times'}
+                </p>
+              )}
             </div>
           </div>
           <div>
@@ -125,7 +153,10 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 flex flex-col border-t border-zinc-700 bg-zinc-850 p-8 py-6">
-          <Button disabled={band === bandRef.current} onClick={addBand}>
+          <Button
+            disabled={band.genre.length === 0 || band.concerts.length === 0}
+            onClick={addBandToCatalogue}
+          >
             Add {band.band} to the catalogue
           </Button>
         </div>

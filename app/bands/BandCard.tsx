@@ -1,7 +1,8 @@
 import { Band } from '@/types/global';
 import Image from 'next/image';
 import BandCardCollapsedTags from './BandCardCollapsedTags';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import classNames from 'classnames';
 
 type BandCardProps = {
   band: Band;
@@ -10,12 +11,22 @@ type BandCardProps = {
 
 function BandCard({ band, setQuery }: BandCardProps) {
   const router = useRouter();
+  const path = usePathname();
   const bandNameFormatted = band.band.replaceAll(' ', '-');
   return (
     <div className="flex justify-center">
       <div
         onClick={() => router.push(`/bands/${bandNameFormatted}/${band.id}`)}
-        className="group flex h-[160px] w-full cursor-pointer items-center gap-6 p-6 text-white hover:border-zinc-600/40 hover:bg-zinc-900/40 sm:gap-8"
+        className={classNames(
+          'group flex h-[160px] w-full cursor-pointer items-center gap-6 p-6 text-white sm:gap-8',
+          {
+            'bg-gradient-to-tr from-zinc-100/10 to-zinc-500/10 to-50%':
+              path.includes(band.id),
+            ' hover:border-zinc-600/40 hover:bg-zinc-900/40': !path.includes(
+              band.id
+            )
+          }
+        )}
       >
         <div className="h-[112px] w-[112px] shrink-0 overflow-hidden rounded-lg bg-zinc-900">
           <Image

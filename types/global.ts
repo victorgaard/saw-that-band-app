@@ -100,4 +100,4 @@ export type SpotifySearch = {
   popularity: number;
   type: string;
   uri: string;
-}[];
+};

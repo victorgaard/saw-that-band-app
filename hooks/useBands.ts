@@ -31,7 +31,8 @@ function useBands() {
   const addBand = useCallback(async (payload: NewBand) => {
     const { data, error } = await supabase
       .from('Bands')
-      .insert([{ ...payload }]);
+      .insert([{ ...payload }])
+      .select();
 
     if (error) throw new Error(`Band could not be updated: ${error}`);
     return data;
