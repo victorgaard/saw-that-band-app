@@ -4,7 +4,18 @@ import { Band } from '@/types/global';
 import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
-function useBand() {
+function useBands() {
+  const getAllBands = useCallback(async (userId: string) => {
+    const { data, error } = await supabase
+      .from('Bands')
+      .select()
+      .eq('user_id', userId)
+      .order('band', { ascending: true });
+
+    if (error) throw new Error('Could not load all bands');
+    return data;
+  }, []);
+
   const getBand = useCallback(async (userId: string, bandId: string) => {
     const { data, error } = await supabase
       .from('Bands')
@@ -12,7 +23,7 @@ function useBand() {
       .eq('user_id', userId)
       .eq('id', bandId);
 
-    if (error) throw new Error('Could not get the band');
+    if (error) throw new Error('Could not load this band');
 
     return data;
   }, []);
@@ -26,13 +37,12 @@ function useBand() {
         .eq('id', bandId);
 
       if (error) throw new Error(`Band could not be updated: ${error}`);
-
       return data;
     },
     []
   );
 
-  return { getBand, updateBand };
+  return { getAllBands, getBand, updateBand };
 }
 
-export default useBand;
+export default useBands;

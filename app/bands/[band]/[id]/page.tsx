@@ -4,14 +4,14 @@ import { AuthContext } from '@/auth/AuthContext';
 import Button from '@/components/Button';
 import { Tab, TabContent, Tabs, TabsList } from '@/components/Tabs';
 import { ToastContext } from '@/components/Toast/ToastContext';
+import useBands from '@/hooks/useBands';
 import { Band, Concert } from '@/types/global';
+import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
 import BandPageAddConcert from './BandPageAddConcert';
-import BandPageEditConcert from './BandPageEditConcert';
-import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import BandPageAddGenre from './BandPageAddGenre';
-import useBand from '@/hooks/useBand';
+import BandPageEditConcert from './BandPageEditConcert';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -21,7 +21,7 @@ function EditBandPage({ params }: EditBandPageProps) {
   const { id } = params;
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
-  const { getBand, updateBand } = useBand();
+  const { getBand, updateBand } = useBands();
 
   const [band, setBand] = useState<Band>();
   const bandRef = useRef<Band>();

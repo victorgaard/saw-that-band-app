@@ -33,6 +33,7 @@ function BandPageAddGenre({ addGenre }: BandPageAddGenreProps) {
       autoComplete="off"
       data-lpignore="true"
       data-form-type="other"
+      maxLength={40}
       autoFocus
     />
   );
