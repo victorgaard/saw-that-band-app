@@ -1,12 +1,12 @@
-import { NewBand, SpotifySearch } from '@/types/global';
+import { NewBand, SpotifyBand } from '@/types/global';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { HTMLAttributes } from 'react';
 
 type BandResultsCardProps = HTMLAttributes<HTMLDivElement> & {
-  band: SpotifySearch;
+  band: SpotifyBand;
   selectedBand: NewBand | undefined;
-  onClick: (band: SpotifySearch) => void;
+  onClick: (band: SpotifyBand) => void;
 };
 
 function BandResultsCard({
