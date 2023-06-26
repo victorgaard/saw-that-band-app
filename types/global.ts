@@ -80,7 +80,7 @@ export type Bands = Database['public']['Tables']['Bands']['Row'][];
 export type Band = Database['public']['Tables']['Bands']['Row'];
 export type NewBand = Database['public']['Tables']['Bands']['Insert'];
 
-export type SpotifySearch = {
+export type SpotifyBand = {
   external_urls: {
     spotify: string;
   };
@@ -100,4 +100,11 @@ export type SpotifySearch = {
   popularity: number;
   type: string;
   uri: string;
+};
+
+export type SpotifySearchResults = {
+  artists: {
+    href: string;
+    items: SpotifyBand[];
+  };
 };

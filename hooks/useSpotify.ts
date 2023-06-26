@@ -1,6 +1,7 @@
 'use client';
 
 import { Token } from '@/app/api/spotify/token/route';
+import { SpotifySearchResults } from '@/types/global';
 import { useCallback } from 'react';
 
 function useSpotify() {
@@ -9,8 +10,7 @@ function useSpotify() {
 
     if (!res.ok) throw new Error('Could not get spotify token');
 
-    const json = await res.json();
-    const data: Token = json;
+    const data: Token = await res.json();
     return data;
   }, []);
 
@@ -19,7 +19,8 @@ function useSpotify() {
 
     if (!res.ok) throw new Error('Could not search for bands');
 
-    const data = await res.json();
+    const data: SpotifySearchResults = await res.json();
+    console.log(data);
     return data;
   }, []);
 

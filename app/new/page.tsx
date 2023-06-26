@@ -1,6 +1,6 @@
 'use client';
 
-import { NewBand, SpotifySearch } from '@/types/global';
+import { NewBand, SpotifyBand } from '@/types/global';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { useContext, useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ function NewBandPage() {
 
   const [query, setQuery] = useState('');
   const [spotifyToken, setSpotifyToken] = useState<string>();
-  const [searchResults, setSearchResults] = useState<SpotifySearch[]>();
+  const [searchResults, setSearchResults] = useState<SpotifyBand[]>();
   const [selectedBand, setSelectedBand] = useState<NewBand>();
   const [searchLoading, setSearchLoading] = useState(false);
 
@@ -58,7 +58,7 @@ function NewBandPage() {
     return () => clearTimeout(searchTimeout);
   }, [query, spotifyToken, search, toast]);
 
-  function pickBand(pickedBand: SpotifySearch) {
+  function pickBand(pickedBand: SpotifyBand) {
     const band: NewBand = {
       band: pickedBand.name,
       genre: pickedBand.genres,

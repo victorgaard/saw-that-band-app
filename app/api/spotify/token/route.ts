@@ -12,10 +12,7 @@ export async function GET() {
     headers: {
       Accept: 'application/json'
     },
-    cache: 'default',
-    next: {
-      revalidate: 600
-    }
+    cache: 'no-store'
   });
 
   if (!res.ok) return null;
