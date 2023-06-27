@@ -102,7 +102,7 @@ function EditBandPage({ params }: EditBandPageProps) {
       });
   }
 
-  if (!band) return <div className="bg-zinc-850 p-8">Loading band</div>;
+  if (!band) return null;
 
   return (
     <div className="relative bg-zinc-850 p-8">
