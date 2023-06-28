@@ -13,6 +13,7 @@ import { BandsContext } from '../../layout';
 import EditConcert from '@/components/EditConcert';
 import AddGenre from '@/components/AddGenre';
 import AddConcert from '@/components/AddConcert';
+import Loading from './loading';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -102,7 +103,7 @@ function EditBandPage({ params }: EditBandPageProps) {
       });
   }
 
-  if (!band) return null;
+  if (!band) return <Loading />;
 
   return (
     <div className="relative bg-zinc-850 p-8">
