@@ -1,4 +1,6 @@
-function LoadingSpinner() {
+import { SVGProps } from 'react';
+
+function LoadingSpinner(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       className="h-5 w-5 animate-spin text-inherit"
@@ -6,6 +8,7 @@ function LoadingSpinner() {
       fill="none"
       viewBox="0 0 24 24"
       data-testid="loading-spinner"
+      {...props}
     >
       <circle
         className="opacity-25"
