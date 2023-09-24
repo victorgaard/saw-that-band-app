@@ -6,63 +6,67 @@ import Input from '@/components/Input';
 import Picture from '@/components/Picture';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
-import { ProfileForm, ProfileLink } from '@/types/global';
+import { ExternalLinkProvider, ProfileForm, ProfileLink } from '@/types/global';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
-const INITIAL_PROFILE_LINKS: ProfileLink[] = [
-  {
-    type: 'spotify',
-    url: ''
-  },
-  {
-    type: 'lastfm',
-    url: ''
-  },
-  {
-    type: 'setlist',
-    url: ''
-  },
-  {
-    type: 'instagram',
-    url: ''
-  },
-  {
-    type: 'other',
-    url: ''
-  }
-];
+function generateLinks(arrayOfPlatforms: ExternalLinkProvider[]) {
+  return arrayOfPlatforms.map(platform => ({ type: platform, url: '' }));
+}
 
-const INITIAL_PROFILE_FORM = {
+const INITIAL_PROFILE_FORM: ProfileForm = {
   name: '',
   picture: '',
   email: '',
   username: '',
   bio: '',
-  links: INITIAL_PROFILE_LINKS
+  links: generateLinks([
+    'spotify',
+    'youtube',
+    'deezer',
+    'apple',
+    'lastfm',
+    'setlist',
+    'soundcloud',
+    'instagram',
+    'other'
+  ])
 };
 
 function ProfilePage() {
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
 
-  const { getProfileFromUserId, uploadProfilePicture, updateProfile } =
-    useProfile();
-
   const [error, setError] = useState(false);
   const [profile, setProfile] = useState<ProfileForm>(INITIAL_PROFILE_FORM);
   const [formLoading, setFormLoading] = useState(false);
+
+  const { getProfileFromUserId, uploadProfilePicture, updateProfile } =
+    useProfile();
+
+  function concatLinks(userLinks: ProfileLink[] | null) {
+    if (!userLinks) return null;
+    const userLinksByType: { [key: string]: string } = {};
+    userLinks.forEach(link => {
+      userLinksByType[link.type] = link.url;
+    });
+    return INITIAL_PROFILE_FORM.links.map(link => ({
+      type: link.type,
+      url: userLinksByType[link.type] || link.url
+    }));
+  }
 
   useEffect(() => {
     if (user) {
       getProfileFromUserId(user.id)
         .then(res => {
+          const [data] = res;
           setProfile({
-            username: res[0].username,
-            email: res[0].email,
-            name: res[0].name || '',
-            picture: res[0].picture || '',
-            bio: res[0].bio || '',
-            links: res[0].links || INITIAL_PROFILE_LINKS
+            username: data.username,
+            email: data.email,
+            name: data.name || INITIAL_PROFILE_FORM.name,
+            picture: data.picture || INITIAL_PROFILE_FORM.picture,
+            bio: data.bio || INITIAL_PROFILE_FORM.bio,
+            links: concatLinks(data.links) || INITIAL_PROFILE_FORM.links
           });
         })
         .catch(() => setError(true));

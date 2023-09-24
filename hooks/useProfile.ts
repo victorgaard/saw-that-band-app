@@ -41,7 +41,7 @@ function useProfile() {
         name: profile.name,
         picture: profile.picture,
         bio: profile.bio,
-        links: profile.links
+        links: profile.links.filter(link => link.url)
       };
       const { data, error } = await supabase
         .from('Users')

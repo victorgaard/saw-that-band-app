@@ -158,17 +158,19 @@ export type SpotifySearchResults = {
   };
 };
 
+export type ExternalLinkProvider =
+  | 'spotify'
+  | 'youtube'
+  | 'deezer'
+  | 'apple'
+  | 'lastfm'
+  | 'setlist'
+  | 'soundcloud'
+  | 'instagram'
+  | 'other';
+
 export type ProfileLink = {
-  type:
-    | 'spotify'
-    | 'youtube'
-    | 'deezer'
-    | 'apple'
-    | 'lastfm'
-    | 'setlist'
-    | 'soundcloud'
-    | 'instagram'
-    | 'other';
+  type: ExternalLinkProvider;
   url: string;
 };
 
