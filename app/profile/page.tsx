@@ -45,10 +45,12 @@ function ProfilePage() {
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
 
-  const { getProfileFromUserId } = useProfile();
+  const { getProfileFromUserId, uploadProfilePicture, updateProfile } =
+    useProfile();
 
   const [error, setError] = useState(false);
   const [profile, setProfile] = useState<ProfileForm>(INITIAL_PROFILE_FORM);
+  const [formLoading, setFormLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -80,6 +82,28 @@ function ProfilePage() {
     }
   }
 
+  function onUpdateProfile() {
+    if (!profile || !user) return;
+
+    updateProfile(user.id, profile)
+      .then(() =>
+        toast({
+          type: 'success',
+          title: 'Profile updated',
+          message: 'Your profile was successfully updated.'
+        })
+      )
+      .catch(() =>
+        toast({
+          type: 'error',
+          title: 'Profile could not be updated',
+          message:
+            'There was an error updating your profile. Please try again later.'
+        })
+      )
+      .finally(() => setFormLoading(false));
+  }
+
   if (!profile.username) return <>Loading...</>;
   if (error)
     return (
@@ -89,12 +113,21 @@ function ProfilePage() {
   return (
     <form
       className="-mx-12 -my-8 flex flex-col"
-      onSubmit={e => e.preventDefault()}
+      onSubmit={e => {
+        e.preventDefault();
+        setFormLoading(true);
+        onUpdateProfile();
+      }}
     >
       <div className="flex h-[calc(100vh-76px)] flex-col gap-24 overflow-auto border-b border-zinc-850 p-12">
         <div className="flex gap-24">
           <p className="w-48 text-lg font-medium">Picture</p>
-          <Picture user={profile} size={96} />
+          <div className="flex items-center gap-2">
+            <Picture user={profile} size={96} />
+            <Button type="button" style="secondary" size="sm">
+              Upload
+            </Button>
+          </div>
         </div>
         <div className="flex gap-24">
           <p className="w-48 text-lg font-medium">Profile information</p>
@@ -148,7 +181,7 @@ function ProfilePage() {
         </div>
       </div>
       <div className="flex justify-end pr-16 pt-3">
-        <Button>Save changes</Button>
+        <Button loading={formLoading}>Save changes</Button>
       </div>
     </form>
   );

@@ -1,21 +1,64 @@
 'use client';
 
+import { ProfileForm } from '@/types/global';
 import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
 function useProfile() {
   const getProfileFromUserId = useCallback(async (userId: string) => {
-    const { data: profile, error } = await supabase
+    const { data, error } = await supabase
       .from('Users')
       .select()
       .eq('id', userId);
 
     if (error)
       throw new Error('Could not retrieve the profile from this userId');
-    return profile;
+
+    return data;
   }, []);
 
-  return { getProfileFromUserId };
+  const uploadProfilePicture = useCallback(
+    async (userId: string, file: File) => {
+      const fileName = `/${userId}/${new Date().toISOString()}`;
+
+      const { data, error } = await supabase.storage
+        .from('Avatar')
+        .upload(fileName, file);
+
+      if (error)
+        throw new Error(
+          'There was an error uploading your profile picture. Please try again later.'
+        );
+
+      return `${process.env.NEXT_PUBLIC_SUPABASE_STORATE_URL}${data.path}`;
+    },
+    []
+  );
+
+  const updateProfile = useCallback(
+    async (userId: string, profile: ProfileForm) => {
+      const payload = {
+        name: profile.name,
+        picture: profile.picture,
+        bio: profile.bio,
+        links: profile.links
+      };
+      const { data, error } = await supabase
+        .from('Users')
+        .update(payload)
+        .eq('id', userId);
+
+      if (error)
+        throw new Error(
+          'There was an error updating your profile. Please try again later.'
+        );
+
+      return data;
+    },
+    []
+  );
+
+  return { getProfileFromUserId, uploadProfilePicture, updateProfile };
 }
 
 export default useProfile;
