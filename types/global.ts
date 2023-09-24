@@ -39,6 +39,54 @@ export type Database = {
           picture?: string;
           user_id?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'Bands_user_id_fkey';
+            columns: ['user_id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
+      Users: {
+        Row: {
+          bio: string | null;
+          created_at: string;
+          email: string;
+          id: string;
+          links: ProfileLink[] | null;
+          name: string | null;
+          picture: string | null;
+          username: string;
+        };
+        Insert: {
+          bio?: string | null;
+          created_at?: string;
+          email: string;
+          id: string;
+          links?: ProfileLink[] | null;
+          name?: string | null;
+          picture?: string | null;
+          username: string;
+        };
+        Update: {
+          bio?: string | null;
+          created_at?: string;
+          email?: string;
+          id?: string;
+          links?: ProfileLink[] | null;
+          name?: string | null;
+          picture?: string | null;
+          username?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'Users_id_fkey';
+            columns: ['id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
       };
       Waitlist: {
         Row: {
@@ -78,6 +126,7 @@ export type Database = {
 
 export type Bands = Database['public']['Tables']['Bands']['Row'][];
 export type Band = Database['public']['Tables']['Bands']['Row'];
+export type Profile = Database['public']['Tables']['Users']['Row'];
 export type NewBand = Database['public']['Tables']['Bands']['Insert'];
 
 export type SpotifyBand = {
@@ -107,4 +156,18 @@ export type SpotifySearchResults = {
     href: string;
     items: SpotifyBand[];
   };
+};
+
+export type ProfileLink = {
+  type:
+    | 'spotify'
+    | 'youtube'
+    | 'deezer'
+    | 'apple'
+    | 'lastfm'
+    | 'setlist'
+    | 'soundcloud'
+    | 'instagram'
+    | 'other';
+  url: string;
 };

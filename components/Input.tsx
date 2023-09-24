@@ -19,7 +19,7 @@ function Input({
   return (
     <div className="flex w-full flex-col gap-1.5">
       {label && (
-        <span className="text-sm">
+        <span className="text-sm text-zinc-400">
           {label} {optional && <span>(optional)</span>}
         </span>
       )}
