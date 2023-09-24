@@ -90,7 +90,7 @@ function Sidebar() {
       <div className="flex shrink-0 items-end justify-center text-sm text-zinc-600">
         <p className="rotate-180 [writing-mode:vertical-lr]">
           <span className="font-semibold text-zinc-500">
-            {user?.user_metadata.name?.toLowerCase()}
+            {user?.user_metadata.username?.toLowerCase()}
           </span>{' '}
           saw that band
         </p>
