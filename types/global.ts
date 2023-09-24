@@ -171,3 +171,12 @@ export type ProfileLink = {
     | 'other';
   url: string;
 };
+
+export type ProfileForm = {
+  name: string;
+  picture: string;
+  email: string;
+  username: string;
+  bio: string;
+  links: ProfileLink[];
+};

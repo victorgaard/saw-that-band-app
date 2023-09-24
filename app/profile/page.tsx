@@ -3,20 +3,11 @@
 import { AuthContext } from '@/auth/AuthContext';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import Picture from '@/components/Picture';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
-import { ProfileLink } from '@/types/global';
-import Image from 'next/image';
+import { ProfileForm, ProfileLink } from '@/types/global';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
-
-type ProfileForm = {
-  name: string;
-  picture: string;
-  email: string;
-  username: string;
-  bio: string;
-  links: ProfileLink[];
-};
 
 const INITIAL_PROFILE_LINKS: ProfileLink[] = [
   {
@@ -103,15 +94,7 @@ function ProfilePage() {
       <div className="flex h-[calc(100vh-76px)] flex-col gap-24 overflow-auto border-b border-zinc-850 p-12">
         <div className="flex gap-24">
           <p className="w-48 text-lg font-medium">Picture</p>
-          <div>
-            <Image
-              src={profile.picture}
-              width={96}
-              height={96}
-              alt="Profile picture"
-              className="h-24 w-24 rounded-lg"
-            />
-          </div>
+          <Picture user={profile} size={96} />
         </div>
         <div className="flex gap-24">
           <p className="w-48 text-lg font-medium">Profile information</p>
