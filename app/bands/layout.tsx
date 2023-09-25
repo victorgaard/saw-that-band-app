@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { FixedSizeList as BandsReactWindowList } from 'react-window';
 import BandsList from './BandsList';
+import LoadingSpinner from '@/icons/LoadingSpinner';
 
 type Context = {
   hasUpdate: boolean;
@@ -93,7 +94,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
       )
   );
 
-  if (!filteredBandsList) return <>Loading...</>;
+  if (!filteredBandsList) return <LoadingSpinner />;
 
   return (
     <BandsContext.Provider value={{ hasUpdate, setHasUpdate }}>

@@ -8,6 +8,7 @@ import AddNewBand from './AddNewBand';
 import BandResultsCard from './BandResultsCard';
 import useSpotify from '@/hooks/useSpotify';
 import { ToastContext } from '@/components/Toast/ToastContext';
+import LoadingSpinner from '@/icons/LoadingSpinner';
 
 function NewBandPage() {
   const { getSpotifyToken, search } = useSpotify();
@@ -85,7 +86,16 @@ function NewBandPage() {
           />
         </div>
         <div className="max-h-[calc(100vh-80px)] overflow-y-auto [scrollbar-color:#3f3f46_transparent] [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-transparent">
-          {searchLoading && <p>Loading...</p>}
+          {!searchLoading && !searchResults && (
+            <div className="flex w-full items-center justify-center pt-24">
+              Search for a band to add to your catalogue
+            </div>
+          )}
+          {searchLoading && (
+            <div className="flex w-full items-center justify-center py-24">
+              <LoadingSpinner />
+            </div>
+          )}
           {!searchLoading && searchResults?.length === 0 && (
             <p>No results for {query}</p>
           )}

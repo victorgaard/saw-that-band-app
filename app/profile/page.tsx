@@ -160,7 +160,7 @@ function ProfilePage() {
       });
   }
 
-  if (!profile.username) return <>Loading...</>;
+  if (!profile.username) return <LoadingSpinner />;
   if (error)
     return (
       <>There was an error loading your profile. Please try again later.</>
