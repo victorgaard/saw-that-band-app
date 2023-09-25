@@ -6,8 +6,15 @@ import Input from '@/components/Input';
 import Picture from '@/components/Picture';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
+import LoadingSpinner from '@/icons/LoadingSpinner';
 import { ExternalLinkProvider, ProfileForm, ProfileLink } from '@/types/global';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 
 function generateLinks(arrayOfPlatforms: ExternalLinkProvider[]) {
   return arrayOfPlatforms.map(platform => ({ type: platform, url: '' }));
@@ -39,6 +46,8 @@ function ProfilePage() {
   const [error, setError] = useState(false);
   const [profile, setProfile] = useState<ProfileForm>(INITIAL_PROFILE_FORM);
   const [formLoading, setFormLoading] = useState(false);
+  const [profilePictureLoading, setProfilePictureLoading] = useState(false);
+  const [hasUpdate, setHasUpdate] = useState(false);
 
   const { getProfileFromUserId, uploadProfilePicture, updateProfile } =
     useProfile();
@@ -86,7 +95,7 @@ function ProfilePage() {
     }
   }
 
-  function onUpdateProfile() {
+  const onUpdateProfile = useCallback(() => {
     if (!profile || !user) return;
 
     updateProfile(user.id, profile)
@@ -105,7 +114,50 @@ function ProfilePage() {
             'There was an error updating your profile. Please try again later.'
         })
       )
-      .finally(() => setFormLoading(false));
+      .finally(() => {
+        setFormLoading(false);
+        setProfilePictureLoading(false);
+        setHasUpdate(false);
+      });
+  }, [profile, toast, updateProfile, user]);
+
+  useEffect(() => {
+    if (hasUpdate) {
+      onUpdateProfile();
+    }
+  }, [hasUpdate, onUpdateProfile]);
+
+  async function onUpdateProfilePicture(event: ChangeEvent<HTMLInputElement>) {
+    const files = event.target.files;
+    if (!files || !user) return;
+
+    const file = files[0];
+    if (!file) return;
+
+    const size = file.size / 1024 / 1024;
+
+    if (size > 2.5)
+      return toast({
+        type: 'error',
+        title: 'Profile picture too big',
+        message: 'Please provide a picture that is under 2.5 MB'
+      });
+
+    setProfilePictureLoading(true);
+    uploadProfilePicture(user.id, file)
+      .then(res => {
+        setProfile(prev => ({ ...prev, picture: res }));
+        setHasUpdate(true);
+      })
+      .catch(() => {
+        toast({
+          type: 'error',
+          title: 'Profile picture not uploaded',
+          message:
+            'There was an error uploading your profile picture. Please try again later.'
+        });
+        setProfilePictureLoading(false);
+      });
   }
 
   if (!profile.username) return <>Loading...</>;
@@ -126,11 +178,35 @@ function ProfilePage() {
       <div className="flex h-[calc(100vh-76px)] flex-col gap-24 overflow-auto border-b border-zinc-850 p-12">
         <div className="flex gap-24">
           <p className="w-48 text-lg font-medium">Picture</p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Picture user={profile} size={96} />
-            <Button type="button" style="secondary" size="sm">
-              Upload
-            </Button>
+            <div className="relative gap-2">
+              <label
+                aria-disabled={profilePictureLoading}
+                htmlFor="file"
+                className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-zinc-850 p-2 text-sm font-semibold text-white transition-colors hover:bg-zinc-900 active:bg-zinc-850 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-zinc-850"
+              >
+                <input
+                  name="file"
+                  id="file"
+                  type="file"
+                  onChange={onUpdateProfilePicture}
+                  disabled={profilePictureLoading}
+                  accept="image/png, image/gif, image/jpeg"
+                  className="hidden"
+                />
+                {profilePictureLoading ? (
+                  <>
+                    <span className="mr-2">
+                      <LoadingSpinner />
+                    </span>{' '}
+                    Uploading...
+                  </>
+                ) : (
+                  'Upload image'
+                )}
+              </label>
+            </div>
           </div>
         </div>
         <div className="flex gap-24">
