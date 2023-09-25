@@ -4,6 +4,7 @@ import { AuthContext } from '@/auth/AuthContext';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Picture from '@/components/Picture';
+import TextArea from '@/components/Textarea';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
 import LoadingSpinner from '@/icons/LoadingSpinner';
@@ -82,7 +83,10 @@ function ProfilePage() {
     }
   }, [user, getProfileFromUserId]);
 
-  function updateForm(e: ChangeEvent<HTMLInputElement>, idx?: number) {
+  function updateForm(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    idx?: number
+  ) {
     if (typeof idx === 'number') {
       const newLinks = [...profile.links];
       newLinks[idx] = {
@@ -233,7 +237,7 @@ function ProfilePage() {
               placeholder="Name"
               onChange={e => updateForm(e)}
             />
-            <Input
+            <TextArea
               label="Bio"
               name="bio"
               value={profile.bio}
