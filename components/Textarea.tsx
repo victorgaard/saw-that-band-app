@@ -1,21 +1,21 @@
 import classNames from 'classnames';
 import { ChangeEvent, TextareaHTMLAttributes } from 'react';
 
-type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label?: string;
   value: string;
   optional?: boolean;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-function TextArea({
+function Textarea({
   label,
   value,
   optional = false,
   onChange,
   className,
   ...rest
-}: TextAreaProps) {
+}: TextareaProps) {
   return (
     <div className="flex w-full flex-col gap-1.5">
       {label && (
@@ -40,4 +40,4 @@ function TextArea({
   );
 }
 
-export default TextArea;
+export default Textarea;

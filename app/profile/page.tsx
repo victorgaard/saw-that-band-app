@@ -4,7 +4,7 @@ import { AuthContext } from '@/auth/AuthContext';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Picture from '@/components/Picture';
-import TextArea from '@/components/Textarea';
+import Textarea from '@/components/Textarea';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
 import LoadingSpinner from '@/icons/LoadingSpinner';
@@ -237,7 +237,7 @@ function ProfilePage() {
               placeholder="Name"
               onChange={e => updateForm(e)}
             />
-            <TextArea
+            <Textarea
               label="Bio"
               name="bio"
               value={profile.bio}
