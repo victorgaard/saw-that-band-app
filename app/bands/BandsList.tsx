@@ -30,7 +30,12 @@ function BandsList({
         bandsCount={filteredBandsList.length}
         handleChange={e => setQuery(e.target.value)}
       />
-      {filteredBandsList.length === 0 && (
+      {!query && filteredBandsList.length === 0 && (
+        <div className="flex w-full items-center justify-center pt-24">
+          Start adding your bands 🤘
+        </div>
+      )}
+      {query && filteredBandsList.length === 0 && (
         <div className="absolute mt-20 flex w-full flex-col items-center justify-center gap-8 px-8 pt-8 sm:mt-48">
           <div className="flex flex-col items-center gap-2">
             <p className="text-zinc-400">There are no results for: </p>
