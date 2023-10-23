@@ -19,6 +19,8 @@ type EditBandPageProps = {
   params: { id: string };
 };
 
+type TabType = 'concerts' | 'genres';
+
 function EditBandPage({ params }: EditBandPageProps) {
   const { id } = params;
   const { user } = useContext(AuthContext);
@@ -27,6 +29,7 @@ function EditBandPage({ params }: EditBandPageProps) {
   const { getBand, updateBand } = useBands();
 
   const [band, setBand] = useState<Band>();
+  const [selectedTab, setSelectedTab] = useState<TabType>('concerts');
   const bandRef = useRef<Band>();
 
   useEffect(() => {
@@ -82,6 +85,16 @@ function EditBandPage({ params }: EditBandPageProps) {
 
   function editBand() {
     if (!user || !band) return;
+
+    if (band.genre.length === 0) {
+      setSelectedTab('genres');
+      return toast({
+        type: 'error',
+        title: `Genre is missing for ${band.band}`,
+        message: 'Add at least one genre to proceed'
+      });
+    }
+
     updateBand(user.id, id, band)
       .then(() => {
         setHasUpdate(true);
@@ -125,7 +138,11 @@ function EditBandPage({ params }: EditBandPageProps) {
           </div>
         </div>
         <div>
-          <Tabs defaultValue="concerts">
+          <Tabs
+            defaultValue="concerts"
+            value={selectedTab}
+            onValueChange={value => setSelectedTab(value as TabType)}
+          >
             <TabsList className="-mx-8 flex items-center gap-4 px-8">
               <Tab value="concerts">Concerts</Tab>
               <Tab value="genres">Genres</Tab>

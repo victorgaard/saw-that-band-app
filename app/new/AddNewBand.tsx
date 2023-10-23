@@ -15,6 +15,8 @@ type AddNewBandProps = {
   selectedBand: NewBand | undefined;
 };
 
+type TabType = 'concerts' | 'genres';
+
 function AddNewBand({ selectedBand }: AddNewBandProps) {
   const { addBand } = useBands();
   const { toast } = useContext(ToastContext);
@@ -22,6 +24,7 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
   const router = useRouter();
 
   const [band, setBand] = useState<NewBand>();
+  const [selectedTab, setSelectedTab] = useState<TabType>('concerts');
 
   useEffect(() => {
     setBand(selectedBand);
@@ -62,6 +65,16 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
 
   function addBandToCatalogue() {
     if (!band) return;
+
+    if (band.genre.length === 0) {
+      setSelectedTab('genres');
+      return toast({
+        type: 'error',
+        title: `Genre is missing for ${band.band}`,
+        message: 'Add at least one genre to proceed'
+      });
+    }
+
     addBand(band)
       .then(res => {
         toast({
@@ -113,7 +126,11 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
           </div>
         </div>
         <div>
-          <Tabs defaultValue="concerts">
+          <Tabs
+            defaultValue="concerts"
+            value={selectedTab}
+            onValueChange={value => setSelectedTab(value as TabType)}
+          >
             <TabsList className="-mx-8 flex items-center gap-4 px-8">
               <Tab value="concerts">Concerts</Tab>
               <Tab value="genres">Genres</Tab>
@@ -163,7 +180,7 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
       </div>
       <div className="absolute bottom-0 left-0 right-0 flex flex-col border-t border-zinc-700 bg-zinc-850 p-8 py-6">
         <Button
-          disabled={band.genre.length === 0 || band.concerts.length === 0}
+          disabled={band.concerts.length === 0}
           onClick={addBandToCatalogue}
         >
           Add {band.band} to the catalogue

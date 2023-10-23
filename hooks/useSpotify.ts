@@ -20,7 +20,6 @@ function useSpotify() {
     if (!res.ok) throw new Error('Could not search for bands');
 
     const data: SpotifySearchResults = await res.json();
-    console.log(data);
     return data;
   }, []);
 
