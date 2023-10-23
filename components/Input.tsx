@@ -36,6 +36,7 @@ function Input({
         autoComplete="off"
         data-lpignore={isAuth ? '' : 'true'}
         data-form-type={isAuth ? '' : 'other'}
+        pattern="^\S+.*"
         {...HTMLInputProps}
       />
     </div>

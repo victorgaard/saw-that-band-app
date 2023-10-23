@@ -5,6 +5,17 @@ import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
 function useProfile() {
+  const checkIfUsernameExists = useCallback(async (username: string) => {
+    const { data, error } = await supabase
+      .from('Users')
+      .select('username')
+      .eq('username', username);
+
+    if (error) throw new Error('Could not retrieve the username');
+    if (data.length > 0) return true;
+    return false;
+  }, []);
+
   const createProfileFromUserId = useCallback(
     async (newProfile: NewProfile) => {
       const { data, error } = await supabase.from('Users').insert([newProfile]);
@@ -70,6 +81,7 @@ function useProfile() {
   );
 
   return {
+    checkIfUsernameExists,
     createProfileFromUserId,
     getProfileFromUserId,
     uploadProfilePicture,
