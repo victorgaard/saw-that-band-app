@@ -5,6 +5,25 @@ import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
 function useProfile() {
+  const checkIfUsernameIsReservedAndUserHasRightsToUse = useCallback(
+    async (email: string, username: string) => {
+      const { data, error } = await supabase
+        .from('Waitlist')
+        .select()
+        .eq('username', username);
+
+      if (error) throw new Error('Could not retrieve the username');
+
+      if (data.length === 0) return { hasRightsToUse: true };
+
+      const res = data[0];
+      if (res.email === email) return { hasRightsToUse: true };
+
+      return { hasRightsToUse: false };
+    },
+    []
+  );
+
   const checkIfUsernameExists = useCallback(async (username: string) => {
     const { data, error } = await supabase
       .from('Users')
@@ -81,6 +100,7 @@ function useProfile() {
   );
 
   return {
+    checkIfUsernameIsReservedAndUserHasRightsToUse,
     checkIfUsernameExists,
     createProfileFromUserId,
     getProfileFromUserId,

@@ -26,7 +26,11 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
   const { supabase, setUser: setAuthUser } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
-  const { checkIfUsernameExists, createProfileFromUserId } = useProfile();
+  const {
+    checkIfUsernameIsReservedAndUserHasRightsToUse,
+    checkIfUsernameExists,
+    createProfileFromUserId
+  } = useProfile();
   const router = useRouter();
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -53,6 +57,22 @@ function SignUp() {
       return toast({
         type: 'error',
         title: 'Username is taken',
+        message: 'Please select another username.',
+        direction: 'center'
+      });
+    }
+
+    const usernameIsReserved =
+      await checkIfUsernameIsReservedAndUserHasRightsToUse(
+        user.email,
+        user.username
+      );
+
+    if (!usernameIsReserved.hasRightsToUse) {
+      setLoading(false);
+      return toast({
+        type: 'error',
+        title: 'Username is reserved for another email',
         message: 'Please select another username.',
         direction: 'center'
       });
@@ -88,8 +108,7 @@ function SignUp() {
         toast({
           type: 'success',
           title: 'Account created',
-          message:
-            'Your account was created. Check the link sent to your email to active it.',
+          message: 'Your account was created. Start adding your bands 🤘',
           direction: 'center'
         });
         setAuthUser(res.data.user);
