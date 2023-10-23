@@ -93,7 +93,7 @@ function SignUp() {
           direction: 'center'
         });
         setAuthUser(res.data.user);
-        router.push('/dashboard');
+        router.push('/bands');
       })
       .catch(() => {
         toast({

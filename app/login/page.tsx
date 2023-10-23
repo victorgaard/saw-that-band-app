@@ -27,7 +27,7 @@ export default function Home() {
     }
 
     setUser(res.data.user);
-    return router.push('/dashboard');
+    return router.push('/bands');
   }
 
   return (
