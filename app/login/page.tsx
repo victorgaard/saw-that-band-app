@@ -1,55 +1,76 @@
-"use client";
+'use client';
 
-import { AuthContext } from "@/auth/AuthContext";
-import Button from "@/components/Button";
-import Input from "@/components/Input";
-import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { AuthContext } from '@/auth/AuthContext';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useContext, useState } from 'react';
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const { supabase, setUser } = useContext(AuthContext);
 
   async function handleSubmit() {
+    setError('');
+    setLoading(true);
     const res = await supabase.auth.signInWithPassword({ email, password });
 
     if (res.error) {
-      return setError("Invalid credentials");
+      setLoading(false);
+      return setError('Invalid credentials');
     }
 
     setUser(res.data.user);
-    return router.push("/dashboard");
+    return router.push('/dashboard');
   }
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={e => {
         e.preventDefault();
         handleSubmit();
       }}
-      className="max-w-lg flex flex-col gap-4"
+      className="flex max-w-lg flex-col gap-4"
     >
       Login
       <Input
+        name="email"
         label="Email"
         type="email"
         placeholder="Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={e => setEmail(e.target.value)}
+        isAuth
+        autoFocus
       />
       <Input
+        name="password"
         label="Password"
         type="password"
         placeholder="Password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={e => setPassword(e.target.value)}
+        isAuth
       />
-      <Button type="submit">Login</Button>
-      {error && <p className="text-red-600">{error}</p>}
+      <Button type="submit" loading={loading}>
+        Login
+      </Button>
+      {error && <p className="text-center text-sm text-red-400">{error}</p>}
+      <p className="text-center text-sm">
+        Don&apos;t have an account?{' '}
+        <Link
+          href="/signup"
+          className="text-emerald-300 underline hover:text-emerald-200"
+        >
+          Sign up
+        </Link>
+      </p>
     </form>
   );
 }

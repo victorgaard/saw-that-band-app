@@ -5,6 +5,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   value: string;
   optional?: boolean;
+  isAuth?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -14,6 +15,7 @@ function Input({
   optional = false,
   onChange,
   className,
+  isAuth,
   ...HTMLInputProps
 }: InputProps) {
   return (
@@ -32,8 +34,8 @@ function Input({
           className
         )}
         autoComplete="off"
-        data-lpignore="true"
-        data-form-type="other"
+        data-lpignore={isAuth ? '' : 'true'}
+        data-form-type={isAuth ? '' : 'other'}
         {...HTMLInputProps}
       />
     </div>

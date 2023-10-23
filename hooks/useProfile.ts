@@ -1,10 +1,21 @@
 'use client';
 
-import { ProfileForm } from '@/types/global';
+import { NewProfile, ProfileForm } from '@/types/global';
 import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
 function useProfile() {
+  const createProfileFromUserId = useCallback(
+    async (newProfile: NewProfile) => {
+      const { data, error } = await supabase.from('Users').insert([newProfile]);
+
+      if (error) throw new Error('Could not create profile from this userId');
+
+      return data;
+    },
+    []
+  );
+
   const getProfileFromUserId = useCallback(async (userId: string) => {
     const { data, error } = await supabase
       .from('Users')
@@ -58,7 +69,12 @@ function useProfile() {
     []
   );
 
-  return { getProfileFromUserId, uploadProfilePicture, updateProfile };
+  return {
+    createProfileFromUserId,
+    getProfileFromUserId,
+    uploadProfilePicture,
+    updateProfile
+  };
 }
 
 export default useProfile;

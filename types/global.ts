@@ -158,6 +158,12 @@ export type SpotifySearchResults = {
   };
 };
 
+export type NewProfile = {
+  id: string;
+  email: string;
+  username: string;
+};
+
 export type ExternalLinkProvider =
   | 'spotify'
   | 'youtube'
@@ -180,5 +186,5 @@ export type ProfileForm = {
   email: string;
   username: string;
   bio: string;
-  links: ProfileLink[];
+  links: ProfileLink[] | [];
 };
