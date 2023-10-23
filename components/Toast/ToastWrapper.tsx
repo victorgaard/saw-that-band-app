@@ -7,9 +7,12 @@ import { ToastContext } from './ToastContext';
 function ToastWrapper({ children }: { children: ReactNode }) {
   const [toastObj, setToastObj] = useState<ToastObjProps | undefined>();
 
-  const toast = useCallback(({ type, title, message }: ToastObjProps) => {
-    setToastObj({ type, title, message });
-  }, []);
+  const toast = useCallback(
+    ({ type, title, message, direction }: ToastObjProps) => {
+      setToastObj({ type, title, message, direction });
+    },
+    []
+  );
 
   function dismiss() {
     setToastObj(undefined);
@@ -35,6 +38,7 @@ function ToastWrapper({ children }: { children: ReactNode }) {
             type={toastObj.type}
             title={toastObj.title}
             message={toastObj.message}
+            direction={toastObj.direction}
             dismiss={dismiss}
           />
         )}

@@ -53,7 +53,8 @@ function SignUp() {
       return toast({
         type: 'error',
         title: 'Username is taken',
-        message: 'Please select another username.'
+        message: 'Please select another username.',
+        direction: 'center'
       });
     }
 
@@ -65,14 +66,16 @@ function SignUp() {
         return toast({
           type: 'error',
           title: 'There is an account with this email',
-          message: 'Try logging in instead.'
+          message: 'Try logging in instead.',
+          direction: 'center'
         });
       }
       return toast({
         type: 'error',
         title: 'Account not created',
         message:
-          'There was an error creating your account. Please try again later.'
+          'There was an error creating your account. Please try again later.',
+        direction: 'center'
       });
     }
 
@@ -86,7 +89,8 @@ function SignUp() {
           type: 'success',
           title: 'Account created',
           message:
-            'Your account was created. Check the link sent to your email to active it.'
+            'Your account was created. Check the link sent to your email to active it.',
+          direction: 'center'
         });
         setAuthUser(res.data.user);
         router.push('/dashboard');
@@ -96,7 +100,8 @@ function SignUp() {
           type: 'error',
           title: 'Account not created',
           message:
-            'There was an error creating your account. Please try again later.'
+            'There was an error creating your account. Please try again later.',
+          direction: 'center'
         });
       })
       .finally(() => setLoading(false));

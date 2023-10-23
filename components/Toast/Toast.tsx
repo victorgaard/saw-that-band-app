@@ -12,18 +12,27 @@ export type ToastObjProps = {
   type: 'success' | 'error';
   title: string;
   message: string;
+  direction?: 'left' | 'center';
 };
 
 export type ToastProps = ToastObjProps & {
   dismiss: () => void;
 };
 
-function Toast({ type, title, message, dismiss }: ToastProps) {
+function Toast({
+  type,
+  title,
+  message,
+  direction = 'left',
+  dismiss
+}: ToastProps) {
   return (
     <div
       className={classNames(
-        'fixed bottom-6 left-[102px] z-50 flex max-w-[calc(100%-32px)] items-center justify-between gap-12 overflow-hidden rounded-lg px-4 py-3 pb-4 text-sm text-white',
+        'fixed bottom-6 z-50 flex max-w-[calc(100%-32px)] items-center justify-between gap-12 overflow-hidden rounded-lg px-4 py-3 pb-4 text-sm text-white',
         {
+          'left-[102px]': direction === 'left',
+          'left-[50%] translate-x-[-50%]': direction === 'center',
           'bg-green-600/20 backdrop-blur-lg': type === 'success',
           'bg-red-600/20 backdrop-blur-lg': type === 'error'
         }
