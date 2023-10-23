@@ -68,6 +68,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
               'There was an error loading your bands. Please try again later.'
           })
         );
+      setHasUpdate(false);
     }
   }, [user, hasUpdate, toast, getAllBands]);
 

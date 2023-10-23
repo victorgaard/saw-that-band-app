@@ -6,7 +6,11 @@ import { Tab, TabContent, Tabs, TabsList } from '@/components/Tabs';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useBands from '@/hooks/useBands';
 import { Band, Concert } from '@/types/global';
-import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  LightBulbIcon,
+  TrashIcon,
+  XMarkIcon
+} from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { BandsContext } from '../../layout';
@@ -14,6 +18,7 @@ import EditConcert from '@/components/EditConcert';
 import AddGenre from '@/components/AddGenre';
 import AddConcert from '@/components/AddConcert';
 import Loading from './loading';
+import { useRouter } from 'next/navigation';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -26,11 +31,12 @@ function EditBandPage({ params }: EditBandPageProps) {
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
   const { setHasUpdate } = useContext(BandsContext);
-  const { getBand, updateBand } = useBands();
+  const { getBand, updateBand, deleteBand } = useBands();
 
   const [band, setBand] = useState<Band>();
   const [selectedTab, setSelectedTab] = useState<TabType>('concerts');
   const bandRef = useRef<Band>();
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -105,13 +111,35 @@ function EditBandPage({ params }: EditBandPageProps) {
           message: `${band.band} was successfully updated.`
         });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         toast({
           type: 'error',
           title: 'Band could not be updated',
           message:
             'There was an error updating this band. Please try again later.'
+        });
+      });
+  }
+
+  function onDeleteBand() {
+    if (!user || !band) return;
+
+    deleteBand(user.id, band.id)
+      .then(() => {
+        toast({
+          type: 'success',
+          title: 'Band deleted',
+          message: `${band.band} was successfully deleted.`
+        });
+        setHasUpdate(true);
+        router.push('/bands');
+      })
+      .catch(() => {
+        toast({
+          type: 'error',
+          title: 'Band could not be deleted',
+          message:
+            'There was an error deleting this band. Please try again later.'
         });
       });
   }
@@ -190,10 +218,16 @@ function EditBandPage({ params }: EditBandPageProps) {
           </Tabs>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 flex flex-col border-t border-zinc-700 bg-zinc-850 p-8 py-6">
-        <Button disabled={band === bandRef.current} onClick={editBand}>
-          Save changes to {band.band}
+      <div className="absolute bottom-0 left-0 right-0 flex gap-4 border-t border-zinc-700 bg-zinc-850 p-8 py-6">
+        <Button style="ghost" onClick={onDeleteBand}>
+          <TrashIcon className="h-5 w-5" />
+          Delete
         </Button>
+        <div className="flex w-full flex-col">
+          <Button disabled={band === bandRef.current} onClick={editBand}>
+            Save changes to {band.band}
+          </Button>
+        </div>
       </div>
     </div>
   );

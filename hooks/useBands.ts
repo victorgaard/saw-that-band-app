@@ -52,7 +52,18 @@ function useBands() {
     []
   );
 
-  return { getAllBands, getBand, addBand, updateBand };
+  const deleteBand = useCallback(async (userId: string, bandId: string) => {
+    const { data, error } = await supabase
+      .from('Bands')
+      .delete()
+      .eq('user_id', userId)
+      .eq('id', bandId);
+
+    if (error) throw new Error(`Band could not be deleted: ${error}`);
+    return data;
+  }, []);
+
+  return { getAllBands, getBand, addBand, updateBand, deleteBand };
 }
 
 export default useBands;
