@@ -3,7 +3,7 @@
 import { AuthContext } from '@/auth/AuthContext';
 import {
   ArrowLeftOnRectangleIcon,
-  ChatBubbleBottomCenterTextIcon,
+  ChatBubbleLeftRightIcon,
   PlusCircleIcon,
   TicketIcon,
   UserCircleIcon
@@ -92,7 +92,7 @@ function Sidebar() {
           rel="noreferrer"
           className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded bg-zinc-800 text-zinc-400 transition-colors hover:bg-zinc-700 active:bg-zinc-800"
         >
-          <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
+          <ChatBubbleLeftRightIcon className="h-6 w-6" />
           <Tooltip>Share feedback</Tooltip>
         </a>
         <Link

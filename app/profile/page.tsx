@@ -9,6 +9,7 @@ import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
 import LoadingSpinner from '@/icons/LoadingSpinner';
 import { ExternalLinkProvider, ProfileForm, ProfileLink } from '@/types/global';
+import { LinkIcon } from '@heroicons/react/24/outline';
 import {
   ChangeEvent,
   useCallback,
@@ -180,6 +181,18 @@ function ProfilePage() {
       }}
     >
       <div className="flex h-[calc(100vh-76px)] flex-col gap-24 overflow-auto border-b border-zinc-850 p-12">
+        <div className="flex items-center gap-24">
+          <p className="w-48 text-lg font-medium">Public profile link</p>
+          <a
+            className="flex flex-1 items-center gap-2 text-emerald-300 underline-offset-4 transition-all hover:text-emerald-400 hover:underline"
+            href={`https://${profile.username}.sawthat.band/?utm_source=profilePage`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <LinkIcon className="h-5 w-5" />
+            https://{profile.username}.sawthat.band/
+          </a>
+        </div>
         <div className="flex gap-24">
           <p className="w-48 text-lg font-medium">Picture</p>
           <div className="flex items-center gap-4">
