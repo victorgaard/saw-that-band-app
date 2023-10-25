@@ -6,8 +6,8 @@ import Input from '@/components/Input';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent, useContext, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
 
 type UserForm = {
   email: string;
@@ -15,13 +15,21 @@ type UserForm = {
   username: string;
 };
 
-const INITIAL_USER_FORM = {
-  email: '',
-  password: '',
-  username: ''
-};
-
 function SignUp() {
+  const router = useRouter();
+  const params = useSearchParams();
+  const usernameTemp = params.get('username');
+  const emailTemp = params.get('email');
+
+  const email = useMemo(() => emailTemp, []);
+  const username = useMemo(() => usernameTemp, []);
+
+  const INITIAL_USER_FORM = {
+    email: email || '',
+    password: '',
+    username: username || ''
+  };
+
   const [user, setUser] = useState<UserForm>(INITIAL_USER_FORM);
   const [loading, setLoading] = useState(false);
   const { supabase, setUser: setAuthUser } = useContext(AuthContext);
@@ -31,7 +39,10 @@ function SignUp() {
     checkIfUsernameExists,
     createProfileFromUserId
   } = useProfile();
-  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/signup');
+  }, [email, username, router]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -135,24 +146,29 @@ function SignUp() {
         }}
         className="flex w-full max-w-lg animate-fade-in-down-shorter flex-col gap-4"
       >
-        Sign up
+        <span className="pb-2 text-center text-xl font-semibold">
+          Create your account on Saw that Band 🤘
+        </span>
         <Input
           name="email"
           label="Email"
           type="email"
           placeholder="Email"
-          value={user.email}
+          value={email || user.email}
           onChange={e => handleInputChange(e)}
-          autoFocus
+          disabled={!!email}
+          autoFocus={username ? false : true}
           required
         />
         <Input
           name="password"
-          label="Password"
+          label="Password (min. 8 characters)"
           type="password"
           placeholder="Password"
           value={user.password}
           onChange={e => handleInputChange(e)}
+          autoFocus={username ? true : false}
+          minLength={8}
           required
         />
         <div className="flex flex-col gap-1.5">
@@ -167,11 +183,12 @@ function SignUp() {
             <input
               type="text"
               name="username"
-              value={user.username}
+              value={username || user.username}
               onChange={e => handleUsernameChange(e)}
               placeholder="username"
+              disabled={!!username}
               maxLength={40}
-              className="w-full rounded-lg border border-zinc-600 bg-white/10 p-4 pl-[72px] pr-[132px] text-sm text-white focus:outline-zinc-100/60"
+              className="w-full rounded-lg border border-zinc-600 bg-white/10 p-4 pl-[72px] pr-[132px] text-sm text-white focus:outline-zinc-100/60 disabled:cursor-not-allowed disabled:opacity-50"
               autoComplete="off"
               data-lpignore="true"
               data-form-type="other"
@@ -180,7 +197,7 @@ function SignUp() {
           </div>
         </div>
         <Button type="submit" loading={loading}>
-          Sign up
+          Create account
         </Button>
         <p className="text-center text-sm">
           Already have an account?{' '}

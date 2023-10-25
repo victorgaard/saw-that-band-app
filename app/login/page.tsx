@@ -39,7 +39,7 @@ export default function Home() {
         }}
         className="flex w-full max-w-lg animate-fade-in-up-shorter flex-col gap-4"
       >
-        Login
+        <span className="pb-2 text-center text-xl font-semibold">Login</span>
         <Input
           name="email"
           label="Email"
