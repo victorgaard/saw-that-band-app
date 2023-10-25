@@ -3,6 +3,7 @@
 import { AuthContext } from '@/auth/AuthContext';
 import {
   ArrowLeftOnRectangleIcon,
+  ChatBubbleBottomCenterTextIcon,
   PlusCircleIcon,
   TicketIcon,
   UserCircleIcon
@@ -12,6 +13,7 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import Button from './Button';
+import Tooltip from './Tooltip';
 
 function Sidebar() {
   const { user } = useContext(AuthContext);
@@ -36,9 +38,10 @@ function Sidebar() {
     <div className="relative flex w-20 flex-col items-center justify-between gap-7 p-6">
       <div className="flex flex-col items-center gap-6">
         <div>
-          <Link href="/new">
+          <Link href="/new" className="group relative">
             <Button size="sm">
               <PlusCircleIcon className="h-6 w-6" />
+              <Tooltip>Add new band</Tooltip>
             </Button>
           </Link>
         </div>
@@ -75,18 +78,31 @@ function Sidebar() {
                 >
                   {route.icon}
                 </div>
+                <Tooltip>{route.label}</Tooltip>
               </Link>
             );
           })}
         </div>
       </div>
       <div className="h-full w-[1px] bg-zinc-700/50" />
-      <Link
-        href="/logout"
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-zinc-800 text-zinc-400 transition-colors hover:bg-zinc-700 active:bg-zinc-800"
-      >
-        <ArrowLeftOnRectangleIcon className="h-6 w-6" />
-      </Link>
+      <div className="flex flex-col gap-4">
+        <a
+          href="https://saw-that-band.canny.io/feedback"
+          target="_blank"
+          rel="noreferrer"
+          className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded bg-zinc-800 text-zinc-400 transition-colors hover:bg-zinc-700 active:bg-zinc-800"
+        >
+          <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
+          <Tooltip>Share feedback</Tooltip>
+        </a>
+        <Link
+          href="/logout"
+          className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded bg-zinc-800 text-zinc-400 transition-colors hover:bg-zinc-700 active:bg-zinc-800"
+        >
+          <ArrowLeftOnRectangleIcon className="h-6 w-6" />
+          <Tooltip>Logout</Tooltip>
+        </Link>
+      </div>
       <div className="flex shrink-0 items-end justify-center text-sm text-zinc-600">
         <p className="rotate-180 [writing-mode:vertical-lr]">
           <span className="font-semibold text-zinc-500">
