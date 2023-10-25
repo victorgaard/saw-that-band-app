@@ -60,6 +60,15 @@ function SignUp() {
 
   async function handleSubmit() {
     if (!user.email || !user.password || !user.username) return;
+
+    if (user.password.length < 8)
+      return toast({
+        type: 'error',
+        title: 'Password too short',
+        message: 'Password must have at least 8 characters.',
+        direction: 'center'
+      });
+
     setLoading(true);
     const usernameExists = await checkIfUsernameExists(user.username);
 
@@ -138,7 +147,7 @@ function SignUp() {
   }
 
   return (
-    <div className="-mx-4 -my-8 flex h-screen flex-1 items-center justify-center bg-gradient-to-tl from-zinc-850 to-zinc-900 sm:-mx-12 sm:-my-8">
+    <div className="-mx-4 -my-8 flex h-screen flex-1 items-center justify-center bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 sm:-mx-12 sm:-my-8 sm:px-0">
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -147,7 +156,7 @@ function SignUp() {
         className="flex w-full max-w-lg animate-fade-in-down-shorter flex-col gap-4"
       >
         <span className="pb-2 text-center text-xl font-semibold">
-          Create your account on Saw that Band 🤘
+          Create your account 🤘
         </span>
         <Input
           name="email"
