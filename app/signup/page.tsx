@@ -231,6 +231,24 @@ function SignUp() {
           </Link>
         </p>
       </form>
+      <div className="absolute bottom-6 flex w-full items-center justify-center gap-8 text-sm text-zinc-400">
+        <a
+          href="https://www.sawthat.band/privacy/index.html"
+          target="_blank"
+          rel="noreferrer"
+          className="underline-offset-2 hover:text-white hover:underline"
+        >
+          Privacy policy
+        </a>
+        <a
+          href="https://www.sawthat.band/terms-and-conditions/index.html"
+          target="_blank"
+          rel="noreferrer"
+          className="underline-offset-2 hover:text-white hover:underline"
+        >
+          Terms and conditions
+        </a>
+      </div>
     </div>
   );
 }
