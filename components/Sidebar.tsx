@@ -4,6 +4,7 @@ import { AuthContext } from '@/auth/AuthContext';
 import {
   ArrowLeftOnRectangleIcon,
   ChatBubbleLeftRightIcon,
+  HeartIcon,
   PlusCircleIcon,
   TicketIcon,
   UserCircleIcon
@@ -86,6 +87,15 @@ function Sidebar() {
       </div>
       <div className="h-full w-[1px] bg-zinc-700/50" />
       <div className="flex flex-col gap-4">
+        <a
+          href="https://www.buymeacoffee.com/sawthatband"
+          target="_blank"
+          rel="noreferrer"
+          className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded bg-zinc-800 text-zinc-400 transition-colors hover:bg-zinc-700 active:bg-zinc-800"
+        >
+          <HeartIcon className="h-6 w-6" />
+          <Tooltip>Support us</Tooltip>
+        </a>
         <a
           href="https://saw-that-band.canny.io/feedback"
           target="_blank"
