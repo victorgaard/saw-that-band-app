@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
+import restrictedUsernames from '@/utils/restrictedUsernames';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
@@ -69,6 +70,18 @@ function SignUp() {
         direction: 'center'
       });
 
+    const isRestrictedUsername = restrictedUsernames.some(
+      restrictedUsername => restrictedUsername === user.username
+    );
+
+    if (isRestrictedUsername)
+      return toast({
+        type: 'error',
+        title: 'Restricted username',
+        message: 'Please choose another username.',
+        direction: 'center'
+      });
+
     setLoading(true);
     const usernameExists = await checkIfUsernameExists(user.username);
 
@@ -77,7 +90,7 @@ function SignUp() {
       return toast({
         type: 'error',
         title: 'Username is taken',
-        message: 'Please select another username.',
+        message: 'Please choose another username.',
         direction: 'center'
       });
     }
