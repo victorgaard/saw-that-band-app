@@ -56,7 +56,10 @@ const restrictedUsernames = [
   'amazon',
   'youtube',
   'welcome',
-  'you'
+  'you',
+  'test',
+  'storybook',
+  'tech'
 ];
 
 export default restrictedUsernames;
