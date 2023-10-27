@@ -4,10 +4,15 @@ import { Token } from '@/app/api/spotify/token/route';
 import { SpotifySearchResults } from '@/types/global';
 import { useCallback } from 'react';
 
+export const revalidate = 0;
+
 function useSpotify() {
   const getSpotifyToken = useCallback(async () => {
     const res = await fetch(`/api/spotify/token`, {
-      cache: 'no-store'
+      cache: 'no-store',
+      next: {
+        revalidate: 0
+      }
     });
 
     if (!res.ok) throw new Error('Could not get spotify token');
@@ -20,7 +25,10 @@ function useSpotify() {
     const res = await fetch(
       `/api/spotify/search?token=${token}&band=${query}`,
       {
-        cache: 'no-store'
+        cache: 'no-store',
+        next: {
+          revalidate: 0
+        }
       }
     );
 

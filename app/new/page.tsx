@@ -10,6 +10,9 @@ import useSpotify from '@/hooks/useSpotify';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import LoadingSpinner from '@/icons/LoadingSpinner';
 
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 function NewBandPage() {
   const { getSpotifyToken, search } = useSpotify();
   const { toast } = useContext(ToastContext);
