@@ -30,9 +30,9 @@ function NewBandPage() {
         .catch(() =>
           toast({
             type: 'error',
-            title: 'Server instability',
+            title: 'Spotify server instability',
             message:
-              'There was an error loading this page. Please try again later.'
+              'There was an error connecting with Spotify API. Please try again later.'
           })
         );
     }
