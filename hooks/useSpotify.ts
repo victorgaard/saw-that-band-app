@@ -6,7 +6,9 @@ import { useCallback } from 'react';
 
 function useSpotify() {
   const getSpotifyToken = useCallback(async () => {
-    const res = await fetch(`/api/spotify/token`);
+    const res = await fetch(`/api/spotify/token`, {
+      cache: 'no-store'
+    });
 
     if (!res.ok) throw new Error('Could not get spotify token');
 
@@ -15,7 +17,12 @@ function useSpotify() {
   }, []);
 
   const search = useCallback(async (token: string, query: string) => {
-    const res = await fetch(`/api/spotify/search?token=${token}&band=${query}`);
+    const res = await fetch(
+      `/api/spotify/search?token=${token}&band=${query}`,
+      {
+        cache: 'no-store'
+      }
+    );
 
     if (!res.ok) throw new Error('Could not search for bands');
 
