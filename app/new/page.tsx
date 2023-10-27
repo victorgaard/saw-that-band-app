@@ -9,6 +9,7 @@ import BandResultsCard from './BandResultsCard';
 import useSpotify from '@/hooks/useSpotify';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import LoadingSpinner from '@/icons/LoadingSpinner';
+import SpotifyIcon from '@/components/SpotifyIcon';
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -32,7 +33,7 @@ function NewBandPage() {
             type: 'error',
             title: 'Spotify server instability',
             message:
-              'There was an error connecting with Spotify API. Please try again later.'
+              'There was an issue on our end connecting to Spotify servers. Please try again later.'
           })
         );
     }
@@ -90,8 +91,12 @@ function NewBandPage() {
         </div>
         <div className="max-h-[calc(100vh-80px)] overflow-y-auto [scrollbar-color:#3f3f46_transparent] [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-transparent">
           {!searchLoading && !searchResults && (
-            <div className="flex w-full items-center justify-center pt-24">
-              Search for a band to add to your catalogue
+            <div className="flex w-full flex-col items-center justify-center pt-24">
+              <span>Search for a band to add to your catalogue</span>
+
+              <p className="mt-4 flex items-center gap-2 text-sm text-zinc-400">
+                Results powered by Spotify <SpotifyIcon className="h-5 w-5" />
+              </p>
             </div>
           )}
           {searchLoading && (
@@ -100,7 +105,10 @@ function NewBandPage() {
             </div>
           )}
           {!searchLoading && searchResults?.length === 0 && (
-            <p>No results for {query}</p>
+            <p>
+              No results for {query}. Please keep in mind the band must be
+              registered on Spotify to be listed here.
+            </p>
           )}
           {!searchLoading &&
             searchResults?.map(band => (

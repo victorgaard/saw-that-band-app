@@ -15,6 +15,8 @@ import {
 import { FixedSizeList as BandsReactWindowList } from 'react-window';
 import BandsList from './BandsList';
 import LoadingSpinner from '@/icons/LoadingSpinner';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/Button';
 
 type Context = {
   hasUpdate: boolean;
@@ -31,6 +33,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
   const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
   const { getAllBands } = useBands();
+  const router = useRouter();
   const dashboardBandCardRef = useRef<BandsReactWindowList>(null);
 
   const [bands, setBands] = useState<Bands>();
@@ -52,7 +55,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
           })
         );
     }
-  }, [user, toast, getAllBands]);
+  }, [user, toast, getAllBands, router]);
 
   useEffect(() => {
     if (user && hasUpdate) {
@@ -96,6 +99,16 @@ function DashboardLayout({ children }: { children: ReactNode }) {
   );
 
   if (!filteredBandsList) return <LoadingSpinner />;
+  if (bands?.length === 0)
+    return (
+      <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
+        <span className="text-2xl font-semibold">
+          Welcome to Saw that Band 🤘
+        </span>
+        <span className="text-zinc-400">Start adding your bands today</span>
+        <Button onClick={() => router.push('/new')}>Add new band</Button>
+      </div>
+    );
 
   return (
     <BandsContext.Provider value={{ hasUpdate, setHasUpdate }}>
