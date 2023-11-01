@@ -37,7 +37,6 @@ function AddConcert({ addConcert }: AddConcertProps) {
           value={date}
           onChange={e => setDate(e.target.value)}
           placeholder="dd-mm-yyyy"
-          max={today}
         />
         <div className="flex items-center justify-end gap-2">
           <Button style="ghost" onClick={() => setAdd(false)}>

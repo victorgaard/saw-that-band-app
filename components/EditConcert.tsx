@@ -51,7 +51,6 @@ function EditConcert({
             setDate(e.target.value);
           }}
           placeholder="dd-mm-yyyy"
-          max={today}
         />
         <div className="flex items-center justify-between">
           <Button
