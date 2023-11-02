@@ -112,7 +112,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
 
   return (
     <BandsContext.Provider value={{ hasUpdate, setHasUpdate }}>
-      <div className="-mx-12 -my-8 grid grid-cols-2">
+      <div className="-mx-4 -my-8 grid grid-cols-1 sm:-mx-12 sm:grid-cols-2">
         <BandsList
           query={query}
           setQuery={setQuery}
