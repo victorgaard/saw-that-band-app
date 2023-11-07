@@ -18,7 +18,7 @@ function ForgotPassword() {
 
   const localStorageToken =
     typeof window !== undefined &&
-    localStorage.getItem('sb-guerfzlhzjrpooirzvlf-auth-token');
+    localStorage?.getItem('sb-guerfzlhzjrpooirzvlf-auth-token');
   const token = JSON.parse(localStorageToken || '{}');
   const email = token?.user?.email;
 
