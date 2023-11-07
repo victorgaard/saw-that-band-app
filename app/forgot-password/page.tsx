@@ -2,14 +2,48 @@
 
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { ToastContext } from '@/components/Toast/ToastContext';
+import supabase from '@/utils/supabase';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const { toast } = useContext(ToastContext);
 
-  function handleSubmit() {}
+  const URLtoRedirectTo =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/forgot-password'
+      : 'https://app.sawthat.band/forgot-password';
+
+  async function handleSubmit() {
+    setLoading(true);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: URLtoRedirectTo
+    });
+
+    if (error) {
+      setLoading(false);
+      return toast({
+        type: 'error',
+        title: 'Request password link not sent',
+        message:
+          error.message ||
+          'There was an issue requesting a new password reset link. Please try again in a few.',
+        direction: 'center'
+      });
+    }
+
+    setLoading(false);
+    toast({
+      type: 'success',
+      title: 'Request password link sent',
+      message: 'Check your inbox for the link to reset your password.',
+      direction: 'center'
+    });
+  }
 
   return (
     <div className="-mx-4 -my-8 flex h-screen flex-1 items-center justify-center bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 sm:-mx-12 sm:-my-8 sm:px-0">
