@@ -16,12 +16,6 @@ function ForgotPassword() {
   const { toast } = useContext(ToastContext);
   const router = useRouter();
 
-  const localStorageToken =
-    typeof window !== undefined &&
-    localStorage?.getItem('sb-guerfzlhzjrpooirzvlf-auth-token');
-  const token = JSON.parse(localStorageToken || '{}');
-  const email = token?.user?.email;
-
   useEffect(() => {
     const hash = new URLSearchParams(window.location.hash.split('#')[1]);
     if (hash.size === 0) return setIsValidSession(false);
@@ -30,15 +24,17 @@ function ForgotPassword() {
     return setIsValidSession(false);
   }, []);
 
-  useEffect(() => {
-    setUser({ ...user, email });
-  }, [email]);
-
   async function handleSubmit() {
+    const localStorageToken =
+      typeof window !== undefined &&
+      localStorage?.getItem('sb-guerfzlhzjrpooirzvlf-auth-token');
+    const token = JSON.parse(localStorageToken || '{}');
+    const email = token?.user?.email || '';
+
     setLoading(true);
 
     const { error } = await supabase.auth.updateUser({
-      email: '',
+      email,
       password: user.password1
     });
 
@@ -46,9 +42,10 @@ function ForgotPassword() {
       setLoading(false);
       return toast({
         type: 'error',
-        title: 'Request password link not sent',
+        title: 'Password not reset',
         message:
-          'There was an issue requesting a new password reset link. Please try again.',
+          error.message ||
+          'There was an issue resetting your password. Please try again.',
         direction: 'center'
       });
     }
@@ -56,8 +53,8 @@ function ForgotPassword() {
     setLoading(false);
     toast({
       type: 'success',
-      title: 'Request password link sent',
-      message: 'Check your inbox for the link to reset your password.',
+      title: 'Password reset',
+      message: 'Your password has been reset.',
       direction: 'center'
     });
     router.push('/');

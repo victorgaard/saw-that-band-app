@@ -14,8 +14,8 @@ function ForgotPassword() {
 
   const URLtoRedirectTo =
     process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/forgot-password'
-      : 'https://app.sawthat.band/forgot-password';
+      ? 'http://localhost:3000/reset-password'
+      : 'https://app.sawthat.band/reset-password';
 
   async function handleSubmit() {
     setLoading(true);
