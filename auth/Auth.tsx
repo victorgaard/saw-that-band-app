@@ -13,6 +13,17 @@ function Auth({ children }: { children: ReactNode }) {
   const router = useRouter();
   const path = usePathname();
 
+  const unauthenticatedRoutes = [
+    '/login',
+    '/signup',
+    '/forgot-password',
+    '/reset-password'
+  ];
+
+  const shouldRedirectRoute = unauthenticatedRoutes.some(
+    route => route === path
+  );
+
   const getSession = useCallback(async () => {
     const { data, error } = await supabase.auth.getSession();
 
@@ -41,19 +52,15 @@ function Auth({ children }: { children: ReactNode }) {
       typeof window !== undefined &&
       !localStorage.getItem('sb-guerfzlhzjrpooirzvlf-auth-token') &&
       !user &&
-      path !== '/signup'
+      !shouldRedirectRoute
     ) {
       router.push('/login');
     }
 
-    if (
-      (user && path === '/') ||
-      (user && path === '/login') ||
-      (user && path === '/signup')
-    ) {
+    if ((user && path === '/') || (user && shouldRedirectRoute)) {
       router.push('/bands');
     }
-  }, [user, router, path, getSession]);
+  }, [user, router, path, shouldRedirectRoute, getSession]);
 
   return (
     <AuthContext.Provider value={{ supabase, user, setUser }}>

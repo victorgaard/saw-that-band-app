@@ -37,30 +37,40 @@ export default function Home() {
           e.preventDefault();
           handleSubmit();
         }}
-        className="flex w-full max-w-lg animate-fade-in-up-shorter flex-col gap-4"
+        className="flex w-full max-w-lg animate-fade-in-up-shorter flex-col gap-6"
       >
         <span className="pb-2 text-center text-xl font-semibold">Login</span>
         <Input
           name="email"
           label="Email"
           type="email"
-          placeholder="Email"
+          placeholder="email@example.com"
           value={email}
           onChange={e => setEmail(e.target.value)}
           isAuth
           autoFocus
           required
         />
-        <Input
-          name="password"
-          label="Password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          isAuth
-          required
-        />
+        <div className="relative">
+          <Input
+            name="password"
+            label="Password"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            isAuth
+            required
+          />
+          <p className="absolute right-0 top-0 text-sm">
+            <Link
+              href="/forgot-password"
+              className="text-emerald-300 underline hover:text-emerald-200"
+            >
+              Forgot password?
+            </Link>
+          </p>
+        </div>
         <Button type="submit" loading={loading}>
           Login
         </Button>

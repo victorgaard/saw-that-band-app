@@ -166,7 +166,7 @@ function SignUp() {
           e.preventDefault();
           handleSubmit();
         }}
-        className="flex w-full max-w-lg animate-fade-in-down-shorter flex-col gap-4"
+        className="flex w-full max-w-lg animate-fade-in-down-shorter flex-col gap-6"
       >
         <span className="pb-2 text-center text-xl font-semibold">
           Create your account 🤘
@@ -175,7 +175,7 @@ function SignUp() {
           name="email"
           label="Email"
           type="email"
-          placeholder="Email"
+          placeholder="email@example.com"
           value={email || user.email}
           onChange={e => handleInputChange(e)}
           disabled={!!email}
@@ -186,7 +186,7 @@ function SignUp() {
           name="password"
           label="Password (min. 8 characters)"
           type="password"
-          placeholder="Password"
+          placeholder="password"
           value={user.password}
           onChange={e => handleInputChange(e)}
           autoFocus={username ? true : false}
