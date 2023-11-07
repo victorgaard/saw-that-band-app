@@ -5,6 +5,7 @@ import Input from '@/components/Input';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import LoadingSpinner from '@/icons/LoadingSpinner';
 import supabase from '@/utils/supabase';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
@@ -13,6 +14,7 @@ function ForgotPassword() {
   const [user, setUser] = useState({ email: '', password1: '', password2: '' });
   const [loading, setLoading] = useState(false);
   const [isValidSession, setIsValidSession] = useState<boolean | undefined>();
+  const [passwordToggle, setPasswordToggle] = useState(false);
   const { toast } = useContext(ToastContext);
   const router = useRouter();
 
@@ -25,6 +27,14 @@ function ForgotPassword() {
   }, []);
 
   async function handleSubmit() {
+    if (user.password1 !== user.password2)
+      return toast({
+        type: 'error',
+        title: 'Passwords do not match',
+        message: 'Passwords must match',
+        direction: 'center'
+      });
+
     const localStorageToken =
       typeof window !== undefined &&
       localStorage?.getItem('sb-guerfzlhzjrpooirzvlf-auth-token');
@@ -93,26 +103,59 @@ function ForgotPassword() {
         <span className="pb-2 text-center text-xl font-semibold">
           Reset password
         </span>
-        <Input
-          name="password1"
-          label="Password"
-          type="password"
-          placeholder="password"
-          value={user.password1}
-          onChange={e => setUser({ ...user, [e.target.name]: e.target.value })}
-          isAuth
-          required
-        />
-        <Input
-          name="password2"
-          label="Confirm password"
-          type="password"
-          placeholder="password"
-          value={user.password2}
-          onChange={e => setUser({ ...user, [e.target.name]: e.target.value })}
-          isAuth
-          required
-        />
+        <div className="relative">
+          <Input
+            name="password1"
+            label="Password"
+            type={passwordToggle ? 'text' : 'password'}
+            placeholder="password"
+            value={user.password1}
+            onChange={e =>
+              setUser({ ...user, [e.target.name]: e.target.value })
+            }
+            minLength={8}
+            isAuth
+            required
+            autoFocus
+          />
+          <button
+            type="button"
+            className="absolute bottom-4 right-4"
+            onClick={() => setPasswordToggle(!passwordToggle)}
+          >
+            {passwordToggle ? (
+              <EyeSlashIcon className="h-5 w-5" />
+            ) : (
+              <EyeIcon className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+        <div className="relative">
+          <Input
+            name="password2"
+            label="Confirm password"
+            type={passwordToggle ? 'text' : 'password'}
+            placeholder="password"
+            value={user.password2}
+            minLength={8}
+            onChange={e =>
+              setUser({ ...user, [e.target.name]: e.target.value })
+            }
+            isAuth
+            required
+          />
+          <button
+            type="button"
+            className="absolute bottom-4 right-4"
+            onClick={() => setPasswordToggle(!passwordToggle)}
+          >
+            {passwordToggle ? (
+              <EyeSlashIcon className="h-5 w-5" />
+            ) : (
+              <EyeIcon className="h-5 w-5" />
+            )}
+          </button>
+        </div>
         <Button type="submit" loading={loading}>
           Reset password
         </Button>

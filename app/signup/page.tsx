@@ -6,6 +6,7 @@ import Input from '@/components/Input';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
 import restrictedUsernames from '@/utils/restrictedUsernames';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
@@ -33,6 +34,7 @@ function SignUp() {
 
   const [user, setUser] = useState<UserForm>(INITIAL_USER_FORM);
   const [loading, setLoading] = useState(false);
+  const [passwordToggle, setPasswordToggle] = useState(false);
   const { supabase, setUser: setAuthUser } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
   const {
@@ -182,17 +184,30 @@ function SignUp() {
           autoFocus={username ? false : true}
           required
         />
-        <Input
-          name="password"
-          label="Password (min. 8 characters)"
-          type="password"
-          placeholder="password"
-          value={user.password}
-          onChange={e => handleInputChange(e)}
-          autoFocus={username ? true : false}
-          minLength={8}
-          required
-        />
+        <div className="relative">
+          <Input
+            name="password"
+            label="Password (min. 8 characters)"
+            type={passwordToggle ? 'text' : 'password'}
+            placeholder="password"
+            value={user.password}
+            onChange={e => handleInputChange(e)}
+            autoFocus={username ? true : false}
+            minLength={8}
+            required
+          />{' '}
+          <button
+            type="button"
+            className="absolute bottom-4 right-4"
+            onClick={() => setPasswordToggle(!passwordToggle)}
+          >
+            {passwordToggle ? (
+              <EyeSlashIcon className="h-5 w-5" />
+            ) : (
+              <EyeIcon className="h-5 w-5" />
+            )}
+          </button>
+        </div>
         <div className="flex flex-col gap-1.5">
           <p className="text-sm text-zinc-400">Username</p>
           <div className="relative">

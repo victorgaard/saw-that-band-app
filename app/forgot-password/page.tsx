@@ -12,11 +12,16 @@ function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const { toast } = useContext(ToastContext);
 
+  const URLToRedirectTo =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/reset-password'
+      : 'https://app.sawthat.band/reset-password';
+
   async function handleSubmit() {
     setLoading(true);
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://app.sawthat.band/reset-password'
+      redirectTo: URLToRedirectTo
     });
 
     if (error) {

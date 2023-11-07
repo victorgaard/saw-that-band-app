@@ -3,6 +3,7 @@
 import { AuthContext } from '@/auth/AuthContext';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
@@ -12,6 +13,7 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [passwordToggle, setPasswordToggle] = useState(false);
 
   const router = useRouter();
   const { supabase, setUser } = useContext(AuthContext);
@@ -55,13 +57,24 @@ export default function Home() {
           <Input
             name="password"
             label="Password"
-            type="password"
+            type={passwordToggle ? 'text' : 'password'}
             placeholder="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             isAuth
             required
           />
+          <button
+            type="button"
+            className="absolute bottom-4 right-4"
+            onClick={() => setPasswordToggle(!passwordToggle)}
+          >
+            {passwordToggle ? (
+              <EyeSlashIcon className="h-5 w-5" />
+            ) : (
+              <EyeIcon className="h-5 w-5" />
+            )}
+          </button>
           <p className="absolute right-0 top-0 text-sm">
             <Link
               href="/forgot-password"
