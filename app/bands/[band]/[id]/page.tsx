@@ -42,6 +42,8 @@ function EditBandPage({ params }: EditBandPageProps) {
 
   const [band, setBand] = useState<Band>();
   const [selectedTab, setSelectedTab] = useState<TabType>('concerts');
+  const [isDeletingBand, setIsDeletingBand] = useState(false);
+
   const bandRef = useRef<Band>();
   const router = useRouter();
 
@@ -134,6 +136,8 @@ function EditBandPage({ params }: EditBandPageProps) {
   function onDeleteBand() {
     if (!user || !band) return;
 
+    setIsDeletingBand(true);
+
     deleteBand(user.id, band.id)
       .then(() => {
         toast({
@@ -151,7 +155,8 @@ function EditBandPage({ params }: EditBandPageProps) {
           message:
             'There was an error deleting this band. Please try again later.'
         });
-      });
+      })
+      .finally(() => setIsDeletingBand(false));
   }
 
   if (!band) return <Loading />;
@@ -252,8 +257,26 @@ function EditBandPage({ params }: EditBandPageProps) {
         </div>
       </div>
       <Modal isOpen={isDeleteModalOpen} close={closeDeleteModal}>
-        Are you sure you want to delete?
-        <ModalFooter>Hello</ModalFooter>
+        <p className="text-lg font-medium text-white">Delete {band.band}</p>
+        <p className="mt-4 text-sm text-zinc-300">
+          Are you sure you want to delete {band.band} from your catalogue?
+        </p>
+        <p className="mt-4 text-sm text-zinc-300">
+          Keep in mind that all concerts from {band.band} will be deleted as
+          well in the process.
+        </p>
+        <ModalFooter>
+          <Button style="ghost" onClick={closeDeleteModal}>
+            Cancel
+          </Button>
+          <Button
+            style="delete"
+            onClick={onDeleteBand}
+            loading={isDeletingBand}
+          >
+            Delete {band.band}
+          </Button>
+        </ModalFooter>
       </Modal>
     </div>
   );
