@@ -19,7 +19,8 @@ import AddGenre from '@/components/AddGenre';
 import AddConcert from '@/components/AddConcert';
 import Loading from './loading';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import useIsOpen from '@/hooks/useIsOpen';
+import { Modal, ModalFooter } from '@/components/Modal';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -33,6 +34,11 @@ function EditBandPage({ params }: EditBandPageProps) {
   const { toast } = useContext(ToastContext);
   const { setHasUpdate } = useContext(BandsContext);
   const { getBand, updateBand, deleteBand } = useBands();
+  const {
+    isOpen: isDeleteModalOpen,
+    open: openDeleteModal,
+    close: closeDeleteModal
+  } = useIsOpen();
 
   const [band, setBand] = useState<Band>();
   const [selectedTab, setSelectedTab] = useState<TabType>('concerts');
@@ -232,7 +238,7 @@ function EditBandPage({ params }: EditBandPageProps) {
         </div>
       </div>
       <div className="fixed bottom-0 left-0 right-0 z-40 -mx-4 flex gap-4 border-t border-zinc-700 bg-zinc-800 p-6 pr-8 sm:absolute sm:mx-0 sm:bg-zinc-850 sm:p-8">
-        <Button style="ghost" onClick={onDeleteBand}>
+        <Button style="ghost" onClick={openDeleteModal}>
           <TrashIcon className="h-5 w-5" />
           {!isMobile && 'Delete'}
         </Button>
@@ -245,6 +251,10 @@ function EditBandPage({ params }: EditBandPageProps) {
           </Button>
         </div>
       </div>
+      <Modal isOpen={isDeleteModalOpen} close={closeDeleteModal}>
+        Are you sure you want to delete?
+        <ModalFooter>Hello</ModalFooter>
+      </Modal>
     </div>
   );
 }
