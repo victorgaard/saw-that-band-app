@@ -24,6 +24,9 @@ function NewBandPage() {
   const [selectedBand, setSelectedBand] = useState<NewBand>();
   const [searchLoading, setSearchLoading] = useState(false);
 
+  const width = (typeof window !== 'undefined' && window.innerWidth) || 0;
+  const isMobile = width < 640;
+
   useEffect(() => {
     if (!spotifyToken) {
       getSpotifyToken()
@@ -121,7 +124,7 @@ function NewBandPage() {
             ))}
         </div>
       </div>
-      <AddNewBand selectedBand={selectedBand} />
+      <AddNewBand selectedBand={selectedBand} isMobile={isMobile} />
     </div>
   );
 }

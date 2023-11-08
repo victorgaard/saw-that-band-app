@@ -13,11 +13,12 @@ import { useContext, useEffect, useState } from 'react';
 
 type AddNewBandProps = {
   selectedBand: NewBand | undefined;
+  isMobile: boolean;
 };
 
 type TabType = 'concerts' | 'genres';
 
-function AddNewBand({ selectedBand }: AddNewBandProps) {
+function AddNewBand({ selectedBand, isMobile }: AddNewBandProps) {
   const { addBand } = useBands();
   const { toast } = useContext(ToastContext);
 
@@ -145,6 +146,7 @@ function AddNewBand({ selectedBand }: AddNewBandProps) {
                       numOfConcerts={band.concerts.length}
                       editConcert={editConcert}
                       deleteConcert={deleteConcert}
+                      isMobile={isMobile}
                     />
                   </div>
                 ))}
