@@ -46,7 +46,7 @@ function ForgotPassword() {
   }
 
   return (
-    <div className="-mx-4 -my-8 flex h-screen flex-1 items-center justify-center bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 sm:-mx-12 sm:-my-8 sm:px-0">
+    <div className="-mx-4 -my-8 flex h-[100dvh] flex-1 items-center justify-center bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 sm:-mx-12 sm:-my-8 sm:h-screen sm:px-0">
       <form
         onSubmit={e => {
           e.preventDefault();

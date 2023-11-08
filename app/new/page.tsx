@@ -77,7 +77,7 @@ function NewBandPage() {
   }
 
   return (
-    <div className="-mx-12 -my-8 grid h-screen grid-cols-2">
+    <div className="-mx-12 -my-8 grid h-[100dvh] grid-cols-2 sm:h-screen">
       <div className="border-r border-zinc-700">
         <div className="relative flex h-[80px] w-full items-center justify-between border-b border-zinc-700 bg-zinc-870/70 pr-6 text-sm">
           <MagnifyingGlassIcon className="absolute left-6 h-4 w-4 text-zinc-500" />

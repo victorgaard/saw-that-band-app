@@ -67,14 +67,14 @@ function ForgotPassword() {
 
   if (isValidSession === undefined)
     return (
-      <div className="-mx-4 -my-8 flex h-screen flex-1 flex-col items-center justify-center gap-8 bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 text-sm sm:-mx-12 sm:-my-8 sm:px-0">
+      <div className="-mx-4 -my-8 flex h-[100dvh] flex-1 flex-col items-center justify-center gap-8 bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 text-sm sm:-mx-12 sm:-my-8 sm:h-screen sm:px-0">
         <LoadingSpinner />
       </div>
     );
 
   if (isValidSession === false)
     return (
-      <div className="-mx-4 -my-8 flex h-screen flex-1 flex-col items-center justify-center gap-8 bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 text-sm sm:-mx-12 sm:-my-8 sm:px-0">
+      <div className="-mx-4 -my-8 flex h-[100dvh] flex-1 flex-col items-center justify-center gap-8 bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 text-sm sm:-mx-12 sm:-my-8 sm:h-screen sm:px-0">
         This reset password link is either invalid or has expired. Please
         request a new one.
         <Link
@@ -87,7 +87,7 @@ function ForgotPassword() {
     );
 
   return (
-    <div className="-mx-4 -my-8 flex h-screen flex-1 items-center justify-center bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 sm:-mx-12 sm:-my-8 sm:px-0">
+    <div className="-mx-4 -my-8 flex h-[100dvh] flex-1 items-center justify-center bg-gradient-to-tl from-zinc-850 to-zinc-900 px-4 sm:-mx-12 sm:-my-8 sm:h-screen sm:px-0">
       <form
         onSubmit={e => {
           e.preventDefault();

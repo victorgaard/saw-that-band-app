@@ -104,7 +104,7 @@ function DashboardLayout({ children }: { children: ReactNode }) {
   if (!filteredBandsList) return <LoadingSpinner />;
   if (bands?.length === 0)
     return (
-      <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
+      <div className="flex h-[100dvh] w-full flex-col items-center justify-center gap-4 sm:h-screen">
         <span className="text-2xl font-semibold">
           Welcome to Saw that Band 🤘
         </span>

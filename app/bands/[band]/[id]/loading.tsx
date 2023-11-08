@@ -1,6 +1,6 @@
 function Loading() {
   return (
-    <div className="flex h-screen flex-col justify-between bg-zinc-850 p-4 sm:p-8">
+    <div className="flex h-[100dvh] flex-col justify-between bg-zinc-850 p-4 sm:h-screen sm:p-8">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-6">
           <div className="h-[128px] w-[128px] shrink-0 rounded-lg bg-zinc-600 object-cover shadow-2xl" />
