@@ -77,10 +77,10 @@ function NewBandPage() {
   }
 
   return (
-    <div className="-mx-12 -my-8 grid h-[100dvh] grid-cols-2 sm:h-screen">
-      <div className="border-r border-zinc-700">
+    <div className="-mx-4 -my-8 grid h-[100dvh] grid-cols-1 sm:-mx-12 sm:h-screen sm:grid-cols-2">
+      <div className="border-zinc-700 sm:border-r">
         <div className="relative flex h-[80px] w-full items-center justify-between border-b border-zinc-700 bg-zinc-870/70 pr-6 text-sm">
-          <MagnifyingGlassIcon className="absolute left-6 h-4 w-4 text-zinc-500" />
+          <MagnifyingGlassIcon className="absolute left-6 hidden h-4 w-4 text-zinc-500 sm:block" />
           <input
             onChange={e => {
               setQuery(e.currentTarget.value);
@@ -88,7 +88,7 @@ function NewBandPage() {
             value={query}
             placeholder="Search for the band name"
             className={classNames(
-              'h-full w-full shrink-0 bg-transparent pl-14 pr-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400'
+              'h-full w-full shrink-0 bg-transparent p-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400 sm:pl-14'
             )}
           />
         </div>
@@ -119,6 +119,7 @@ function NewBandPage() {
                 key={band.id}
                 band={band}
                 selectedBand={selectedBand}
+                isMobile={isMobile}
                 onClick={() => pickBand(band)}
               />
             ))}

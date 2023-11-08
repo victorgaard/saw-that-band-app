@@ -25,7 +25,7 @@ function BandsListSearch({
         value={query}
         placeholder="Search for band, genre, year or location"
         className={classNames(
-          'h-full w-[90.5%] shrink-0 bg-transparent pl-6 pr-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400 sm:pl-14',
+          'h-full w-[90.5%] shrink-0 bg-transparent p-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400 sm:pl-14',
           {
             'md:w-[50%]': query,
             'md:w-full': !query
