@@ -3,13 +3,15 @@ import Input from '@/components/Input';
 import { Concert } from '@/types/global';
 import yearMonthDayToDayMonthYear from '@/utils/yearMonthDayToDayMonthYear';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 
 type AddConcertProps = {
   addConcert: (newConcert: Concert) => void;
+  isMobile: boolean;
 };
 
-function AddConcert({ addConcert }: AddConcertProps) {
+function AddConcert({ addConcert, isMobile }: AddConcertProps) {
   const [add, setAdd] = useState(false);
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
@@ -22,7 +24,14 @@ function AddConcert({ addConcert }: AddConcertProps) {
 
   if (add)
     return (
-      <div className="flex flex-col gap-4 rounded-lg bg-zinc-700 p-6">
+      <div
+        className={classNames(
+          'flex flex-col gap-4 rounded-lg bg-zinc-700 p-6',
+          {
+            'fixed inset-0 z-50': isMobile
+          }
+        )}
+      >
         <p className="font-medium">Add new concert</p>
         <Input
           label="Location"

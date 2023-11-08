@@ -155,7 +155,7 @@ function AddNewBand({
                     />
                   </div>
                 ))}
-                <AddConcert addConcert={addConcert} />
+                <AddConcert addConcert={addConcert} isMobile={isMobile} />
               </div>
             </TabContent>
             <TabContent value="genres">

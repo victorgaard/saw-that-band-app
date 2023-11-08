@@ -5,6 +5,7 @@ import dayMonthYearToFullDateStyle from '@/utils/dayMonthYearToFullDateStyle';
 import dayMonthYearToYearMonthDay from '@/utils/dayMonthYearToYearMonthDay';
 import yearMonthDayToDayMonthYear from '@/utils/yearMonthDayToDayMonthYear';
 import { TrashIcon } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 
 type EditConcertProps = {
@@ -36,7 +37,14 @@ function EditConcert({
 
   if (edit)
     return (
-      <div className="flex flex-col gap-4 rounded-lg bg-zinc-700 p-6">
+      <div
+        className={classNames(
+          'flex flex-col gap-4 rounded-lg bg-zinc-700 p-6',
+          {
+            'fixed inset-0 z-50': isMobile
+          }
+        )}
+      >
         <p className="font-medium">Edit concert</p>
         <Input
           label="Location"

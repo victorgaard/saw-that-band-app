@@ -30,6 +30,7 @@ function AddGenre({ addGenre }: AddGenreProps) {
       onKeyDown={handleKeyDown}
       placeholder="new genre..."
       className="h-[34px] min-w-[200px] flex-1 bg-transparent focus:border-0 focus:outline-none"
+      autoCapitalize="off"
       autoComplete="off"
       data-lpignore="true"
       data-form-type="other"
