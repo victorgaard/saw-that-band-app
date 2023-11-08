@@ -28,7 +28,7 @@ function AddConcert({ addConcert, isMobile }: AddConcertProps) {
         className={classNames(
           'flex flex-col gap-4 rounded-lg bg-zinc-700 p-6',
           {
-            'fixed inset-0 z-50': isMobile
+            'fixed inset-0 z-50 animate-fade-in-up-shorter': isMobile
           }
         )}
       >

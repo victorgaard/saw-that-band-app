@@ -104,7 +104,7 @@ function AddNewBand({
 
   return (
     <div className="relative bg-zinc-850 p-4 sm:p-8">
-      <div className="-my-8 -mr-8 flex h-[calc(100dvh-130px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)]">
+      <div className="-my-8 -mr-8 flex h-[calc(100dvh-130px)] animate-fade-in-left-no-forwards flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)] sm:animate-none">
         <div className="flex items-center gap-6">
           {band.picture && (
             <Image
