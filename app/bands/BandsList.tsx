@@ -22,6 +22,9 @@ function BandsList({
   dashboardBandCardRef,
   setQuery
 }: BandsListProps) {
+  const width = (typeof window !== 'undefined' && window.innerWidth) || 0;
+  const isMobile = width < 640;
+
   return (
     <div className="relative border-zinc-700 sm:border-r">
       <BandsListSearch
@@ -56,14 +59,14 @@ function BandsList({
         </div>
       )}
 
-      <div className="h-[calc(100vh-80px)] w-full">
+      <div className="h-[calc(100dvh-160px)] w-full sm:h-[calc(100vh-80px)]">
         <AutoSizer>
           {({ height, width }: { height: number; width: number }) => (
             <BandsReactWindowList
               ref={dashboardBandCardRef}
               width={width}
               height={height}
-              itemSize={160}
+              itemSize={isMobile ? 130 : 160}
               itemCount={filteredBandsList.length}
               className="[scrollbar-color:#3f3f46_transparent] [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-transparent"
             >

@@ -18,7 +18,7 @@ function BandCard({ band, setQuery }: BandCardProps) {
       <div
         onClick={() => router.push(`/bands/${bandNameFormatted}/${band.id}`)}
         className={classNames(
-          'group flex h-[160px] w-full cursor-pointer items-center gap-6 p-6 text-white sm:gap-8',
+          'group flex h-[130px] w-full cursor-pointer items-center gap-6 p-4 text-white sm:h-[160px] sm:gap-8 sm:p-6',
           {
             'bg-gradient-to-tr from-zinc-100/10 to-zinc-500/10 to-50%':
               path.includes(band.id),
@@ -40,7 +40,7 @@ function BandCard({ band, setQuery }: BandCardProps) {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col sm:gap-0">
-            <span className="text-xl font-semibold text-zinc-300 transition-colors group-hover:text-white sm:text-lg">
+            <span className="text-lg font-semibold text-zinc-300 transition-colors group-hover:text-white">
               {band.band}
             </span>
             <p className="mt-0.5 flex flex-col text-sm text-zinc-400 transition-colors group-hover:text-zinc-300 sm:flex-row sm:gap-1">
