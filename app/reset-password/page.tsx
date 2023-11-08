@@ -19,10 +19,12 @@ function ForgotPassword() {
   const router = useRouter();
 
   useEffect(() => {
-    const hash = new URLSearchParams(window.location.hash.split('#')[1]);
-    if (hash.size === 0) return setIsValidSession(false);
-    const hasToken = hash.get('access_token');
-    if (hasToken) return setIsValidSession(true);
+    supabase.auth.onAuthStateChange(async event => {
+      if (event == 'PASSWORD_RECOVERY') {
+        return setIsValidSession(true);
+      }
+    });
+
     return setIsValidSession(false);
   }, []);
 
