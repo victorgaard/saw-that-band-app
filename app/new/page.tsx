@@ -76,6 +76,21 @@ function NewBandPage() {
     setSelectedBand(band);
   }
 
+  function resetBandPicked() {
+    setSelectedBand(undefined);
+  }
+
+  if (isMobile && selectedBand)
+    return (
+      <div className="-mx-4 -my-8 grid h-[100dvh] grid-cols-1 sm:-mx-12 sm:h-screen sm:grid-cols-2">
+        <AddNewBand
+          selectedBand={selectedBand}
+          isMobile={isMobile}
+          resetBandPicked={resetBandPicked}
+        />
+      </div>
+    );
+
   return (
     <div className="-mx-4 -my-8 grid h-[100dvh] grid-cols-1 sm:-mx-12 sm:h-screen sm:grid-cols-2">
       <div className="border-zinc-700 sm:border-r">
@@ -125,7 +140,11 @@ function NewBandPage() {
             ))}
         </div>
       </div>
-      <AddNewBand selectedBand={selectedBand} isMobile={isMobile} />
+      <AddNewBand
+        selectedBand={selectedBand}
+        isMobile={isMobile}
+        resetBandPicked={resetBandPicked}
+      />
     </div>
   );
 }

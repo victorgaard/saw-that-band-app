@@ -154,13 +154,21 @@ function EditBandPage({ params }: EditBandPageProps) {
     <div className="relative bg-zinc-850 p-4 sm:p-8">
       <div className="-my-8 -mr-8 flex h-[calc(100dvh-130px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)]">
         <div className="flex items-center gap-6">
-          <Image
-            src={band.picture}
-            width={128}
-            height={128}
-            alt={band.band}
-            className="h-[128px] w-[128px] shrink-0 rounded-lg bg-zinc-600 object-cover shadow-2xl"
-          />
+          {band.picture && (
+            <Image
+              width={112}
+              height={112}
+              src={band.picture}
+              alt={band.band}
+              className="h-[112px] w-[112px] rounded-lg object-cover"
+              priority
+            />
+          )}
+          {!band.picture && (
+            <div className="flex h-[112px] w-[112px] items-center justify-center rounded-lg bg-zinc-870 text-5xl text-zinc-400">
+              {band.band[0]}
+            </div>
+          )}
           <div className="flex flex-col gap-2">
             <p className="text-2xl font-semibold sm:text-4xl">{band.band}</p>
             <p className="text-sm text-zinc-400">
@@ -228,7 +236,7 @@ function EditBandPage({ params }: EditBandPageProps) {
           <TrashIcon className="h-5 w-5" />
           {!isMobile && 'Delete'}
         </Button>
-        <Button style="outline" onClick={() => router.back()}>
+        <Button style="outline" onClick={() => router.push('/bands')}>
           Cancel
         </Button>
         <div className="flex w-full flex-col">

@@ -14,11 +14,16 @@ import { useContext, useEffect, useState } from 'react';
 type AddNewBandProps = {
   selectedBand: NewBand | undefined;
   isMobile: boolean;
+  resetBandPicked: () => void;
 };
 
 type TabType = 'concerts' | 'genres';
 
-function AddNewBand({ selectedBand, isMobile }: AddNewBandProps) {
+function AddNewBand({
+  selectedBand,
+  isMobile,
+  resetBandPicked
+}: AddNewBandProps) {
   const { addBand } = useBands();
   const { toast } = useContext(ToastContext);
 
@@ -98,8 +103,8 @@ function AddNewBand({ selectedBand, isMobile }: AddNewBandProps) {
   if (!band) return null;
 
   return (
-    <div className="relative bg-zinc-850 p-8">
-      <div className="-my-8 -mr-8 flex h-[calc(100vh-101px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8">
+    <div className="relative bg-zinc-850 p-4 sm:p-8">
+      <div className="-my-8 -mr-8 flex h-[calc(100dvh-130px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)]">
         <div className="flex items-center gap-6">
           {band.picture && (
             <Image
@@ -107,7 +112,7 @@ function AddNewBand({ selectedBand, isMobile }: AddNewBandProps) {
               height={112}
               src={band.picture}
               alt={band.band}
-              className="h-[112px] w-[112px] object-cover"
+              className="h-[112px] w-[112px] rounded-lg object-cover"
               priority
             />
           )}
@@ -117,7 +122,7 @@ function AddNewBand({ selectedBand, isMobile }: AddNewBandProps) {
             </div>
           )}
           <div className="flex flex-col gap-2">
-            <p className="text-4xl font-semibold">{band.band}</p>
+            <p className="text-2xl font-semibold sm:text-4xl">{band.band}</p>
             {band.concerts.length !== 0 && (
               <p className="text-sm text-zinc-400">
                 Seen live {band.concerts.length}{' '}
@@ -180,13 +185,18 @@ function AddNewBand({ selectedBand, isMobile }: AddNewBandProps) {
           </Tabs>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 flex flex-col border-t border-zinc-700 bg-zinc-850 p-8 py-6">
-        <Button
-          disabled={band.concerts.length === 0}
-          onClick={addBandToCatalogue}
-        >
-          Add {band.band} to the catalogue
+      <div className="relative bottom-0 left-0 right-0 -mx-4 flex gap-4 border-t border-zinc-700 bg-zinc-800 p-4 py-6 sm:absolute sm:mx-0 sm:bg-zinc-850 sm:p-8">
+        <Button style="outline" onClick={resetBandPicked}>
+          Cancel
         </Button>
+        <div className="flex w-full flex-col">
+          <Button
+            disabled={band.concerts.length === 0}
+            onClick={addBandToCatalogue}
+          >
+            Add {band.band} {!isMobile && 'to the catalogue'}
+          </Button>
+        </div>
       </div>
     </div>
   );
