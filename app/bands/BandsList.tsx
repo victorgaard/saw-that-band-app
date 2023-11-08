@@ -23,7 +23,7 @@ function BandsList({
   setQuery
 }: BandsListProps) {
   return (
-    <div className="relative border-r border-zinc-700">
+    <div className="relative border-zinc-700 sm:border-r">
       <BandsListSearch
         query={query}
         setQuery={setQuery}

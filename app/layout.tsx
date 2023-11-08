@@ -3,6 +3,7 @@ import './globals.css';
 import { Poppins } from 'next/font/google';
 import ToastWrapper from '@/components/Toast/ToastWrapper';
 import Sidebar from '@/components/Sidebar';
+import SidebarMobile from '@/components/SidebarMobile';
 
 const font = Poppins({
   subsets: ['latin'],
@@ -81,6 +82,9 @@ export default function RootLayout({
               </div>
             </main>
           </ToastWrapper>
+          <div className="sm:hidden">
+            <SidebarMobile />
+          </div>
         </body>
       </html>
     </Auth>
