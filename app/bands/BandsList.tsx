@@ -13,6 +13,7 @@ type BandsListProps = {
   query: string;
   filteredBandsList: Bands;
   dashboardBandCardRef: RefObject<BandsReactWindowList<any>>;
+  isMobile: boolean;
   setQuery: (query: string) => void;
 };
 
@@ -20,11 +21,9 @@ function BandsList({
   query,
   filteredBandsList,
   dashboardBandCardRef,
+  isMobile,
   setQuery
 }: BandsListProps) {
-  const width = (typeof window !== 'undefined' && window.innerWidth) || 0;
-  const isMobile = width < 640;
-
   return (
     <div className="relative border-zinc-700 sm:border-r">
       <BandsListSearch

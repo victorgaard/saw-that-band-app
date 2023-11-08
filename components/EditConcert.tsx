@@ -11,6 +11,7 @@ type EditConcertProps = {
   idx: number;
   concert: Concert;
   numOfConcerts: number;
+  isMobile: boolean;
   editConcert: (idx: number, updatedConcert: Concert) => void;
   deleteConcert: (idx: number) => void;
 };
@@ -19,6 +20,7 @@ function EditConcert({
   idx,
   concert,
   numOfConcerts,
+  isMobile,
   editConcert,
   deleteConcert
 }: EditConcertProps) {
@@ -53,17 +55,18 @@ function EditConcert({
           placeholder="dd-mm-yyyy"
         />
         <div className="flex items-center justify-between">
-          <Button
-            style="ghost"
-            onClick={() => {
-              deleteConcert(idx);
-              setEdit(false);
-            }}
-            disabled={numOfConcerts === 1}
-          >
-            <TrashIcon className="h-6 w-6" /> Delete concert
-          </Button>
-          <div className="flex items-center gap-2">
+          {numOfConcerts > 1 && (
+            <Button
+              style="ghost"
+              onClick={() => {
+                deleteConcert(idx);
+                setEdit(false);
+              }}
+            >
+              <TrashIcon className="h-6 w-6" /> {!isMobile && 'Delete concert'}
+            </Button>
+          )}
+          <div className="flex w-full items-center justify-end gap-2">
             <Button style="ghost" onClick={() => setEdit(false)}>
               Cancel
             </Button>
@@ -90,11 +93,20 @@ function EditConcert({
       onClick={() => setEdit(true)}
       className="group flex cursor-pointer items-center justify-between gap-2 rounded-lg bg-zinc-800 p-6 text-sm hover:bg-zinc-700"
     >
-      <div className="flex items-center gap-4">
+      <div className="flex w-full items-center justify-between gap-4 sm:justify-normal">
         <p className="min-w-[100px] truncate">{concert.location}</p>
-        <p>{dayMonthYearToFullDateStyle(concert.date)}</p>
+        <p>
+          {dayMonthYearToFullDateStyle(
+            concert.date,
+            isMobile ? 'medium' : 'full'
+          )}
+        </p>
       </div>
-      <span className="opacity-0 group-hover:opacity-100">Edit concert</span>
+      {!isMobile && (
+        <span className="whitespace-nowrap opacity-0 group-hover:opacity-100">
+          Edit concert
+        </span>
+      )}
     </div>
   );
 }

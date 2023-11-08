@@ -1,4 +1,7 @@
-function dayMonthYearToFullDateStyle(date: string) {
+function dayMonthYearToFullDateStyle(
+  date: string,
+  style?: 'full' | 'long' | 'medium' | 'short'
+) {
   const dateParts = date.split('-');
   const newDate = new Date(
     parseInt(dateParts[2]),
@@ -9,7 +12,7 @@ function dayMonthYearToFullDateStyle(date: string) {
     parseInt(dateParts[0])
   );
   return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'full'
+    dateStyle: style || 'full'
   }).format(newDate);
 }
 export default dayMonthYearToFullDateStyle;

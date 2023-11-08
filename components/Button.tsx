@@ -6,7 +6,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
   loading?: boolean;
   disabled?: boolean;
-  style?: 'primary' | 'secondary' | 'ghost';
+  style?: 'primary' | 'secondary' | 'ghost' | 'outline';
   size?: 'xs' | 'sm' | 'md' | 'lg';
   onClick?: () => void;
 };
@@ -32,6 +32,8 @@ function Button({
   const ghost =
     'bg-transparent hover:bg-white/5 active:bg-white/10 text-white disabled:hover:bg-transparent';
 
+  const outline = 'border border-zinc-700';
+
   return (
     <button
       onClick={onClick}
@@ -45,7 +47,8 @@ function Button({
         },
         style === 'primary' ? primary : '',
         style === 'secondary' ? secondary : '',
-        style === 'ghost' ? ghost : ''
+        style === 'ghost' ? ghost : '',
+        style === 'outline' ? outline : ''
       )}
       {...ButtonHTMLProps}
     >

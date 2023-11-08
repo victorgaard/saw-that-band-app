@@ -15,7 +15,7 @@ import {
 import { FixedSizeList as BandsReactWindowList } from 'react-window';
 import BandsList from './BandsList';
 import LoadingSpinner from '@/icons/LoadingSpinner';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 
 type Context = {
@@ -35,6 +35,9 @@ function DashboardLayout({ children }: { children: ReactNode }) {
   const { getAllBands } = useBands();
   const router = useRouter();
   const dashboardBandCardRef = useRef<BandsReactWindowList>(null);
+  const path = usePathname();
+  const width = (typeof window !== 'undefined' && window.innerWidth) || 0;
+  const isMobile = width < 640;
 
   const [bands, setBands] = useState<Bands>();
   const [hasUpdate, setHasUpdate] = useState(false);
@@ -113,12 +116,24 @@ function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <BandsContext.Provider value={{ hasUpdate, setHasUpdate }}>
       <div className="-mx-4 -my-8 grid grid-cols-1 sm:-mx-12 sm:grid-cols-2">
-        <BandsList
-          query={query}
-          setQuery={setQuery}
-          filteredBandsList={filteredBandsList}
-          dashboardBandCardRef={dashboardBandCardRef}
-        />
+        {isMobile && path === '/bands' && (
+          <BandsList
+            query={query}
+            setQuery={setQuery}
+            filteredBandsList={filteredBandsList}
+            dashboardBandCardRef={dashboardBandCardRef}
+            isMobile={isMobile}
+          />
+        )}
+        {!isMobile && (
+          <BandsList
+            query={query}
+            setQuery={setQuery}
+            filteredBandsList={filteredBandsList}
+            dashboardBandCardRef={dashboardBandCardRef}
+            isMobile={isMobile}
+          />
+        )}
         {children}
       </div>
     </BandsContext.Provider>

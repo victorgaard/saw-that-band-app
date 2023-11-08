@@ -19,6 +19,7 @@ import AddGenre from '@/components/AddGenre';
 import AddConcert from '@/components/AddConcert';
 import Loading from './loading';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -37,6 +38,9 @@ function EditBandPage({ params }: EditBandPageProps) {
   const [selectedTab, setSelectedTab] = useState<TabType>('concerts');
   const bandRef = useRef<Band>();
   const router = useRouter();
+
+  const width = (typeof window !== 'undefined' && window.innerWidth) || 0;
+  const isMobile = width < 640;
 
   useEffect(() => {
     if (user) {
@@ -147,8 +151,8 @@ function EditBandPage({ params }: EditBandPageProps) {
   if (!band) return <Loading />;
 
   return (
-    <div className="relative bg-zinc-850 p-8">
-      <div className="-my-8 -mr-8 flex h-[calc(100vh-101px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8">
+    <div className="relative bg-zinc-850 p-4 sm:p-8">
+      <div className="-my-8 -mr-8 flex h-[calc(100dvh-130px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)]">
         <div className="flex items-center gap-6">
           <Image
             src={band.picture}
@@ -158,7 +162,7 @@ function EditBandPage({ params }: EditBandPageProps) {
             className="h-[128px] w-[128px] shrink-0 rounded-lg bg-zinc-600 object-cover shadow-2xl"
           />
           <div className="flex flex-col gap-2">
-            <p className="text-4xl font-semibold">{band.band}</p>
+            <p className="text-2xl font-semibold sm:text-4xl">{band.band}</p>
             <p className="text-sm text-zinc-400">
               Seen live {band.concerts.length}{' '}
               {band.concerts.length === 1 ? 'once' : 'times'}
@@ -185,6 +189,7 @@ function EditBandPage({ params }: EditBandPageProps) {
                       numOfConcerts={band.concerts.length}
                       editConcert={editConcert}
                       deleteConcert={deleteConcert}
+                      isMobile={isMobile}
                     />
                   </div>
                 ))}
@@ -218,14 +223,17 @@ function EditBandPage({ params }: EditBandPageProps) {
           </Tabs>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 flex gap-4 border-t border-zinc-700 bg-zinc-850 p-8 py-6">
+      <div className="relative bottom-0 left-0 right-0 -mx-4 flex gap-4 border-t border-zinc-700 bg-zinc-800 p-4 py-6 sm:absolute sm:mx-0 sm:bg-zinc-850 sm:p-8">
         <Button style="ghost" onClick={onDeleteBand}>
           <TrashIcon className="h-5 w-5" />
-          Delete
+          {!isMobile && 'Delete'}
+        </Button>
+        <Button style="outline" onClick={() => router.back()}>
+          Cancel
         </Button>
         <div className="flex w-full flex-col">
           <Button disabled={band === bandRef.current} onClick={editBand}>
-            Save changes to {band.band}
+            Save changes
           </Button>
         </div>
       </div>
