@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 
 function ForgotPassword() {
-  const [user, setUser] = useState({ email: '', password1: '', password2: '' });
+  const [password, setPassword] = useState({ password1: '', password2: '' });
   const [loading, setLoading] = useState(false);
   const [isValidSession, setIsValidSession] = useState<boolean | undefined>();
   const [passwordToggle, setPasswordToggle] = useState(false);
@@ -27,7 +27,7 @@ function ForgotPassword() {
   }, []);
 
   async function handleSubmit() {
-    if (user.password1 !== user.password2)
+    if (password.password1 !== password.password2)
       return toast({
         type: 'error',
         title: 'Passwords do not match',
@@ -35,17 +35,10 @@ function ForgotPassword() {
         direction: 'center'
       });
 
-    const localStorageToken =
-      typeof window !== undefined &&
-      localStorage?.getItem('sb-guerfzlhzjrpooirzvlf-auth-token');
-    const token = JSON.parse(localStorageToken || '{}');
-    const email = token?.user?.email || '';
-
     setLoading(true);
 
     const { error } = await supabase.auth.updateUser({
-      email,
-      password: user.password1
+      password: password.password1
     });
 
     if (error) {
@@ -109,9 +102,9 @@ function ForgotPassword() {
             label="Password"
             type={passwordToggle ? 'text' : 'password'}
             placeholder="password"
-            value={user.password1}
+            value={password.password1}
             onChange={e =>
-              setUser({ ...user, [e.target.name]: e.target.value })
+              setPassword({ ...password, [e.target.name]: e.target.value })
             }
             minLength={8}
             isAuth
@@ -136,10 +129,10 @@ function ForgotPassword() {
             label="Confirm password"
             type={passwordToggle ? 'text' : 'password'}
             placeholder="password"
-            value={user.password2}
+            value={password.password2}
             minLength={8}
             onChange={e =>
-              setUser({ ...user, [e.target.name]: e.target.value })
+              setPassword({ ...password, [e.target.name]: e.target.value })
             }
             isAuth
             required
