@@ -173,15 +173,15 @@ function ProfilePage() {
 
   return (
     <form
-      className="-mx-12 -my-8 flex flex-col"
+      className="-mx-10 -my-8 flex flex-col sm:-mx-12"
       onSubmit={e => {
         e.preventDefault();
         setFormLoading(true);
         onUpdateProfile();
       }}
     >
-      <div className="flex h-[calc(100vh-76px)] flex-col gap-24 overflow-auto border-b border-zinc-850 p-12">
-        <div className="flex items-center gap-24">
+      <div className="flex h-[calc(100dvh-160px)] flex-col gap-12 overflow-auto border-b border-zinc-850 p-12 sm:h-[calc(100vh-76px)] sm:gap-24">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-24">
           <p className="w-48 text-lg font-medium">Public profile link</p>
           <a
             className="flex flex-1 items-center gap-2 text-emerald-300 underline-offset-4 transition-all hover:text-emerald-400 hover:underline"
@@ -193,9 +193,9 @@ function ProfilePage() {
             https://{profile.username}.sawthat.band/
           </a>
         </div>
-        <div className="flex gap-24">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-24">
           <p className="w-48 text-lg font-medium">Picture</p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <Picture user={profile} size={96} />
             <div className="relative gap-2">
               <label
@@ -226,7 +226,7 @@ function ProfilePage() {
             </div>
           </div>
         </div>
-        <div className="flex gap-24">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-24">
           <p className="w-48 text-lg font-medium">Profile information</p>
           <div className="grid flex-1 gap-6">
             <Input
@@ -259,9 +259,9 @@ function ProfilePage() {
             />
           </div>
         </div>
-        <div className="flex gap-24">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-24">
           <p className="w-48 text-lg font-medium">Social links</p>
-          <div className="grid flex-1 grid-cols-2 gap-6">
+          <div className="grid flex-1 gap-6 sm:grid-cols-2">
             {profile.links.map((link, idx) => (
               <Input
                 key={link.type}
@@ -277,7 +277,7 @@ function ProfilePage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-end pr-16 pt-3">
+      <div className="flex flex-col px-10 pt-3 sm:flex-row sm:justify-end sm:pr-16">
         <Button loading={formLoading}>Save changes</Button>
       </div>
     </form>

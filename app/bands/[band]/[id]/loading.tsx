@@ -3,7 +3,7 @@ function Loading() {
     <div className="flex h-[100dvh] flex-col justify-between bg-zinc-850 p-4 sm:h-screen sm:p-8">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-6">
-          <div className="h-[128px] w-[128px] shrink-0 rounded-lg bg-zinc-600 object-cover shadow-2xl" />
+          <div className="h-[112px] w-[112px] shrink-0 rounded-lg bg-zinc-600 object-cover shadow-2xl" />
           <div className="flex flex-col gap-2">
             <div className="h-[40px] w-[200px] rounded-lg bg-zinc-700" />
             <div className="h-[20px] w-[100px] rounded-lg bg-zinc-700" />
