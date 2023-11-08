@@ -152,7 +152,7 @@ function EditBandPage({ params }: EditBandPageProps) {
 
   return (
     <div className="relative bg-zinc-850 p-4 sm:p-8">
-      <div className="-my-8 -mr-8 flex h-[calc(100dvh-130px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)]">
+      <div className="-my-8 -mr-8 flex h-[calc(100dvh-71px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)]">
         <div className="flex items-center gap-6">
           {band.picture && (
             <Image
@@ -231,7 +231,7 @@ function EditBandPage({ params }: EditBandPageProps) {
           </Tabs>
         </div>
       </div>
-      <div className="relative bottom-0 left-0 right-0 -mx-4 flex gap-4 border-t border-zinc-700 bg-zinc-800 p-4 py-6 sm:absolute sm:mx-0 sm:bg-zinc-850 sm:p-8">
+      <div className="fixed bottom-0 left-0 right-0 z-40 -mx-4 flex gap-4 border-t border-zinc-700 bg-zinc-800 p-6 pr-8 sm:absolute sm:mx-0 sm:bg-zinc-850 sm:p-8">
         <Button style="ghost" onClick={onDeleteBand}>
           <TrashIcon className="h-5 w-5" />
           {!isMobile && 'Delete'}

@@ -10,7 +10,6 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Button from './Button';
 import { useContext } from 'react';
 import { AuthContext } from '@/auth/AuthContext';
 import classNames from 'classnames';

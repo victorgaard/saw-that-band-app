@@ -185,7 +185,7 @@ function AddNewBand({
           </Tabs>
         </div>
       </div>
-      <div className="relative bottom-0 left-0 right-0 -mx-4 flex gap-4 border-t border-zinc-700 bg-zinc-800 p-4 py-6 sm:absolute sm:mx-0 sm:bg-zinc-850 sm:p-8">
+      <div className="fixed bottom-0 left-0 right-0 z-40 -mx-4 flex gap-4 border-t border-zinc-700 bg-zinc-800 p-6 pr-8 sm:absolute sm:mx-0 sm:bg-zinc-850 sm:p-8">
         <Button style="outline" onClick={resetBandPicked}>
           Cancel
         </Button>
