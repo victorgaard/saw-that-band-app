@@ -1,4 +1,3 @@
-import LoadingSpinner from '@/icons/LoadingSpinner';
 import classNames from 'classnames';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 

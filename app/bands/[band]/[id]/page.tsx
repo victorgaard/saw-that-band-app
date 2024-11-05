@@ -7,6 +7,7 @@ import { ToastContext } from '@/components/Toast/ToastContext';
 import useBands from '@/hooks/useBands';
 import { Band, Concert } from '@/types/global';
 import {
+  ArrowTopRightOnSquareIcon,
   LightBulbIcon,
   TrashIcon,
   XMarkIcon
@@ -161,6 +162,15 @@ function EditBandPage({ params }: EditBandPageProps) {
 
   if (!band) return <Loading />;
 
+  function generatePublicProfileBandUrl() {
+    const protocol = 'https://';
+    const domain = '.sawthat.band/';
+    const username = user?.user_metadata.username;
+    const formattedBandName = band?.band.replaceAll(' ', '-');
+    const bandPath = `${formattedBandName}/${band?.id}`;
+    return protocol + username + domain + bandPath;
+  }
+
   return (
     <div className="relative bg-zinc-850 p-4 sm:p-8">
       <div className="-my-8 -mr-8 flex h-[calc(100dvh-71px)] flex-col gap-4 overflow-auto pb-12 pr-8 pt-8 sm:h-[calc(100vh-101px)]">
@@ -181,6 +191,15 @@ function EditBandPage({ params }: EditBandPageProps) {
             </div>
           )}
           <div className="flex flex-col gap-2">
+            <a
+              href={generatePublicProfileBandUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-fit items-center gap-2 whitespace-nowrap rounded border border-zinc-700 p-2 px-3 text-xs font-medium text-zinc-50 shadow-sm transition-colors duration-75 hover:border-zinc-600 hover:bg-zinc-700/50 hover:text-white"
+            >
+              View on your public profile
+              <ArrowTopRightOnSquareIcon className="h-3.5 w-3.5 opacity-50" />
+            </a>
             <p className="text-2xl font-semibold sm:text-4xl">{band.band}</p>
             <p className="text-sm text-zinc-400">
               Seen live {band.concerts.length}{' '}
