@@ -162,14 +162,12 @@ function EditBandPage({ params }: EditBandPageProps) {
 
   if (!band) return <Loading />;
 
-  function generatePublicProfileBandUrl() {
-    const protocol = 'https://';
-    const domain = '.sawthat.band/';
-    const username = user?.user_metadata.username;
-    const formattedBandName = band?.band.replaceAll(' ', '-');
-    const bandPath = `${formattedBandName}/${band?.id}`;
-    return protocol + username + domain + bandPath;
-  }
+  const protocol = 'https://';
+  const domain = '.sawthat.band/';
+  const username = user?.user_metadata.username;
+  const formattedBandName = band?.band.replaceAll(' ', '-');
+  const bandPath = `${formattedBandName}/${band?.id}`;
+  const url = protocol + username + domain + bandPath;
 
   return (
     <div className="relative bg-zinc-850 p-4 sm:p-8">
@@ -192,7 +190,7 @@ function EditBandPage({ params }: EditBandPageProps) {
           )}
           <div className="flex flex-col gap-2">
             <a
-              href={generatePublicProfileBandUrl()}
+              href={url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex w-fit items-center gap-2 whitespace-nowrap rounded border border-zinc-700 p-2 px-3 text-xs font-medium text-zinc-50 shadow-sm transition-colors duration-75 hover:border-zinc-600 hover:bg-zinc-700/50 hover:text-white"
