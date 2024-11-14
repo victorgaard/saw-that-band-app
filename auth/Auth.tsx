@@ -4,11 +4,12 @@ import { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
 import supabase from '@/utils/supabase';
-import { User } from '@supabase/supabase-js';
 import { ToastContext } from '@/components/Toast/ToastContext';
+import useProfile from '@/hooks/useProfile';
+import { Profile } from '@/types/global';
 
 function Auth({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Profile | null>(null);
   const { toast } = useContext(ToastContext);
   const router = useRouter();
   const path = usePathname();
@@ -24,11 +25,15 @@ function Auth({ children }: { children: ReactNode }) {
     route => route === path
   );
 
+  const { getProfileFromUserId } = useProfile();
+
   const getSession = useCallback(async () => {
     const { data, error } = await supabase.auth.getSession();
 
     if (!error && data.session) {
-      return setUser(data.session.user);
+      const [profile] = await getProfileFromUserId(data.session.user.id);
+
+      return setUser(profile);
     }
 
     return toast({
@@ -37,7 +42,7 @@ function Auth({ children }: { children: ReactNode }) {
       message:
         'There was an error getting your account. Please try again later.'
     });
-  }, [toast]);
+  }, [toast, getProfileFromUserId]);
 
   useEffect(() => {
     if (

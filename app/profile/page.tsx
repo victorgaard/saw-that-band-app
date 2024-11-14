@@ -68,21 +68,16 @@ function ProfilePage() {
 
   useEffect(() => {
     if (user) {
-      getProfileFromUserId(user.id)
-        .then(res => {
-          const [data] = res;
-          setProfile({
-            username: data.username,
-            email: data.email,
-            name: data.name || INITIAL_PROFILE_FORM.name,
-            picture: data.picture || INITIAL_PROFILE_FORM.picture,
-            bio: data.bio || INITIAL_PROFILE_FORM.bio,
-            links: concatLinks(data.links) || INITIAL_PROFILE_FORM.links
-          });
-        })
-        .catch(() => setError(true));
+      setProfile({
+        username: user.username,
+        email: user.email,
+        name: user.name || INITIAL_PROFILE_FORM.name,
+        picture: user.picture || INITIAL_PROFILE_FORM.picture,
+        bio: user.bio || INITIAL_PROFILE_FORM.bio,
+        links: concatLinks(user.links) || INITIAL_PROFILE_FORM.links
+      });
     }
-  }, [user, getProfileFromUserId]);
+  }, [user]);
 
   function updateForm(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

@@ -164,7 +164,7 @@ function EditBandPage({ params }: EditBandPageProps) {
 
   const protocol = 'https://';
   const domain = '.sawthat.band/';
-  const username = user?.user_metadata.username;
+  const username = user.username;
   const formattedBandName = band?.band.replaceAll(' ', '-');
   const bandPath = `${formattedBandName}/${band?.id}`;
   const url = protocol + username + domain + bandPath;
