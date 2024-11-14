@@ -160,7 +160,7 @@ function EditBandPage({ params }: EditBandPageProps) {
       .finally(() => setIsDeletingBand(false));
   }
 
-  if (!band) return <Loading />;
+  if (!user || !band) return <Loading />;
 
   const protocol = 'https://';
   const domain = '.sawthat.band/';
