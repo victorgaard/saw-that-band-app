@@ -23,8 +23,8 @@ function SignUp() {
   const usernameTemp = params.get('username');
   const emailTemp = params.get('email');
 
-  const email = useMemo(() => emailTemp, []);
-  const username = useMemo(() => usernameTemp, []);
+  const email = useMemo(() => emailTemp, [emailTemp]);
+  const username = useMemo(() => usernameTemp, [usernameTemp]);
 
   const INITIAL_USER_FORM = {
     email: email || '',
@@ -35,7 +35,7 @@ function SignUp() {
   const [user, setUser] = useState<UserForm>(INITIAL_USER_FORM);
   const [loading, setLoading] = useState(false);
   const [passwordToggle, setPasswordToggle] = useState(false);
-  const { supabase, setUser: setAuthUser } = useContext(AuthContext);
+  const { supabase } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
   const {
     checkIfUsernameIsReservedAndUserHasRightsToUse,
@@ -146,7 +146,6 @@ function SignUp() {
           message: 'Your account was created. Start adding your bands 🤘',
           direction: 'center'
         });
-        setAuthUser(res.data.user);
         router.push('/bands');
       })
       .catch(() => {

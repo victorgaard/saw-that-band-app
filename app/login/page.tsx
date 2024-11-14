@@ -16,7 +16,7 @@ export default function Home() {
   const [passwordToggle, setPasswordToggle] = useState(false);
 
   const router = useRouter();
-  const { supabase, setUser } = useContext(AuthContext);
+  const { supabase } = useContext(AuthContext);
 
   async function handleSubmit() {
     setError('');
@@ -28,7 +28,6 @@ export default function Home() {
       return setError('Invalid credentials');
     }
 
-    setUser(res.data.user);
     return router.push('/bands');
   }
 
