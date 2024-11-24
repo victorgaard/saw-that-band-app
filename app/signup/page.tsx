@@ -8,8 +8,14 @@ import useProfile from '@/hooks/useProfile';
 import restrictedUsernames from '@/utils/restrictedUsernames';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useContext, useState } from 'react';
+
+const INITIAL_USER_FORM = {
+  email: '',
+  password: '',
+  username: ''
+};
 
 type UserForm = {
   email: string;
@@ -19,33 +25,13 @@ type UserForm = {
 
 function SignUp() {
   const router = useRouter();
-  const params = useSearchParams();
-  const usernameTemp = params.get('username');
-  const emailTemp = params.get('email');
-
-  const email = useMemo(() => emailTemp, [emailTemp]);
-  const username = useMemo(() => usernameTemp, [usernameTemp]);
-
-  const INITIAL_USER_FORM = {
-    email: email || '',
-    password: '',
-    username: username || ''
-  };
 
   const [user, setUser] = useState<UserForm>(INITIAL_USER_FORM);
   const [loading, setLoading] = useState(false);
   const [passwordToggle, setPasswordToggle] = useState(false);
   const { supabase } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
-  const {
-    checkIfUsernameIsReservedAndUserHasRightsToUse,
-    checkIfUsernameExists,
-    createProfileFromUserId
-  } = useProfile();
-
-  useEffect(() => {
-    router.replace('/signup');
-  }, [email, username, router]);
+  const { checkIfUsernameExists, createProfileFromUserId } = useProfile();
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -93,22 +79,6 @@ function SignUp() {
         type: 'error',
         title: 'Username is taken',
         message: 'Please choose another username.',
-        direction: 'center'
-      });
-    }
-
-    const usernameIsReserved =
-      await checkIfUsernameIsReservedAndUserHasRightsToUse(
-        user.email,
-        user.username
-      );
-
-    if (!usernameIsReserved.hasRightsToUse) {
-      setLoading(false);
-      return toast({
-        type: 'error',
-        title: 'Username is reserved for another email',
-        message: 'Please select another username.',
         direction: 'center'
       });
     }
@@ -177,10 +147,9 @@ function SignUp() {
           label="Email"
           type="email"
           placeholder="email@example.com"
-          value={email || user.email}
+          value={user.email}
           onChange={e => handleInputChange(e)}
-          disabled={!!email}
-          autoFocus={username ? false : true}
+          autoFocus
           required
         />
         <div className="relative">
@@ -191,10 +160,9 @@ function SignUp() {
             placeholder="password"
             value={user.password}
             onChange={e => handleInputChange(e)}
-            autoFocus={username ? true : false}
             minLength={8}
             required
-          />{' '}
+          />
           <button
             type="button"
             className="absolute bottom-4 right-4"
@@ -219,10 +187,9 @@ function SignUp() {
             <input
               type="text"
               name="username"
-              value={username || user.username}
+              value={user.username}
               onChange={e => handleUsernameChange(e)}
               placeholder="username"
-              disabled={!!username}
               maxLength={40}
               className="w-full rounded-lg border border-zinc-600 bg-white/10 p-4 pl-[72px] pr-[132px] text-sm text-white focus:outline-zinc-100/60 disabled:cursor-not-allowed disabled:opacity-50"
               autoComplete="off"
