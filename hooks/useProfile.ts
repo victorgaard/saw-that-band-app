@@ -1,6 +1,7 @@
 'use client';
 
 import { NewProfile, ProfileForm } from '@/types/global';
+import { revalidateTag } from '@/utils/revalidateTag';
 import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
@@ -75,6 +76,7 @@ function useProfile() {
           'There was an error updating your profile. Please try again later.'
         );
 
+      revalidateTag(profile.username);
       return data;
     },
     []

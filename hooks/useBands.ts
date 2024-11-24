@@ -1,6 +1,7 @@
 'use client';
 
 import { Band, NewBand } from '@/types/global';
+import { revalidateTag } from '@/utils/revalidateTag';
 import supabase from '@/utils/supabase';
 import { useCallback } from 'react';
 
@@ -35,6 +36,8 @@ function useBands() {
       .select();
 
     if (error) throw new Error(`Band could not be updated: ${error}`);
+
+    revalidateTag('bands');
     return data;
   }, []);
 
@@ -47,6 +50,8 @@ function useBands() {
         .eq('id', bandId);
 
       if (error) throw new Error(`Band could not be updated: ${error}`);
+
+      revalidateTag('bands');
       return data;
     },
     []
@@ -60,6 +65,8 @@ function useBands() {
       .eq('id', bandId);
 
     if (error) throw new Error(`Band could not be deleted: ${error}`);
+
+    revalidateTag('bands');
     return data;
   }, []);
 
