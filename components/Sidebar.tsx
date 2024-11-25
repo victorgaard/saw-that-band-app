@@ -35,6 +35,8 @@ function Sidebar() {
 
   if (!user) return null;
 
+  const name = user.name || user.username;
+
   return (
     <div className="relative flex w-20 flex-col items-center justify-between gap-7 p-6">
       <div className="flex flex-col items-center gap-6">
@@ -116,7 +118,7 @@ function Sidebar() {
       <div className="flex shrink-0 items-end justify-center text-sm text-zinc-600">
         <p className="rotate-180 [writing-mode:vertical-lr]">
           <span className="font-semibold text-zinc-500">
-            {user.username.toLowerCase()}
+            {name.toLowerCase()}
           </span>{' '}
           saw that band
         </p>

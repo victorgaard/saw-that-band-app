@@ -76,7 +76,7 @@ function useProfile() {
           'There was an error updating your profile. Please try again later.'
         );
 
-      revalidateTag(profile.username);
+      revalidateTag('users');
       return data;
     },
     []
