@@ -6,6 +6,7 @@ import { Tab, TabContent, Tabs, TabsList } from '@/components/Tabs';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useBands from '@/hooks/useBands';
 import { Concert, NewBand } from '@/types/global';
+import { trimString } from '@/utils/trimString';
 import { LightBulbIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -38,14 +39,22 @@ function AddNewBand({
 
   function addConcert(newConcert: Concert) {
     if (!band) return;
-    const concerts = [...band.concerts, newConcert];
+    const sanitizedConcert = {
+      ...newConcert,
+      location: trimString(newConcert.location)
+    };
+    const concerts = [...band.concerts, sanitizedConcert];
     setBand({ ...band, concerts });
   }
 
   function editConcert(idx: number, updatedConcert: Concert) {
     if (!band) return;
+    const sanitizedConcert = {
+      ...updatedConcert,
+      location: trimString(updatedConcert.location)
+    };
     const concerts = [...band.concerts];
-    concerts[idx] = updatedConcert;
+    concerts[idx] = sanitizedConcert;
     setBand({ ...band, concerts });
   }
 

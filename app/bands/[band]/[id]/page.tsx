@@ -22,6 +22,7 @@ import Loading from './loading';
 import { useRouter } from 'next/navigation';
 import useIsOpen from '@/hooks/useIsOpen';
 import { Modal, ModalFooter } from '@/components/Modal';
+import { trimString } from '@/utils/trimString';
 
 type EditBandPageProps = {
   params: { id: string };
@@ -71,14 +72,22 @@ function EditBandPage({ params }: EditBandPageProps) {
 
   function addConcert(newConcert: Concert) {
     if (!band) return;
-    const concerts = [...band.concerts, newConcert];
+    const sanitizedConcert = {
+      ...newConcert,
+      location: trimString(newConcert.location)
+    };
+    const concerts = [...band.concerts, sanitizedConcert];
     setBand({ ...band, concerts });
   }
 
   function editConcert(idx: number, updatedConcert: Concert) {
     if (!band) return;
+    const sanitizedConcert = {
+      ...updatedConcert,
+      location: trimString(updatedConcert.location)
+    };
     const concerts = [...band.concerts];
-    concerts[idx] = updatedConcert;
+    concerts[idx] = sanitizedConcert;
     setBand({ ...band, concerts });
   }
 
@@ -218,7 +227,7 @@ function EditBandPage({ params }: EditBandPageProps) {
             <TabContent value="concerts">
               <div className="flex flex-col gap-2">
                 {band.concerts.map((concert, idx) => (
-                  <div key={concert.date}>
+                  <div key={`${idx} ${concert.date}`}>
                     <EditConcert
                       idx={idx}
                       concert={concert}

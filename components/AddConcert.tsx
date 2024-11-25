@@ -15,7 +15,6 @@ function AddConcert({ addConcert, isMobile }: AddConcertProps) {
   const [add, setAdd] = useState(false);
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
-  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     setLocation('');
@@ -36,7 +35,9 @@ function AddConcert({ addConcert, isMobile }: AddConcertProps) {
         <Input
           label="Location"
           value={location}
-          onChange={e => setLocation(e.target.value)}
+          onChange={e => {
+            setLocation(e.target.value);
+          }}
           placeholder="Location"
           autoFocus
         />

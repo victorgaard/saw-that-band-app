@@ -28,7 +28,6 @@ function EditConcert({
   const [edit, setEdit] = useState(false);
   const [location, setLocation] = useState('');
   const [date, setDate] = useState(dayMonthYearToYearMonthDay(''));
-  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     setLocation(concert.location);
