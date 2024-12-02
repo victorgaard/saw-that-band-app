@@ -26,9 +26,8 @@ function Textarea({
       <textarea
         value={value}
         onChange={onChange}
-        maxLength={40}
         className={classNames(
-          'w-full rounded-lg border border-zinc-600 bg-white/10 p-4 text-sm text-white focus:outline-zinc-100/60 disabled:cursor-not-allowed disabled:opacity-50',
+          'w-full rounded-lg border border-zinc-600 bg-white/10 p-4 text-sm text-white [field-sizing:content] focus:outline-zinc-100/60 disabled:cursor-not-allowed disabled:opacity-50',
           className
         )}
         autoComplete="off"

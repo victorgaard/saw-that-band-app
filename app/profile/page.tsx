@@ -12,6 +12,7 @@ import { ExternalLinkProvider, ProfileForm, ProfileLink } from '@/types/global';
 import { LinkIcon } from '@heroicons/react/24/outline';
 import {
   ChangeEvent,
+  KeyboardEvent,
   useCallback,
   useContext,
   useEffect,
@@ -160,6 +161,12 @@ function ProfilePage() {
       });
   }
 
+  function preventLineBreak(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  }
+
   if (!profile.username) return <LoadingSpinner />;
   if (error)
     return (
@@ -245,13 +252,20 @@ function ProfilePage() {
               placeholder="Name"
               onChange={e => updateForm(e)}
             />
-            <Textarea
-              label="Bio"
-              name="bio"
-              value={profile.bio}
-              placeholder="Bio"
-              onChange={e => updateForm(e)}
-            />
+            <div className="space-y-2">
+              <Textarea
+                label="Bio"
+                name="bio"
+                value={profile.bio}
+                placeholder="Bio"
+                onChange={e => updateForm(e)}
+                onKeyDown={e => preventLineBreak(e)}
+                maxLength={140}
+              />
+              <p className="text-sm text-zinc-400">
+                {profile.bio.length} / 140 characters
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:gap-24">
