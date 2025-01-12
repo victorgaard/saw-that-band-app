@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
 import { AuthContext } from '@/auth/AuthContext';
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 
 function SidebarMobile() {
   const { user } = useContext(AuthContext);
@@ -25,7 +25,7 @@ function SidebarMobile() {
       <div className="flex h-full w-full justify-between gap-2 p-2">
         <Link
           href="/new"
-          className={classNames(
+          className={cn(
             'flex flex-1 shrink-0 items-center justify-center rounded-lg transition-colors active:bg-zinc-800',
             {
               'bg-zinc-600 text-white': path === '/new',
@@ -37,7 +37,7 @@ function SidebarMobile() {
         </Link>
         <Link
           href="/bands"
-          className={classNames(
+          className={cn(
             'flex flex-1 shrink-0 items-center justify-center rounded-lg transition-colors active:bg-zinc-800',
             {
               'bg-zinc-600 text-white': path === '/bands',
@@ -49,7 +49,7 @@ function SidebarMobile() {
         </Link>
         <Link
           href="/profile"
-          className={classNames(
+          className={cn(
             'flex flex-1 shrink-0 items-center justify-center rounded-lg transition-colors active:bg-zinc-800',
             {
               'bg-zinc-600 text-white': path === '/profile',

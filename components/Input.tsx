@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import { ChangeEvent, InputHTMLAttributes } from 'react';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -29,7 +29,7 @@ function Input({
         value={value}
         onChange={onChange}
         maxLength={40}
-        className={classNames(
+        className={cn(
           'w-full rounded-lg border border-zinc-600 bg-white/10 p-4 text-sm text-white focus:outline-zinc-100/60 disabled:cursor-not-allowed disabled:opacity-50',
           className
         )}

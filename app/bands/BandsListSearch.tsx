@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import { ChangeEvent } from 'react';
 
 type BandsListSearchProps = {
@@ -24,7 +24,7 @@ function BandsListSearch({
         }}
         value={query}
         placeholder="Search for band, genre, year or location"
-        className={classNames(
+        className={cn(
           'h-full w-[90.5%] shrink-0 bg-transparent p-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400 sm:pl-14',
           {
             'md:w-[50%]': query,

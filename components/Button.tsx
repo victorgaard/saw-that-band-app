@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -40,7 +40,7 @@ function Button({
     <button
       onClick={onClick}
       disabled={disabled || loading}
-      className={classNames(
+      className={cn(
         baseButton,
         {
           'p-1': size === 'xs',

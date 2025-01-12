@@ -4,6 +4,7 @@ import { AuthContext } from '@/auth/AuthContext';
 import {
   ArrowLeftOnRectangleIcon,
   ChatBubbleLeftRightIcon,
+  GiftIcon,
   HeartIcon,
   PlusCircleIcon,
   TicketIcon,
@@ -12,7 +13,7 @@ import {
 import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
 import Link from 'next/link';
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import Button from './Button';
 import Tooltip from './Tooltip';
 
@@ -30,6 +31,11 @@ function Sidebar() {
       label: 'Profile',
       href: '/profile',
       icon: <UserCircleIcon className="h-6 w-6" />
+    },
+    {
+      label: 'Wrapped',
+      href: '/wrapped',
+      icon: <GiftIcon className="h-6 w-6" />
     }
   ];
 
@@ -56,12 +62,12 @@ function Sidebar() {
                 key={route.label}
                 href={route.href}
                 aria-label={`Navigate to ${route.label}`}
-                className={classNames('group relative flex items-center', {
+                className={cn('group relative flex items-center', {
                   'rounded outline outline-2 outline-zinc-500/80': isActive
                 })}
               >
                 <div
-                  className={classNames(
+                  className={cn(
                     'absolute -left-5 w-[5px] rounded-r transition-all',
                     {
                       'h-8 bg-zinc-500': isActive,
@@ -70,7 +76,7 @@ function Sidebar() {
                   )}
                 />
                 <div
-                  className={classNames(
+                  className={cn(
                     'flex h-10 w-10 items-center justify-center rounded transition-colors',
                     {
                       'bg-zinc-600 text-white': isActive,
