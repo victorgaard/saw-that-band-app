@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import { ChangeEvent, TextareaHTMLAttributes } from 'react';
 
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
@@ -26,7 +26,7 @@ function Textarea({
       <textarea
         value={value}
         onChange={onChange}
-        className={classNames(
+        className={cn(
           'w-full rounded-lg border border-zinc-600 bg-white/10 p-4 text-sm text-white [field-sizing:content] focus:outline-zinc-100/60 disabled:cursor-not-allowed disabled:opacity-50',
           className
         )}

@@ -1,5 +1,5 @@
 import { NewBand, SpotifyBand } from '@/types/global';
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import Image from 'next/image';
 import { HTMLAttributes } from 'react';
 
@@ -20,7 +20,7 @@ function BandResultsCard({
     <div className="flex justify-center">
       <div
         onClick={onClick}
-        className={classNames(
+        className={cn(
           'group flex w-full cursor-pointer items-center gap-6 p-6 text-white sm:gap-8',
           {
             'h-[160px]': !isMobile,

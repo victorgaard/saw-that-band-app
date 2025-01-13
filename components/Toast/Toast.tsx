@@ -1,6 +1,6 @@
 'use client';
 
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import {
   CheckIcon,
   ExclamationCircleIcon,
@@ -28,7 +28,7 @@ function Toast({
 }: ToastProps) {
   return (
     <div
-      className={classNames(
+      className={cn(
         'fixed bottom-6 z-50 flex max-w-[calc(100%-32px)] items-center justify-between gap-12 overflow-hidden rounded-lg px-4 py-3 pb-4 text-sm text-white',
         {
           'left-[102px]': direction === 'left',

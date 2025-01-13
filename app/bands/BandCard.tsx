@@ -2,7 +2,7 @@ import { Band } from '@/types/global';
 import Image from 'next/image';
 import BandCardCollapsedTags from './BandCardCollapsedTags';
 import { usePathname, useRouter } from 'next/navigation';
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 
 type BandCardProps = {
   band: Band;
@@ -17,7 +17,7 @@ function BandCard({ band, setQuery }: BandCardProps) {
     <div className="flex justify-center">
       <div
         onClick={() => router.push(`/bands/${bandNameFormatted}/${band.id}`)}
-        className={classNames(
+        className={cn(
           'group flex h-[130px] w-full cursor-pointer items-center gap-6 p-4 text-white sm:h-[160px] sm:gap-8 sm:p-6',
           {
             'bg-gradient-to-tr from-zinc-100/10 to-zinc-500/10 to-50%':

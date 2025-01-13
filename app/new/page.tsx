@@ -2,7 +2,7 @@
 
 import { NewBand, SpotifyBand } from '@/types/global';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import classNames from 'classnames';
+import { cn } from '@/utils/cn';
 import { useContext, useEffect, useState } from 'react';
 import AddNewBand from './AddNewBand';
 import BandResultsCard from './BandResultsCard';
@@ -102,7 +102,7 @@ function NewBandPage() {
             }}
             value={query}
             placeholder="Search for the band name"
-            className={classNames(
+            className={cn(
               'h-full w-full shrink-0 bg-transparent p-6 text-white placeholder:text-zinc-400 focus:outline-none focus:placeholder:text-zinc-400 sm:pl-14'
             )}
           />
