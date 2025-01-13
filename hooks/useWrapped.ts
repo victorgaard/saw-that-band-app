@@ -1,7 +1,13 @@
-import { Bands } from '@/types/global';
+import { Bands, Profile } from '@/types/global';
 import { useState } from 'react';
 
-export function useWrapped(bands: Bands, year: string) {
+type UseWrappedArgs = {
+  user: Profile;
+  bands: Bands;
+  year: string;
+};
+
+export function useWrapped({ user, bands, year }: UseWrappedArgs) {
   const [wrappedBands] = useState(() => getBands());
 
   function getBands() {
@@ -61,9 +67,29 @@ export function useWrapped(bands: Bands, year: string) {
     return wrappedBands.filter(band => band.concerts.length === mostConcerts);
   }
 
+  function getBandGenres() {
+    const topGenres = wrappedBands.reduce<Record<string, number>>(
+      (counts, band) => {
+        band.genre.forEach(genre => {
+          counts[genre] = (counts[genre] || 0) + 1;
+        });
+        return counts;
+      },
+      {}
+    );
+
+    return Object.entries(topGenres)
+      .sort(([, countA], [, countB]) => countB - countA)
+      .slice(0, 5)
+      .map(([genre, count]) => ({ genre, count }));
+  }
+
   return {
-    bands: wrappedBands,
-    stats: getConcertStats(),
-    mostSeenBand: getMostSeenBand()
+    username: user.name || user.username,
+    firstConcert: wrappedBands[0].band,
+    lastConcert: wrappedBands[wrappedBands.length - 1].band,
+    concertStats: getConcertStats(),
+    mostSeenBand: getMostSeenBand(),
+    bandGenres: getBandGenres()
   };
 }

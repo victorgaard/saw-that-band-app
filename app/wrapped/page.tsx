@@ -31,7 +31,7 @@ function WrappedPage() {
   if (!bands && !user && error)
     return <>There was an error, please try again later</>;
 
-  return <WrappedContent year={year} user={user} userBands={bands} />;
+  return <WrappedContent year={year} user={user} bands={bands} />;
 }
 
 export default WrappedPage;
