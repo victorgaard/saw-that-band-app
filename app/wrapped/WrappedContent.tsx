@@ -1,5 +1,20 @@
 import { useWrapped } from '@/hooks/useWrapped';
 import { Bands, Profile } from '@/types/global';
+import Image from 'next/image';
+
+function WrappedContentImage({ src }: { src: string | null }) {
+  if (!src) return <div className="size-64"></div>;
+
+  return (
+    <Image
+      src={src}
+      alt="user avatar"
+      width={64}
+      height={64}
+      className="size-64"
+    />
+  );
+}
 
 type WrappedContentProps = {
   year: string;
@@ -8,18 +23,13 @@ type WrappedContentProps = {
 };
 
 export function WrappedContent({ year, user, bands }: WrappedContentProps) {
-  const {
-    username,
-    firstConcert,
-    lastConcert,
-    concertStats,
-    mostSeenBand,
-    bandGenres
-  } = useWrapped({ year, user, bands });
+  const { firstConcert, lastConcert, concertStats, mostSeenBand, bandGenres } =
+    useWrapped({ year, bands });
 
   return (
     <div className="flex flex-col gap-4">
-      <p>Stats for {username}</p>
+      <p>Stats for {user.name || user.username}</p>
+      <WrappedContentImage src={user.picture} />
       <p>Unique bands seen in 2024: {concertStats.uniqueBands}</p>
       <p>Total concerts in 2024: {concertStats.totalConcerts}</p>
       <p>First concert: {firstConcert}</p>

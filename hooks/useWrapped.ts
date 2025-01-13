@@ -2,12 +2,11 @@ import { Bands, Profile } from '@/types/global';
 import { useState } from 'react';
 
 type UseWrappedArgs = {
-  user: Profile;
   bands: Bands;
   year: string;
 };
 
-export function useWrapped({ user, bands, year }: UseWrappedArgs) {
+export function useWrapped({ bands, year }: UseWrappedArgs) {
   const [wrappedBands] = useState(() => getBands());
 
   function getBands() {
@@ -85,7 +84,6 @@ export function useWrapped({ user, bands, year }: UseWrappedArgs) {
   }
 
   return {
-    username: user.name || user.username,
     firstConcert: wrappedBands[0].band,
     lastConcert: wrappedBands[wrappedBands.length - 1].band,
     concertStats: getConcertStats(),
