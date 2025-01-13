@@ -1,12 +1,14 @@
 import { Bands, Profile } from '@/types/global';
+import getTimeAgo from '@/utils/getTimeAgo';
 import { useState } from 'react';
 
 type UseWrappedArgs = {
+  user: Profile;
   bands: Bands;
   year: string;
 };
 
-export function useWrapped({ bands, year }: UseWrappedArgs) {
+export function useWrapped({ user, bands, year }: UseWrappedArgs) {
   const [wrappedBands] = useState(() => getBands());
 
   function getBands() {
@@ -51,10 +53,12 @@ export function useWrapped({ bands, year }: UseWrappedArgs) {
       0
     );
     const uniqueBands = wrappedBands.length;
+    const timeSpent = Math.floor((totalConcerts * 1.5) / 24);
 
     return {
       uniqueBands,
-      totalConcerts
+      totalConcerts,
+      timeSpent
     };
   }
 
@@ -83,9 +87,16 @@ export function useWrapped({ bands, year }: UseWrappedArgs) {
       .map(([genre, count]) => ({ genre, count }));
   }
 
+  const profile = {
+    name: user.name || user.username,
+    joined: getTimeAgo(user.created_at),
+    picture: user.picture
+  };
+
   return {
-    firstConcert: wrappedBands[0].band,
-    lastConcert: wrappedBands[wrappedBands.length - 1].band,
+    profile,
+    firstConcert: wrappedBands[0],
+    lastConcert: wrappedBands[wrappedBands.length - 1],
     concertStats: getConcertStats(),
     mostSeenBand: getMostSeenBand(),
     bandGenres: getBandGenres()
