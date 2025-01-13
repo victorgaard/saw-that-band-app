@@ -22,12 +22,12 @@ export function WrappedContent({ year, user, userBands }: WrappedContentProps) {
       <p>Total concerts in 2024: {totalConcerts}</p>
       <p>First concert: {firstConcert}</p>
       <p>Last concert: {lastConcert}</p>
-      <div>
+      <section>
         Most seen band in 2024:{' '}
         {mostSeenBand.map(band => (
           <p key={band.id}>{band.band}</p>
         ))}
-      </div>
+      </section>
     </div>
   );
 }
