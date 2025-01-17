@@ -67,6 +67,8 @@ export function useWrapped({ user, bands, year }: UseWrappedArgs) {
       return Math.max(maxConcerts, currentBand.concerts.length);
     }, 0);
 
+    if (mostConcerts === 1) return [];
+
     return wrappedBands.filter(band => band.concerts.length === mostConcerts);
   }
 
@@ -95,6 +97,7 @@ export function useWrapped({ user, bands, year }: UseWrappedArgs) {
 
   return {
     profile,
+    hasBands: wrappedBands.length > 0,
     firstConcert: wrappedBands[0],
     lastConcert: wrappedBands[wrappedBands.length - 1],
     concertStats: getConcertStats(),
