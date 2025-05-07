@@ -30,7 +30,7 @@ function NewBandPage() {
   useEffect(() => {
     if (!spotifyToken) {
       getSpotifyToken()
-        .then(res => setSpotifyToken(res.accessToken))
+        .then(res => setSpotifyToken(res.access_token))
         .catch(() =>
           toast({
             type: 'error',
