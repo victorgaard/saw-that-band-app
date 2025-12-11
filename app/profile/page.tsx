@@ -9,7 +9,7 @@ import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
 import LoadingSpinner from '@/icons/LoadingSpinner';
 import { ExternalLinkProvider, ProfileForm, ProfileLink } from '@/types/global';
-import { LinkIcon } from '@heroicons/react/24/outline';
+import { ArrowDownTrayIcon, LinkIcon } from '@heroicons/react/24/outline';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -24,6 +24,7 @@ function generateLinks(arrayOfPlatforms: ExternalLinkProvider[]) {
 }
 
 const INITIAL_PROFILE_FORM: ProfileForm = {
+  id: '',
   name: '',
   picture: '',
   email: '',
@@ -52,8 +53,12 @@ function ProfilePage() {
   const [profilePictureLoading, setProfilePictureLoading] = useState(false);
   const [hasUpdate, setHasUpdate] = useState(false);
 
-  const { getProfileFromUserId, uploadProfilePicture, updateProfile } =
-    useProfile();
+  const {
+    getProfileFromUserId,
+    uploadProfilePicture,
+    updateProfile,
+    exportCsv
+  } = useProfile();
 
   function concatLinks(userLinks: ProfileLink[] | null) {
     if (!userLinks) return null;
@@ -70,6 +75,7 @@ function ProfilePage() {
   useEffect(() => {
     if (user) {
       setProfile({
+        id: user.id,
         username: user.username,
         email: user.email,
         name: user.name || INITIAL_PROFILE_FORM.name,
@@ -284,6 +290,17 @@ function ProfilePage() {
               />
             ))}
           </div>
+        </div>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-24">
+          <p className="w-48 text-lg font-medium">Data</p>
+          <Button
+            type="button"
+            onClick={() => exportCsv(profile.id)}
+            style="secondary"
+          >
+            <ArrowDownTrayIcon className="h-4 w-4 opacity-60" />
+            Download your bands data as CSV
+          </Button>
         </div>
       </div>
       <div className="flex flex-col px-10 pt-3 sm:flex-row sm:justify-end sm:pr-16">

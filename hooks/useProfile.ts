@@ -82,12 +82,36 @@ function useProfile() {
     []
   );
 
+  const exportCsv = useCallback(async (userId: string) => {
+    const { data, error } = await supabase
+      .from('Bands')
+      .select()
+      .eq('user_id', userId)
+      .csv();
+
+    if (error)
+      throw new Error(
+        'There was an error updating your profile. Please try again later.'
+      );
+
+    const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'bands.csv';
+    link.click();
+
+    URL.revokeObjectURL(url);
+  }, []);
+
   return {
     checkIfUsernameExists,
     createProfileFromUserId,
     getProfileFromUserId,
     uploadProfilePicture,
-    updateProfile
+    updateProfile,
+    exportCsv
   };
 }
 

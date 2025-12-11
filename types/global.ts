@@ -181,6 +181,7 @@ export type ProfileLink = {
 };
 
 export type ProfileForm = {
+  id: string;
   name: string;
   picture: string;
   email: string;
