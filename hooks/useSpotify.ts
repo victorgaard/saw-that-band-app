@@ -4,7 +4,7 @@ import { Token } from '@/app/api/spotify/token/route';
 import { SpotifySearchResults } from '@/types/global';
 import { useCallback } from 'react';
 
-export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 function useSpotify() {
   const getSpotifyToken = useCallback(async () => {

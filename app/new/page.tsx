@@ -11,7 +11,6 @@ import { ToastContext } from '@/components/Toast/ToastContext';
 import LoadingSpinner from '@/icons/LoadingSpinner';
 import SpotifyIcon from '@/components/SpotifyIcon';
 
-export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 function NewBandPage() {
