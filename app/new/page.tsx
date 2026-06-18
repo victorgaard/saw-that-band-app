@@ -109,8 +109,8 @@ function NewBandPage() {
 
           {hasQuery && !searchLoading && searchResults?.length === 0 && (
             <p className="p-6 text-center text-zinc-400">
-              No results for "{query}". Please keep in mind the band must be
-              registered on Spotify to be listed here.
+              No results for &quot;{query}&quot;. Please keep in mind the band
+              must be registered on Spotify to be listed here.
             </p>
           )}
 
