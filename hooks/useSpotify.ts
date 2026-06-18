@@ -2,43 +2,65 @@
 
 import { Token } from '@/app/api/spotify/token/route';
 import { SpotifySearchResults } from '@/types/global';
-import { useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useDebounce } from './useDebounce';
 
 export const dynamic = 'force-dynamic';
 
-function useSpotify() {
-  const getSpotifyToken = useCallback(async () => {
-    const res = await fetch(`/api/spotify/token`, {
-      cache: 'no-store',
-      next: {
-        revalidate: 0
-      }
-    });
+async function getSpotifyToken() {
+  const res = await fetch('/api/spotify/token', {
+    cache: 'no-store'
+  });
 
-    if (!res.ok) throw new Error('Could not get spotify token');
+  if (!res.ok) {
+    throw new Error('Could not get spotify token');
+  }
 
-    const data: Token = await res.json();
-    return data;
-  }, []);
+  return (await res.json()) as Token;
+}
 
-  const search = useCallback(async (token: string, query: string) => {
-    const res = await fetch(
-      `/api/spotify/search?token=${token}&band=${query}`,
-      {
-        cache: 'no-store',
-        next: {
-          revalidate: 0
-        }
-      }
-    );
+async function searchSpotify(token: string, query: string) {
+  const res = await fetch(
+    `/api/spotify/search?token=${token}&band=${encodeURIComponent(query)}`,
+    {
+      cache: 'no-store'
+    }
+  );
 
-    if (!res.ok) throw new Error('Could not search for bands');
+  if (!res.ok) {
+    throw new Error('Could not search for bands');
+  }
 
-    const data: SpotifySearchResults = await res.json();
-    return data;
-  }, []);
+  return (await res.json()) as SpotifySearchResults;
+}
 
-  return { getSpotifyToken, search };
+function useSpotify(query: string) {
+  const debouncedQuery = useDebounce(query.trim(), 700);
+
+  const tokenQuery = useQuery({
+    queryKey: ['spotify-token'],
+    queryFn: getSpotifyToken,
+    staleTime: 50 * 60 * 1000
+  });
+
+  const isWaitingForDebounce =
+    query.trim().length > 0 && query.trim() !== debouncedQuery;
+
+  const searchQuery = useQuery({
+    queryKey: ['spotify-search', debouncedQuery],
+    enabled: Boolean(debouncedQuery && tokenQuery.data?.access_token),
+    queryFn: () => searchSpotify(tokenQuery.data!.access_token, debouncedQuery),
+    select: data => data.artists.items
+  });
+
+  const searchLoading = isWaitingForDebounce || searchQuery.isPending;
+
+  return {
+    searchResults: searchQuery.data,
+    searchLoading,
+    searchError: searchQuery.error,
+    tokenError: tokenQuery.error
+  };
 }
 
 export default useSpotify;

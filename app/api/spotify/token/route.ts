@@ -6,8 +6,6 @@ export type Token = {
   expires_in: number;
 };
 
-export const dynamic = 'force-dynamic';
-
 export async function GET() {
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -23,10 +21,7 @@ export async function GET() {
     },
     body: new URLSearchParams({
       grant_type: 'client_credentials'
-    }),
-    next: {
-      revalidate: 3000
-    }
+    })
   });
 
   if (!res.ok) {

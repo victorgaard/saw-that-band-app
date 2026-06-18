@@ -1,5 +1,5 @@
-import Auth from '@/auth/Auth';
 import './globals.css';
+import Auth from '@/auth/Auth';
 import { Poppins } from 'next/font/google';
 import ToastWrapper from '@/components/Toast/ToastWrapper';
 import Sidebar from '@/components/Sidebar';

@@ -7,6 +7,7 @@ import supabase from '@/utils/supabase';
 import { ToastContext } from '@/components/Toast/ToastContext';
 import useProfile from '@/hooks/useProfile';
 import { Profile } from '@/types/global';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function Auth({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<Profile | null>(null);
@@ -67,9 +68,11 @@ function Auth({ children }: { children: ReactNode }) {
     }
   }, [user, router, path, shouldRedirectRoute, getSession]);
 
+  const queryClient = new QueryClient();
+
   return (
     <AuthContext.Provider value={{ supabase, user, setUser }}>
-      {children}
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </AuthContext.Provider>
   );
 }
