@@ -116,7 +116,7 @@ function NewBandPage() {
 
           {hasQuery &&
             !searchLoading &&
-            searchResults?.map(band => (
+            searchResults?.map((band: SpotifyBand) => (
               <BandResultsCard
                 key={band.id}
                 band={band}

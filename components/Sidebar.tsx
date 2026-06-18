@@ -31,11 +31,6 @@ function Sidebar() {
       label: 'Profile',
       href: '/profile',
       icon: <UserCircleIcon className="h-6 w-6" />
-    },
-    {
-      label: 'Wrapped',
-      href: '/wrapped',
-      icon: <GiftIcon className="h-6 w-6" />
     }
   ];
 
