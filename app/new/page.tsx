@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
@@ -30,23 +30,25 @@ function NewBandPage() {
 
   const hasQuery = query.trim().length > 0;
 
-  if (tokenError) {
-    toast({
-      type: 'error',
-      title: 'Spotify server instability',
-      message:
-        'There was an issue on our end connecting to Spotify servers. Please try again later.'
-    });
-  }
+  useEffect(() => {
+    if (tokenError) {
+      toast({
+        type: 'error',
+        title: 'Spotify server instability',
+        message:
+          'There was an issue on our end connecting to Spotify servers. Please try again later.'
+      });
+    }
 
-  if (searchError) {
-    toast({
-      type: 'error',
-      title: 'Search error',
-      message:
-        'There was an error searching for this band. Please try again later.'
-    });
-  }
+    if (searchError) {
+      toast({
+        type: 'error',
+        title: 'Search error',
+        message:
+          'There was an error searching for this band. Please try again later.'
+      });
+    }
+  }, [tokenError, searchError, toast]);
 
   function pickBand(pickedBand: SpotifyBand) {
     setSelectedBand({

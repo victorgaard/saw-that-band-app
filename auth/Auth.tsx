@@ -71,9 +71,11 @@ function Auth({ children }: { children: ReactNode }) {
   const queryClient = new QueryClient();
 
   return (
-    <AuthContext.Provider value={{ supabase, user, setUser }}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </AuthContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContext.Provider value={{ supabase, user, setUser }}>
+        {children}
+      </AuthContext.Provider>
+    </QueryClientProvider>
   );
 }
 
