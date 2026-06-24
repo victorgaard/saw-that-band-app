@@ -39,8 +39,7 @@ function useSpotify(query: string) {
 
   const tokenQuery = useQuery({
     queryKey: ['spotify-token'],
-    queryFn: getSpotifyToken,
-    staleTime: 50 * 60 * 1000
+    queryFn: getSpotifyToken
   });
 
   const isWaitingForDebounce =
