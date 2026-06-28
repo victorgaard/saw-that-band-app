@@ -5,8 +5,6 @@ import { SpotifySearchResults } from '@/types/global';
 import { useQuery } from '@tanstack/react-query';
 import { useDebounce } from './useDebounce';
 
-export const dynamic = 'force-dynamic';
-
 async function getSpotifyToken() {
   const res = await fetch('/api/spotify/token', {
     cache: 'no-store'
